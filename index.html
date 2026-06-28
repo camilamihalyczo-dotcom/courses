@@ -1,0 +1,1256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Camila Mihalyczo — Language Tutor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,900&family=Bebas+Neue&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --cream:#F3EDE3; --ink:#0D0D0D; --ink2:#5a5650; --w:#FAFAF8;
+  --be:#1B3FA0; --ec:#B03A2E; --ep:#1A7A4A;
+  --bs:#C47A0B; --ss:#6B3FA0; --sp:#A0396B;
+  --serif:'Playfair Display',Georgia,serif;
+  --cond:'Bebas Neue',Impact,sans-serif;
+  --sans:'Inter',system-ui,sans-serif;
+}
+html{scroll-behavior:smooth}
+body{background:var(--w);color:var(--ink);font-family:var(--sans);overflow-x:hidden;line-height:1.6}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;background:var(--ink);display:flex;justify-content:space-between;align-items:center;padding:.6rem 2.5rem;gap:1rem}
+.nav-brand{display:flex;flex-direction:column;gap:.05rem;flex-shrink:0}
+.nav-logo{font-family:var(--cond);font-size:1rem;letter-spacing:.12em;color:var(--cream);line-height:1}
+.nav-tagline{font-size:.6rem;color:rgba(255,255,255,.35);letter-spacing:.06em}
+.nav-links{display:flex;list-style:none;gap:0;flex:1;justify-content:center}
+.nav-links a{font-family:var(--cond);font-size:.72rem;letter-spacing:.1em;color:rgba(255,255,255,.4);text-decoration:none;padding:.35rem 1rem;border-left:1px solid rgba(255,255,255,.1);transition:color .15s}
+.nav-links a:hover{color:#fff}
+.nav-links li:first-child a{border-left:none}
+.nav-right{display:flex;align-items:center;gap:.75rem;flex-shrink:0}
+.lang-toggle{display:flex;border:1px solid rgba(255,255,255,.2);overflow:hidden}
+.lang-btn{font-family:var(--cond);font-size:.7rem;letter-spacing:.1em;padding:.3rem .7rem;background:transparent;color:rgba(255,255,255,.4);border:none;cursor:pointer;transition:background .15s,color .15s}
+.lang-btn.active{background:var(--cream);color:var(--ink)}
+.nav-cta{font-family:var(--cond);font-size:.72rem;letter-spacing:.1em;color:var(--ink);background:var(--cream);padding:.4rem 1.1rem;text-decoration:none;transition:background .15s}
+.nav-cta:hover{background:#fff}
+/* hamburger */
+.nav-hamburger{display:none;flex-direction:column;gap:4px;background:none;border:none;cursor:pointer;padding:.4rem}
+.nav-hamburger span{display:block;width:20px;height:2px;background:var(--cream);transition:transform .25s,opacity .25s}
+/* mobile menu */
+.mobile-menu{
+  position:fixed;inset:0;z-index:300;background:var(--ink);
+  display:flex;flex-direction:column;
+  transform:translateX(100%);transition:transform .35s cubic-bezier(.4,0,.2,1);
+  padding:1.5rem 1.5rem 2rem;
+}
+.mobile-menu.open{transform:translateX(0)}
+.mm-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:3rem}
+.mm-close{background:none;border:1px solid rgba(255,255,255,.2);color:var(--cream);font-size:1.4rem;width:2.2rem;height:2.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.mm-links{list-style:none;display:flex;flex-direction:column;gap:0;flex:1}
+.mm-links li{border-bottom:1px solid rgba(255,255,255,.08)}
+.mm-links a{display:block;font-family:var(--cond);font-size:2rem;letter-spacing:.06em;color:rgba(255,255,255,.7);text-decoration:none;padding:1rem 0;transition:color .15s}
+.mm-links a:hover{color:#fff}
+.mm-bottom{display:flex;align-items:center;gap:1rem;margin-top:2rem;flex-wrap:wrap}
+
+/* ── TICKER ── */
+.ticker-wrap{margin-top:46px;overflow:hidden;white-space:nowrap;background:var(--ink);padding:.45rem 0}
+.ticker-track{display:inline-flex;animation:tick 30s linear infinite}
+.ti{font-family:var(--cond);font-size:.8rem;letter-spacing:.14em;color:rgba(255,255,255,.35);padding:0 1.75rem}
+.ti b{color:rgba(255,255,255,.7)}
+@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ── HERO ── */
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid rgba(0,0,0,.1);padding:5rem 2.5rem 4rem;gap:4rem;align-items:end}
+.hero-label{font-family:var(--cond);font-size:.72rem;letter-spacing:.18em;color:var(--ink2);margin-bottom:2rem;display:flex;align-items:center;gap:.75rem}
+.hero-label::before{content:'';display:inline-block;width:2rem;height:1px;background:var(--ink2)}
+.hero-h{font-family:var(--cond);font-size:clamp(4rem,8vw,7.5rem);line-height:.9;letter-spacing:-.01em;color:var(--ink);margin-bottom:1.5rem}
+.hero-h .serif-line{font-family:var(--serif);font-style:italic;font-size:clamp(3.5rem,7vw,6.5rem);color:var(--be);display:block;line-height:1}
+.hero-sub{font-size:1rem;color:var(--ink2);line-height:1.75;max-width:42ch;margin-bottom:2.5rem}
+.hero-sub strong{color:var(--ink);font-weight:600}
+.hero-btns{display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:3rem}
+.btn-solid{font-family:var(--cond);font-size:.85rem;letter-spacing:.1em;background:var(--ink);color:var(--cream);padding:.75rem 1.75rem;text-decoration:none;border:2px solid var(--ink);transition:background .15s,color .15s}
+.btn-solid:hover{background:var(--be);border-color:var(--be)}
+.btn-ghost{font-family:var(--cond);font-size:.85rem;letter-spacing:.1em;background:transparent;color:var(--ink);padding:.75rem 1.75rem;text-decoration:none;border:2px solid var(--ink);transition:background .15s,color .15s}
+.btn-ghost:hover{background:var(--ink);color:var(--cream)}
+.hero-stats{display:flex;gap:2.5rem;flex-wrap:wrap;padding-top:2rem;border-top:1px solid rgba(0,0,0,.1)}
+.hstat-n{font-family:var(--cond);font-size:2.5rem;line-height:1;color:var(--ink);display:block}
+.hstat-l{font-size:.7rem;color:var(--ink2);letter-spacing:.06em;text-transform:uppercase;margin-top:.1rem;display:block}
+
+/* ── HERO RIGHT: auto-scroll course cards ── */
+.hero-right{
+  display:flex;flex-direction:column;justify-content:flex-end;gap:1.5rem;
+  align-self:stretch;
+}
+.course-scroll-wrap{
+  flex:1;
+  min-height:320px; /* fallback when flex doesn't give height */
+  height:420px;
+  position:relative;
+  overflow:hidden;
+  border:1.5px solid rgba(0,0,0,.1);
+  background:var(--w);
+}
+/* top + bottom fade masks */
+.course-scroll-wrap::before,
+.course-scroll-wrap::after{
+  content:'';
+  position:absolute;left:0;right:0;height:3.5rem;z-index:2;pointer-events:none;
+}
+.course-scroll-wrap::before{top:0;background:linear-gradient(to bottom,var(--w),transparent)}
+.course-scroll-wrap::after{bottom:0;background:linear-gradient(to top,var(--w),transparent)}
+
+.course-scroll-track{
+  display:flex;flex-direction:column;
+  animation:scrollUp 28s linear infinite;
+  padding:.75rem;
+  gap:.6rem;
+}
+.course-scroll-track:hover{animation-play-state:paused}
+
+@keyframes scrollUp{
+  0%  {transform:translateY(0)}
+  100%{transform:translateY(-50%)}
+}
+
+.cs-card{
+  border:1.5px solid rgba(0,0,0,.1);
+  padding:1rem 1.1rem;
+  background:#fff;
+  position:relative;
+  transition:border-color .2s, transform .2s;
+  cursor:default;
+  overflow:hidden;
+}
+.cs-card::before{
+  content:'';position:absolute;top:0;left:0;bottom:0;
+  width:4px;
+}
+.cs-card:hover{transform:translateX(3px)}
+
+.cs-card-track{
+  font-family:var(--cond);font-size:.6rem;letter-spacing:.14em;
+  margin-bottom:.3rem;display:block;
+}
+.cs-card-name{
+  font-family:var(--cond);font-size:.95rem;letter-spacing:.04em;
+  line-height:1.15;color:var(--ink);margin-bottom:.35rem;
+}
+.cs-card-info{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:.5rem;
+}
+.cs-card-desc{font-size:.75rem;color:var(--ink2);line-height:1.4;flex:1}
+.cs-card-n{
+  font-family:var(--cond);font-size:1.4rem;letter-spacing:.02em;
+  flex-shrink:0;line-height:1;
+}
+
+/* card colour per track */
+.cs-be::before{background:var(--be)} .cs-be .cs-card-track,.cs-be .cs-card-n{color:var(--be)}
+.cs-be:hover{border-color:var(--be)}
+.cs-ec::before{background:var(--ec)} .cs-ec .cs-card-track,.cs-ec .cs-card-n{color:var(--ec)}
+.cs-ec:hover{border-color:var(--ec)}
+.cs-ep::before{background:var(--ep)} .cs-ep .cs-card-track,.cs-ep .cs-card-n{color:var(--ep)}
+.cs-ep:hover{border-color:var(--ep)}
+.cs-bs::before{background:var(--bs)} .cs-bs .cs-card-track,.cs-bs .cs-card-n{color:var(--bs)}
+.cs-bs:hover{border-color:var(--bs)}
+.cs-ss::before{background:var(--ss)} .cs-ss .cs-card-track,.cs-ss .cs-card-n{color:var(--ss)}
+.cs-ss:hover{border-color:var(--ss)}
+.cs-sp::before{background:var(--sp)} .cs-sp .cs-card-track,.cs-sp .cs-card-n{color:var(--sp)}
+.cs-sp:hover{border-color:var(--sp)}
+
+.hero-right-note{
+  font-size:.78rem;color:var(--ink2);line-height:1.6;
+  border-left:2px solid var(--be);padding-left:1rem;flex-shrink:0;
+}
+.hero-right-note strong{color:var(--ink);font-weight:600}
+
+/* ── SECTION STRUCTURE ── */
+.mq{overflow:hidden;white-space:nowrap;padding:.5rem 0;border-top:1px solid rgba(0,0,0,.1);border-bottom:1px solid rgba(0,0,0,.1)}
+.mq.dark{background:var(--ink)}
+.mq-track{display:inline-flex;animation:tick 22s linear infinite}
+.mq-track.rev{animation-direction:reverse}
+.mq-i{font-family:var(--cond);font-size:.95rem;letter-spacing:.12em;color:var(--ink);padding:0 1.75rem}
+.mq.dark .mq-i{color:rgba(255,255,255,.25)}
+.mq-i s{text-decoration:none;color:var(--be)}
+.mq.dark .mq-i s{color:rgba(255,255,255,.5)}
+
+section{border-bottom:1px solid rgba(0,0,0,.1)}
+.sec-head{display:flex;align-items:stretch;border-bottom:1px solid rgba(0,0,0,.1)}
+.sec-num{font-family:var(--cond);font-size:.75rem;letter-spacing:.12em;writing-mode:vertical-rl;color:rgba(255,255,255,.6);background:var(--ink);padding:1rem .8rem;flex-shrink:0;display:flex;align-items:center;border-right:1px solid rgba(0,0,0,.12)}
+.sec-meta{padding:1.25rem 2.5rem;display:flex;align-items:center;gap:1.25rem;flex:1;flex-wrap:wrap}
+.sec-title{font-family:var(--cond);font-size:clamp(1.6rem,3vw,2.3rem);letter-spacing:.04em;line-height:1;color:var(--ink)}
+.sec-badge{font-family:var(--cond);font-size:.68rem;letter-spacing:.12em;padding:.2rem .65rem;border:1.5px solid;flex-shrink:0}
+.sec-body{padding:3rem 2.5rem}
+
+/* ── ABOUT ── */
+.about-cols{display:grid;grid-template-columns:3fr 2fr;gap:3rem;align-items:start}
+.about-lede{font-family:var(--serif);font-style:italic;font-size:1.25rem;line-height:1.55;margin-bottom:1.5rem}
+.about-body{font-size:.94rem;color:var(--ink2);line-height:1.8}
+.about-body strong{color:var(--ink);font-weight:600}
+.about-body p+p{margin-top:1rem}
+.creds{border:1.5px solid rgba(0,0,0,.15)}
+.creds-hd{font-family:var(--cond);font-size:.75rem;letter-spacing:.14em;padding:.65rem 1rem;background:var(--ink);color:rgba(255,255,255,.7);border-bottom:1px solid rgba(0,0,0,.15)}
+.cred{display:flex;flex-direction:column;padding:.8rem 1rem;border-bottom:1px solid rgba(0,0,0,.08)}
+.cred:last-child{border-bottom:none}
+.ck{font-family:var(--cond);font-size:.6rem;letter-spacing:.14em;color:var(--be);margin-bottom:.15rem}
+.cv{font-size:.88rem;font-weight:500;color:var(--ink)}
+
+/* ── PLATFORM LINK ROWS ── */
+.plat-links-grid{display:flex;flex-direction:column}
+.plat-link-row{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.1rem 2.5rem;
+  border-bottom:1px solid rgba(0,0,0,.08);
+  text-decoration:none;
+  transition:background .15s;
+  gap:1rem;
+}
+.plat-link-row:last-child{border-bottom:none}
+.plat-link-row:hover{background:rgba(0,0,0,.03)}
+.plat-link-email{background:rgba(27,63,160,.04)}
+.plat-link-email:hover{background:rgba(27,63,160,.08)}
+.plat-link-left{display:flex;align-items:center;gap:1.25rem}
+.plat-link-num{
+  font-family:var(--cond);font-size:.85rem;letter-spacing:.1em;
+  color:var(--ink2);flex-shrink:0;width:1.5rem;text-align:center;
+}
+.plat-link-name{
+  font-family:var(--cond);font-size:1.1rem;letter-spacing:.04em;
+  color:var(--ink);display:block;line-height:1.2;
+}
+.plat-link-sub{
+  font-size:.78rem;color:var(--ink2);margin-top:.1rem;display:block;
+}
+.plat-link-url{
+  font-family:var(--cond);font-size:.72rem;letter-spacing:.08em;
+  color:var(--be);flex-shrink:0;
+}
+.plat-link-email .plat-link-num{color:var(--be)}
+.plat-link-email .plat-link-url{color:var(--be)}
+@media(max-width:640px){
+  .plat-link-row{padding:.9rem 1.25rem;flex-direction:column;align-items:flex-start;gap:.5rem}
+  .plat-link-url{font-size:.65rem}
+}
+
+/* ── CONTACT FORM WRAP (solo form, sin columna de links) ── */
+.contact-form-wrap{
+  display:grid;grid-template-columns:1fr 1fr;
+  background:var(--ink);
+}
+.contact-form-left{padding:3.5rem 2.5rem}
+.contact-form-right{padding:3.5rem 2.5rem;border-left:1px solid rgba(255,255,255,.08)}
+@media(max-width:900px){
+  .contact-form-wrap{grid-template-columns:1fr}
+  .contact-form-left{padding:2.5rem 1.25rem}
+  .contact-form-right{padding:2rem 1.25rem;border-left:none;border-top:1px solid rgba(255,255,255,.08)}
+}
+/* override ch/csub colors inside dark bg */
+.contact-form-wrap .ch{color:var(--cream)}
+.contact-form-wrap .ch em{color:var(--be)}
+.contact-form-wrap .csub{color:rgba(255,255,255,.45)}
+.testimonials-strip{border-top:1px solid rgba(0,0,0,.1);padding:2.5rem 2.5rem}
+.testi-strip-label{font-family:var(--cond);font-size:.68rem;letter-spacing:.18em;color:var(--ink2);margin-bottom:1.5rem;display:flex;align-items:center;gap:.75rem}
+.testi-strip-label::after{content:'';flex:1;height:1px;background:rgba(0,0,0,.1)}
+.testi-strip-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.testi-strip-card{padding:1.5rem;border:1.5px solid rgba(0,0,0,.08);position:relative}
+.testi-strip-card::before{content:'"';font-family:var(--serif);font-size:3rem;color:rgba(0,0,0,.06);position:absolute;top:.5rem;left:1rem;line-height:1}
+.testi-strip-text{font-family:var(--serif);font-style:italic;font-size:.95rem;color:var(--ink);line-height:1.55;margin-bottom:.75rem;padding-top:.5rem}
+.testi-strip-attr{font-family:var(--cond);font-size:.58rem;letter-spacing:.12em;color:var(--ink2)}
+@media(max-width:760px){.testi-strip-grid{grid-template-columns:1fr}.testimonials-strip{padding:2rem 1.25rem}}
+
+/* ── TRACK CTA ── */
+.track-cta{
+  display:inline-block;margin-top:1.25rem;
+  font-family:var(--cond);font-size:.8rem;letter-spacing:.1em;
+  color:var(--tc);text-decoration:none;
+  border-bottom:1.5px solid var(--tc);padding-bottom:.1rem;
+  transition:opacity .15s;
+}
+.track-cta:hover{opacity:.6}
+.stats-wall{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid rgba(0,0,0,.1)}
+.swall{padding:3rem 2.5rem;border-right:1px solid rgba(0,0,0,.1);display:flex;flex-direction:column;justify-content:space-between}
+.swall:last-child{border-right:none}
+.swall-n{font-family:var(--cond);font-size:clamp(3rem,5vw,4.5rem);line-height:.9;color:var(--ink);margin-bottom:1rem}
+.swall-l{font-size:.8rem;color:var(--ink2);line-height:1.5;max-width:18ch}
+
+/* ── COURSES ── */
+#courses .sec-body{padding:0}
+.track{border-bottom:1px solid rgba(0,0,0,.08)}
+.track:last-child{border-bottom:none}
+.track-hd{display:flex;align-items:stretch;border-bottom:1px solid rgba(0,0,0,.08);cursor:pointer;transition:background .15s;user-select:none}
+.track-hd:hover{background:rgba(0,0,0,.02)}
+.track-bar{width:5px;flex-shrink:0}
+.track-info{padding:1.25rem 1.5rem 1.25rem 2rem;flex:1;display:flex;align-items:center;justify-content:space-between;gap:.75rem;flex-wrap:wrap}
+.track-name{font-family:var(--cond);font-size:clamp(1.2rem,2.5vw,2rem);letter-spacing:.04em;line-height:1.1;flex:1;min-width:0}
+.track-right{display:flex;align-items:center;gap:.75rem;flex-shrink:0}
+.track-tag{font-family:var(--cond);font-size:.55rem;letter-spacing:.1em;padding:.2rem .5rem;border:1.5px solid currentColor;flex-shrink:0;white-space:nowrap}
+.track-toggle{font-family:var(--cond);font-size:1.3rem;color:var(--ink2);flex-shrink:0;transition:transform .3s;line-height:1}
+.track-toggle.open{transform:rotate(45deg)}
+.track-content{display:none;padding:0 2.5rem 2rem}
+.track-content.open{display:block}
+.track-intro{font-size:.85rem;color:var(--ink2);margin-bottom:1.25rem;padding-top:1.5rem;max-width:55ch}
+.lvl-table{width:100%;border-collapse:collapse;border:1.5px solid rgba(0,0,0,.1)}
+.lvl-table th{text-align:left;padding:.55rem 1rem;font-family:var(--cond);font-size:.6rem;letter-spacing:.12em;color:rgba(255,255,255,.7);background:var(--ink);border-bottom:1px solid rgba(0,0,0,.15)}
+.lvl-table td{padding:.85rem 1rem;font-size:.88rem;border-bottom:1px solid rgba(0,0,0,.06);vertical-align:top}
+.lvl-table tr:last-child td{border-bottom:none}
+.lvl-table tr:hover td{background:rgba(0,0,0,.025)}
+.lvl-table td:first-child{font-weight:600}
+.lvl-table td.num{font-family:var(--cond);font-size:1.2rem;letter-spacing:.04em;text-align:center}
+.lvl-table td.goal{color:var(--ink2);font-size:.83rem}
+.pill-sm{display:inline-block;font-family:var(--cond);font-size:.55rem;letter-spacing:.1em;padding:.1rem .4rem;border:1.5px solid currentColor;margin-left:.35rem;vertical-align:middle}
+.sp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1px;background:rgba(0,0,0,.08);margin-top:.5rem}
+.sp{padding:1.4rem 1.25rem;background:var(--w);position:relative;overflow:hidden}
+.sp::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%}
+.sp:hover{background:rgba(0,0,0,.02)}
+.sp-tag{font-family:var(--cond);font-size:.6rem;letter-spacing:.12em;display:block;margin-bottom:.4rem}
+.sp-name{font-family:var(--cond);font-size:1rem;letter-spacing:.04em;line-height:1.2;margin-bottom:.5rem;color:var(--ink)}
+.sp-desc{font-size:.8rem;color:var(--ink2);line-height:1.5}
+
+/* colour system */
+.c-be{--tc:var(--be)}.c-ec{--tc:var(--ec)}.c-ep{--tc:var(--ep)}
+.c-bs{--tc:var(--bs)}.c-ss{--tc:var(--ss)}.c-sp{--tc:var(--sp)}
+.track-bar,.track-name,.track-tag,.ck,.sp-tag,.lvl-table td.num,.track-toggle{color:var(--tc)}
+.track-bar{background:var(--tc)}
+.sp::before{background:var(--tc)}
+
+/* ── CTA BLOCK (animated, Inspirux/Ctrl-inspired) ── */
+.cta-block{
+  background:var(--ink);
+  padding:5rem 2.5rem;
+  display:flex;flex-direction:column;align-items:flex-start;
+  gap:2rem;
+  border-top:1px solid rgba(255,255,255,.06);
+  overflow:hidden;
+  position:relative;
+}
+/* animated diagonal stripe bg */
+.cta-block::before{
+  content:'';
+  position:absolute;inset:0;
+  background:repeating-linear-gradient(
+    -55deg,
+    transparent,transparent 40px,
+    rgba(255,255,255,.018) 40px,rgba(255,255,255,.018) 41px
+  );
+  pointer-events:none;
+}
+.cta-eyebrow{
+  font-family:var(--cond);font-size:.75rem;letter-spacing:.2em;
+  color:rgba(255,255,255,.35);
+  display:flex;align-items:center;gap:.75rem;
+}
+.cta-eyebrow::before{content:'';width:2rem;height:1px;background:rgba(255,255,255,.25)}
+.cta-headline{
+  font-family:var(--cond);
+  font-size:clamp(2.5rem,6vw,5.5rem);
+  letter-spacing:.02em;line-height:.92;
+  color:var(--cream);max-width:14ch;
+  position:relative;z-index:1;
+}
+.cta-headline em{font-family:var(--serif);font-style:italic;color:var(--be)}
+.cta-row{
+  display:flex;align-items:center;gap:2rem;flex-wrap:wrap;
+  position:relative;z-index:1;width:100%;
+}
+.cta-sub{font-size:.9rem;color:rgba(255,255,255,.45);max-width:40ch;line-height:1.65;flex:1}
+/* big animated email button */
+.cta-email-btn{
+  display:inline-flex;align-items:center;gap:1rem;
+  font-family:var(--cond);font-size:clamp(1rem,2vw,1.5rem);letter-spacing:.08em;
+  color:var(--ink);background:var(--cream);
+  padding:1.1rem 2rem;text-decoration:none;
+  border:2px solid var(--cream);
+  position:relative;overflow:hidden;
+  transition:color .3s;
+  flex-shrink:0;
+}
+.cta-email-btn::after{
+  content:'';
+  position:absolute;inset:0;
+  background:var(--be);
+  transform:translateX(-101%);
+  transition:transform .35s cubic-bezier(.4,0,.2,1);
+  z-index:0;
+}
+.cta-email-btn:hover::after{transform:translateX(0)}
+.cta-email-btn:hover{color:#fff;border-color:var(--be)}
+.cta-email-btn span{position:relative;z-index:1}
+.cta-arr{
+  font-size:1.4rem;transition:transform .3s;
+  position:relative;z-index:1;
+}
+.cta-email-btn:hover .cta-arr{transform:translate(4px,-4px)}
+/* marquee inside CTA */
+.cta-mq{overflow:hidden;white-space:nowrap;padding:.6rem 0;border-top:1px solid rgba(255,255,255,.06);width:100%;position:relative;z-index:1}
+.cta-mq-track{display:inline-flex;animation:tick 18s linear infinite reverse}
+.cta-mq-item{font-family:var(--cond);font-size:.85rem;letter-spacing:.12em;color:rgba(255,255,255,.15);padding:0 1.75rem}
+.cta-mq-item b{color:rgba(255,255,255,.4)}
+
+/* ── PLATFORMS ── */
+.platforms-grid{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid rgba(0,0,0,.1)}
+.plat{padding:2.5rem 2rem;border-right:1px solid rgba(0,0,0,.1);display:flex;flex-direction:column}
+.plat:last-child{border-right:none}
+.plat-idx{font-family:var(--cond);font-size:.65rem;letter-spacing:.18em;color:var(--ink2);margin-bottom:.5rem}
+.plat-name{font-family:var(--cond);font-size:1.8rem;letter-spacing:.04em;line-height:1;color:var(--ink);margin-bottom:.65rem}
+.plat-badge{display:inline-block;font-family:var(--cond);font-size:.6rem;letter-spacing:.12em;padding:.2rem .6rem;border:1.5px solid var(--be);color:var(--be);margin-bottom:1rem}
+.plat-desc{font-size:.85rem;color:var(--ink2);line-height:1.65;flex:1;margin-bottom:1.25rem}
+.plat-link{font-family:var(--cond);font-size:.75rem;letter-spacing:.1em;color:var(--be);text-decoration:none;border-bottom:1.5px solid var(--be);padding-bottom:.1rem;align-self:flex-start;transition:color .15s,border-color .15s}
+.plat-link:hover{color:var(--ec);border-color:var(--ec)}
+
+/* ── FAQ ── */
+#faq .sec-body{padding:0}
+.faq-item{border-bottom:1px solid rgba(0,0,0,.08)}
+.faq-q{display:flex;justify-content:space-between;align-items:center;padding:1.4rem 2.5rem;cursor:pointer;transition:background .15s;user-select:none}
+.faq-q:hover{background:rgba(0,0,0,.02)}
+.faq-qt{font-size:.95rem;font-weight:500;color:var(--ink);flex:1;padding-right:2rem}
+.faq-icon{font-family:var(--cond);font-size:1.1rem;color:var(--ink2);flex-shrink:0;transition:transform .25s}
+.faq-icon.open{transform:rotate(45deg)}
+.faq-a{display:none;padding:0 2.5rem 1.5rem;font-size:.9rem;color:var(--ink2);line-height:1.7;max-width:65ch}
+.faq-a.open{display:block}
+
+/* ── CONTACT ── */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr}
+.contact-l{padding:3.5rem 2.5rem;border-right:1px solid rgba(0,0,0,.1)}
+.ch{font-family:var(--cond);font-size:clamp(2rem,4vw,3.5rem);letter-spacing:.02em;line-height:1;color:var(--ink);margin-bottom:.75rem}
+.ch em{font-family:var(--serif);font-style:italic;color:var(--be)}
+.csub{font-size:.93rem;color:var(--ink2);max-width:38ch;line-height:1.7;margin-bottom:2rem}
+.clinks{display:flex;flex-direction:column;border:1.5px solid rgba(0,0,0,.12)}
+.cl{display:flex;align-items:center;justify-content:space-between;padding:.95rem 1.25rem;text-decoration:none;border-bottom:1px solid rgba(0,0,0,.08);transition:background .15s}
+.cl:last-child{border-bottom:none}
+.cl:hover{background:rgba(0,0,0,.04)}
+.cl-info{display:flex;flex-direction:column;gap:.12rem}
+.cl-label{font-family:var(--cond);font-size:.6rem;letter-spacing:.14em;color:var(--be)}
+.cl-url{font-size:.88rem;font-weight:500;color:var(--ink)}
+.cl-arr{font-size:1rem;color:var(--ink2)}
+.contact-r{padding:3.5rem 2.5rem;background:var(--ink)}
+.tl{font-family:var(--cond);font-size:.68rem;letter-spacing:.15em;color:rgba(255,255,255,.35);margin-bottom:2rem;display:flex;align-items:center;gap:.75rem}
+.tl::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.1)}
+.testi{margin-bottom:1.75rem;padding-left:1.1rem;border-left:2.5px solid var(--be)}
+.testi-t{font-family:var(--serif);font-style:italic;font-size:1rem;color:var(--cream);line-height:1.5;margin-bottom:.4rem}
+.testi-a{font-family:var(--cond);font-size:.6rem;letter-spacing:.1em;color:rgba(255,255,255,.3)}
+
+/* ── FOOTER ── */
+footer{background:var(--ink);overflow:hidden}
+/* newsletter block */
+.foot-newsletter{
+  display:grid;grid-template-columns:1fr 1fr;gap:4rem;
+  padding:4rem 2.5rem;
+  border-bottom:1px solid rgba(255,255,255,.08);
+  align-items:start;
+}
+.foot-nl-label{font-family:var(--cond);font-size:.68rem;letter-spacing:.18em;color:rgba(255,255,255,.35);margin-bottom:.75rem;display:block}
+.foot-nl-h{font-family:var(--cond);font-size:clamp(1.4rem,2.5vw,2rem);letter-spacing:.02em;line-height:1.15;color:var(--cream);margin-bottom:.75rem}
+.foot-nl-sub{font-size:.85rem;color:rgba(255,255,255,.45);line-height:1.6}
+.nl-form{display:flex;flex-direction:column;gap:.75rem}
+.nl-input{
+  background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.15);
+  color:var(--cream);font-family:var(--sans);font-size:.9rem;
+  padding:.85rem 1.1rem;outline:none;
+  transition:border-color .2s;
+}
+.nl-input::placeholder{color:rgba(255,255,255,.3)}
+.nl-input:focus{border-color:var(--be)}
+.nl-select{
+  background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.15);
+  color:rgba(255,255,255,.7);font-family:var(--sans);font-size:.85rem;
+  padding:.85rem 1.1rem;outline:none;cursor:pointer;
+  transition:border-color .2s;
+  -webkit-appearance:none;appearance:none;
+}
+.nl-select:focus{border-color:var(--be)}
+.nl-btn{
+  font-family:var(--cond);font-size:.9rem;letter-spacing:.1em;
+  background:var(--cream);color:var(--ink);
+  border:2px solid var(--cream);padding:.85rem 1.75rem;
+  cursor:pointer;align-self:flex-start;
+  position:relative;overflow:hidden;transition:color .3s;
+}
+.nl-btn::after{content:'';position:absolute;inset:0;background:var(--be);transform:translateX(-101%);transition:transform .3s cubic-bezier(.4,0,.2,1);z-index:0}
+.nl-btn:hover::after{transform:translateX(0)}
+.nl-btn:hover{color:#fff;border-color:var(--be)}
+.nl-btn span{position:relative;z-index:1}
+.nl-success{font-family:var(--cond);font-size:.85rem;letter-spacing:.08em;color:var(--ep);padding:.75rem 0}
+.nl-error{font-size:.8rem;color:var(--ec);padding:.5rem 0}
+/* big email */
+.foot-email-wrap{padding:2.5rem 2.5rem 0;overflow:hidden;border-bottom:1px solid rgba(255,255,255,.06)}
+.foot-email{
+  font-family:var(--cond);
+  font-size:clamp(2rem,6.5vw,6rem);
+  letter-spacing:-.01em;line-height:.85;
+  color:var(--cream);white-space:nowrap;display:block;
+  text-decoration:none;padding-bottom:2.5rem;
+  transition:color .2s;
+}
+.foot-email:hover{color:rgba(255,255,255,.45)}
+/* bottom bar */
+.foot-bottom{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.25rem 2.5rem;flex-wrap:wrap;gap:1rem;
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.foot-social{display:flex;gap:.75rem;align-items:center}
+.foot-icon{
+  display:flex;align-items:center;justify-content:center;
+  width:2rem;height:2rem;
+  color:rgba(255,255,255,.4);
+  border:1px solid rgba(255,255,255,.12);
+  transition:color .15s,border-color .15s;
+  text-decoration:none;
+}
+.foot-icon:hover{color:var(--cream);border-color:rgba(255,255,255,.4)}
+.foot-nav{display:flex;gap:1.5rem;flex-wrap:wrap}
+.foot-nav a{font-family:var(--cond);font-size:.65rem;letter-spacing:.1em;color:rgba(255,255,255,.3);text-decoration:none;transition:color .15s}
+.foot-nav a:hover{color:rgba(255,255,255,.8)}
+.foot-copy{font-family:var(--cond);font-size:.65rem;letter-spacing:.1em;color:rgba(255,255,255,.2)}
+/* wordmark */
+.foot-wordmark-wrap{overflow:hidden}
+.foot-wordmark{
+  font-family:var(--cond);
+  font-size:clamp(5rem,18vw,16rem);
+  letter-spacing:-.02em;line-height:.8;
+  color:rgba(255,255,255,.04);
+  white-space:nowrap;display:block;padding:0 1rem;
+}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1000px){
+  .hero{grid-template-columns:1fr;gap:2.5rem;padding:4rem 1.75rem 3rem}
+  .about-cols{grid-template-columns:1fr;gap:2rem}
+  .stats-wall{grid-template-columns:repeat(2,1fr)}
+  .platforms-grid{grid-template-columns:1fr}
+  .plat{border-right:none;border-bottom:1px solid rgba(0,0,0,.1)}
+  .plat:last-child{border-bottom:none}
+  .contact-grid{grid-template-columns:1fr}
+  .contact-l{border-right:none;border-bottom:1px solid rgba(0,0,0,.1)}
+  .foot-newsletter{grid-template-columns:1fr;gap:2rem;padding:3rem 1.75rem}
+  /* on single-col hero, scroll wrap needs explicit height */
+  .course-scroll-wrap{height:340px;flex:none}
+}
+@media(max-width:900px){
+  /* hide desktop nav, show hamburger */
+  .nav-links{display:none}
+  .nav-cta{display:none}
+  .nav-hamburger{display:flex}
+  .nav-tagline{display:none}
+}
+@media(max-width:640px){
+  nav{padding:.7rem 1rem;gap:.5rem}
+  .sec-meta{padding:1rem 1.25rem}
+  .sec-body{padding:1.5rem 1.25rem}
+  .faq-q{padding:1.1rem 1.25rem}
+  .faq-a{padding:0 1.25rem 1.25rem}
+  .contact-l,.contact-r{padding:2rem 1.25rem}
+  .track-content{padding:0 1rem 1.5rem}
+  .track-info{padding:.9rem 1rem .9rem 1rem}
+  .track-tag{display:none} /* hide on very small screens, name is enough */
+  .lvl-table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .swall{padding:1.75rem 1.25rem}
+  .stats-wall{grid-template-columns:repeat(2,1fr)}
+  .foot-newsletter{padding:2rem 1.25rem}
+  .foot-email-wrap{padding:1.5rem 1.25rem 0}
+  .foot-bottom{padding:1rem 1.25rem;flex-direction:column;align-items:flex-start;gap:.75rem}
+  .cta-block{padding:2.5rem 1.25rem}
+  .cta-headline{font-size:clamp(2rem,8vw,3.5rem)}
+  .cta-row{flex-direction:column;align-items:flex-start}
+  .hero-stats{gap:1.5rem}
+  .course-scroll-wrap{height:300px;flex:none}
+  /* stack stats 2x2 */
+  .hero-stats{display:grid;grid-template-columns:1fr 1fr;gap:.75rem 2rem}
+}
+
+/* ── i18n: hide/show ── */
+[data-lang]{display:none}
+body.lang-en [data-lang="en"]{display:block}
+body.lang-en [data-lang="en"].inline{display:inline}
+body.lang-en [data-lang="en"].flex{display:flex}
+body.lang-en [data-lang="en"].grid{display:grid}
+body.lang-es [data-lang="es"]{display:block}
+body.lang-es [data-lang="es"].inline{display:inline}
+body.lang-es [data-lang="es"].flex{display:flex}
+body.lang-es [data-lang="es"].grid{display:grid}
+/* elements that swap text inline */
+.t[data-en][data-es]{}
+</style>
+</head>
+<body class="lang-en">
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">
+    <span class="nav-logo">CAMILA MIHALYCZO</span>
+    <span class="nav-tagline t" data-en="Language Tutor · Buenos Aires" data-es="Tutora de Idiomas · Buenos Aires">Language Tutor · Buenos Aires</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#about" class="t" data-en="PROFILE" data-es="PERFIL">PROFILE</a></li>
+    <li><a href="#courses" class="t" data-en="COURSES" data-es="CURSOS">COURSES</a></li>
+    <li><a href="#platforms" class="t" data-en="PLATFORMS" data-es="PLATAFORMAS">PLATFORMS</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#contact" class="t" data-en="CONTACT" data-es="CONTACTO">CONTACT</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="lang-toggle">
+      <button class="lang-btn active" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" onclick="setLang('es')">ES</button>
+    </div>
+    <a href="#contact" class="nav-cta t" data-en="BOOK A CLASS" data-es="RESERVAR CLASE">BOOK A CLASS</a>
+    <button class="nav-hamburger" onclick="toggleMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mm-header">
+    <span class="nav-logo">CAMILA MIHALYCZO</span>
+    <button class="mm-close" onclick="toggleMenu()">×</button>
+  </div>
+  <ul class="mm-links">
+    <li><a href="#about" onclick="toggleMenu()" class="t" data-en="PROFILE" data-es="PERFIL">PROFILE</a></li>
+    <li><a href="#courses" onclick="toggleMenu()" class="t" data-en="COURSES" data-es="CURSOS">COURSES</a></li>
+    <li><a href="#platforms" onclick="toggleMenu()" class="t" data-en="PLATFORMS" data-es="PLATAFORMAS">PLATFORMS</a></li>
+    <li><a href="#faq" onclick="toggleMenu()">FAQ</a></li>
+    <li><a href="#contact" onclick="toggleMenu()" class="t" data-en="CONTACT" data-es="CONTACTO">CONTACT</a></li>
+  </ul>
+  <div class="mm-bottom">
+    <div class="lang-toggle">
+      <button class="lang-btn active" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" onclick="setLang('es')">ES</button>
+    </div>
+    <a href="#contact" onclick="toggleMenu()" class="btn-solid t" data-en="BOOK A CLASS" data-es="RESERVAR CLASE">BOOK A CLASS</a>
+  </div>
+</div>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker-track">
+    <span class="ti"><b>ENGLISH TUTOR</b></span><span class="ti">·</span>
+    <span class="ti"><b>TUTORA DE ESPAÑOL</b></span><span class="ti">·</span>
+    <span class="ti"><b>CAMBRIDGE CERTIFIED</b></span><span class="ti">·</span>
+    <span class="ti"><b>BUENOS AIRES</b></span><span class="ti">·</span>
+    <span class="ti"><b>TEFL NIVEL 5</b></span><span class="ti">·</span>
+    <span class="ti"><b>BUSINESS ENGLISH</b></span><span class="ti">·</span>
+    <span class="ti"><b>ESPAÑOL RIOPLATENSE</b></span><span class="ti">·</span>
+    <span class="ti"><b>CREATIVE PROFESSIONALS</b></span><span class="ti">·</span>
+    <span class="ti"><b>ENGLISH TUTOR</b></span><span class="ti">·</span>
+    <span class="ti"><b>TUTORA DE ESPAÑOL</b></span><span class="ti">·</span>
+    <span class="ti"><b>CAMBRIDGE CERTIFIED</b></span><span class="ti">·</span>
+    <span class="ti"><b>BUENOS AIRES</b></span><span class="ti">·</span>
+    <span class="ti"><b>TEFL NIVEL 5</b></span><span class="ti">·</span>
+    <span class="ti"><b>BUSINESS ENGLISH</b></span><span class="ti">·</span>
+    <span class="ti"><b>ESPAÑOL RIOPLATENSE</b></span><span class="ti">·</span>
+    <span class="ti"><b>CREATIVE PROFESSIONALS</b></span><span class="ti">·</span>
+  </div>
+</div>
+
+<!-- HERO -->
+<section style="border:none;padding:0">
+<div class="hero">
+  <div class="hero-left">
+    <div>
+      <p class="hero-label t" data-en="LANGUAGE TUTOR · ONLINE · BUENOS AIRES" data-es="TUTORA DE IDIOMAS · EN LÍNEA · BUENOS AIRES">LANGUAGE TUTOR · ONLINE · BUENOS AIRES</p>
+      <h1 class="hero-h">
+        CAMILA<br>
+        <span class="serif-line">Mihalyczo</span><br>
+        <span class="t" data-en="LANGUAGE" data-es="IDIOMAS">LANGUAGE</span><br>
+        <span style="color:var(--be)" class="t" data-en="TUTOR." data-es="TUTORA.">TUTOR.</span>
+      </h1>
+      <!-- EN bio -->
+      <p class="hero-sub" data-lang="en">
+        I teach <strong>English and Spanish</strong> to professionals, creatives, and developers who need a language that actually works in their real life — not textbook exercises.<br><br>
+        Cambridge certified. TEFL Level 5. <strong>Buenos Aires native.</strong>
+      </p>
+      <!-- ES bio -->
+      <p class="hero-sub" data-lang="es">
+        Enseño <strong>inglés y español</strong> a profesionales, creativos y desarrolladores que necesitan un idioma que funcione en su trabajo real — no ejercicios de libros de texto.<br><br>
+        Certificación Cambridge. TEFL Nivel 5. <strong>Porteña de nacimiento.</strong>
+      </p>
+      <div class="hero-btns">
+        <a href="#courses" class="btn-solid t" data-en="SEE ALL COURSES" data-es="VER TODOS LOS CURSOS">SEE ALL COURSES</a>
+        <a href="#contact" class="btn-ghost t" data-en="FREE TRIAL CLASS" data-es="CLASE DE PRUEBA GRATIS">FREE TRIAL CLASS</a>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="hstat"><span class="hstat-n">6+</span><span class="hstat-l t" data-en="years teaching" data-es="años enseñando">years teaching</span></div>
+      <div class="hstat"><span class="hstat-n">5</span><span class="hstat-l t" data-en="course tracks" data-es="tracks de cursos">course tracks</span></div>
+      <div class="hstat"><span class="hstat-n">2</span><span class="hstat-l t" data-en="languages" data-es="idiomas">languages</span></div>
+      <div class="hstat"><span class="hstat-n" style="color:var(--be)">100%</span><span class="hstat-l t" data-en="online, flexible schedule" data-es="online, horarios flexibles">online, flexible schedule</span></div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="course-scroll-wrap">
+      <div class="course-scroll-track" id="scrollTrack">
+        <!-- cards injected by JS -->
+      </div>
+    </div>
+    <p class="hero-right-note" data-lang="en">
+      <strong>Why this page?</strong> Platforms like iTalki and Preply limit the course packages I can offer. Here you'll find the full catalogue — with the option to book directly and access better pricing.
+    </p>
+    <p class="hero-right-note" data-lang="es">
+      <strong>¿Por qué esta página?</strong> Las plataformas limitan los paquetes que puedo mostrar. Acá encontrás el catálogo completo — con la posibilidad de contratar directamente y mejores precios.
+    </p>
+  </div>
+</div>
+</section>
+
+<!-- MARQUEE 1 -->
+<div class="mq dark">
+  <div class="mq-track">
+    <span class="mq-i">BUSINESS ENGLISH <s>✦</s></span><span class="mq-i">ENGLISH FOR CREATIVES <s>✦</s></span><span class="mq-i">EXAM PREPARATION <s>✦</s></span><span class="mq-i">BUSINESS SPANISH <s>✦</s></span><span class="mq-i">SURVIVAL SPANISH <s>✦</s></span><span class="mq-i">SPECIAL COURSES <s>✦</s></span>
+    <span class="mq-i">BUSINESS ENGLISH <s>✦</s></span><span class="mq-i">ENGLISH FOR CREATIVES <s>✦</s></span><span class="mq-i">EXAM PREPARATION <s>✦</s></span><span class="mq-i">BUSINESS SPANISH <s>✦</s></span><span class="mq-i">SURVIVAL SPANISH <s>✦</s></span><span class="mq-i">SPECIAL COURSES <s>✦</s></span>
+  </div>
+</div>
+
+<!-- ① ABOUT + TESTIMONIALS -->
+<section id="about">
+  <div class="sec-head">
+    <span class="sec-num">01</span>
+    <div class="sec-meta">
+      <h2 class="sec-title t" data-en="PROFILE" data-es="PERFIL">PROFILE</h2>
+      <span class="sec-badge" style="color:var(--be);border-color:var(--be)" data-lang="en">BUENOS AIRES · ONLINE</span>
+      <span class="sec-badge" style="color:var(--be);border-color:var(--be)" data-lang="es">BUENOS AIRES · EN LÍNEA</span>
+    </div>
+  </div>
+  <div class="sec-body">
+    <div class="about-cols">
+      <div>
+        <p class="about-lede" data-lang="en">I don't do generic. Every course is built around a real purpose — leading meetings in English, writing proposals for international clients, or sounding like someone who actually lives in Buenos Aires.</p>
+        <p class="about-lede" data-lang="es">No hago genérico. Cada curso está construido alrededor de un propósito real — liderar reuniones en inglés, escribir propuestas a clientes internacionales, o sonar como alguien que realmente vive en Buenos Aires.</p>
+        <div class="about-body" data-lang="en">
+          <p>I've been teaching English and Spanish for over six years — one-on-one, in groups, in person and on Zoom — to teens, adults, professionals, developers, and creatives.</p>
+          <p>I also study <strong>Multimedia Arts and Full Stack Development</strong>, which means I understand what my tech and design students actually do at work. When we practise vocabulary, it's the vocabulary they'll use tomorrow morning.</p>
+          <p>I speak <strong>Rioplatense Spanish</strong> as a native — the dialect of Buenos Aires. If you want to learn Spanish for Argentina specifically, or understand what people actually say here (not what textbooks teach), you're in the right place.</p>
+        </div>
+        <div class="about-body" data-lang="es">
+          <p>Enseño inglés y español desde hace más de seis años — clases individuales, grupos, presencial y por Zoom — a adolescentes, adultos, profesionales, desarrolladores y creativos.</p>
+          <p>Estudio <strong>Artes Multimediales y Desarrollo Full Stack</strong>, lo que me permite entender exactamente lo que hacen mis alumnos de tech y diseño. Cuando practicamos vocabulario, es el que van a usar mañana por la mañana.</p>
+          <p>Hablo <strong>español rioplatense</strong> como lengua materna — el dialecto de Buenos Aires. Si querés aprender español para Argentina o entender lo que la gente dice de verdad, estás en el lugar correcto.</p>
+        </div>
+      </div>
+      <div class="creds">
+        <div class="creds-hd t" data-en="CREDENTIALS" data-es="CREDENCIALES">CREDENTIALS</div>
+        <div class="cred c-be"><span class="ck t" data-en="ENGLISH CERTIFICATION" data-es="CERTIFICACIÓN EN INGLÉS">ENGLISH CERTIFICATION</span><span class="cv">Cambridge First Certificate (B2–C1)</span></div>
+        <div class="cred c-be"><span class="ck t" data-en="TEACHING CERT" data-es="CERTIFICACIÓN DOCENTE">TEACHING CERT</span><span class="cv">TEFL Academy Level 5 <span class="t" data-en="(in progress)" data-es="(en curso)">(in progress)</span></span></div>
+        <div class="cred c-be"><span class="ck t" data-en="EXPERIENCE" data-es="EXPERIENCIA">EXPERIENCE</span><span class="cv t" data-en="6+ years — teens, adults, professionals" data-es="6+ años — adolescentes, adultos, profesionales">6+ years — teens, adults, professionals</span></div>
+        <div class="cred c-be"><span class="ck t" data-en="BACKGROUND" data-es="FORMACIÓN">BACKGROUND</span><span class="cv">Multimedia Arts · Full Stack Dev · DevOps</span></div>
+        <div class="cred c-be"><span class="ck t" data-en="NATIVE DIALECT" data-es="DIALECTO NATIVO">NATIVE DIALECT</span><span class="cv t" data-en="Rioplatense Spanish (Buenos Aires)" data-es="Español Rioplatense (Buenos Aires)">Rioplatense Spanish (Buenos Aires)</span></div>
+        <div class="cred c-be"><span class="ck t" data-en="PLATFORMS" data-es="PLATAFORMAS">PLATFORMS</span><span class="cv">iTalki · Preply · TusClasesParticulares</span></div>
+      </div>
+    </div>
+  </div>
+  <!-- TESTIMONIALS inline after about -->
+  <div class="testimonials-strip">
+    <div class="testi-strip-label t" data-en="WHAT STUDENTS SAY" data-es="LO QUE DICEN LOS ALUMNOS">WHAT STUDENTS SAY</div>
+    <div class="testi-strip-grid">
+      <div class="testi-strip-card">
+        <p class="testi-strip-text" data-lang="en">"She doesn't just teach vocabulary — she teaches you how to think in the language."</p>
+        <p class="testi-strip-text" data-lang="es">"No solo enseña vocabulario — te enseña a pensar en el idioma."</p>
+        <span class="testi-strip-attr t" data-en="STUDENT REVIEW · ITALKI" data-es="RESEÑA · ITALKI">STUDENT REVIEW · ITALKI</span>
+      </div>
+      <div class="testi-strip-card">
+        <p class="testi-strip-text" data-lang="en">"The Business English course changed how I approach every work email. My manager noticed."</p>
+        <p class="testi-strip-text" data-lang="es">"El curso de Business English cambió cómo abordo cada email de trabajo. Mi jefa lo notó."</p>
+        <span class="testi-strip-attr t" data-en="STUDENT REVIEW · ONLINE CLASSES" data-es="RESEÑA · CLASES ONLINE">STUDENT REVIEW · ONLINE CLASSES</span>
+      </div>
+      <div class="testi-strip-card">
+        <p class="testi-strip-text" data-lang="en">"I finally understand what people in Buenos Aires actually say. Unlike anything else."</p>
+        <p class="testi-strip-text" data-lang="es">"Por fin entiendo lo que la gente en Buenos Aires realmente dice. Completamente distinto a todo."</p>
+        <span class="testi-strip-attr t" data-en="STUDENT REVIEW · RIOPLATENSE IMMERSION" data-es="RESEÑA · RIOPLATENSE IMMERSION">STUDENT REVIEW · RIOPLATENSE IMMERSION</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-wall">
+  <div class="swall"><span class="swall-n">6+</span><span class="swall-l t" data-en="years teaching English and Spanish, online and in-person" data-es="años enseñando inglés y español, online y presencial">years teaching English and Spanish, online and in-person</span></div>
+  <div class="swall"><span class="swall-n">5</span><span class="swall-l t" data-en="course tracks — Business, Creative, Exam Prep, and more" data-es="tracks de cursos — Business, Creative, Exam Prep, y más">course tracks — Business, Creative, Exam Prep, y más</span></div>
+  <div class="swall"><span class="swall-n" style="color:var(--be)">2</span><span class="swall-l t" data-en="languages: English and Rioplatense Spanish, native level" data-es="idiomas: inglés y español rioplatense, nivel nativo">languages: English and Rioplatense Spanish, native level</span></div>
+  <div class="swall"><span class="swall-n">100%</span><span class="swall-l t" data-en="online, adapted to your timezone and schedule" data-es="online, adaptado a tu zona horaria y disponibilidad">online, adapted to your timezone and schedule</span></div>
+</div>
+
+<!-- ② COURSES — with per-track CTA -->
+<section id="courses">
+  <div class="sec-head">
+    <span class="sec-num">02</span>
+    <div class="sec-meta">
+      <h2 class="sec-title t" data-en="COURSES & PACKAGES" data-es="CURSOS Y PAQUETES">COURSES & PACKAGES</h2>
+      <span class="sec-badge" style="color:var(--ec);border-color:var(--ec)" data-lang="en">BEYOND THE PLATFORMS</span>
+      <span class="sec-badge" style="color:var(--ec);border-color:var(--ec)" data-lang="es">MÁS ALLÁ DE LAS PLATAFORMAS</span>
+    </div>
+  </div>
+
+  <!-- TRACK 1: BUSINESS ENGLISH -->
+  <div class="track c-be">
+    <div class="track-hd" onclick="toggleTrack(this)">
+      <div class="track-bar"></div>
+      <div class="track-info">
+        <span class="track-name">BUSINESS ENGLISH</span>
+        <div class="track-right">
+          <span class="track-tag t" data-en="ENGLISH · PROFESSIONALS" data-es="INGLÉS · PROFESIONALES">ENGLISH · PROFESSIONALS</span>
+          <span class="track-toggle">+</span>
+        </div>
+      </div>
+    </div>
+    <div class="track-content">
+      <p class="track-intro" data-lang="en">For professionals who need English at work — not someday, right now.</p>
+      <p class="track-intro" data-lang="es">Para profesionales que necesitan inglés en el trabajo — no algún día, sino ahora.</p>
+      <table class="lvl-table">
+        <thead><tr><th class="t" data-en="LEVEL" data-es="NIVEL">LEVEL</th><th style="text-align:center;width:90px" class="t" data-en="CLASSES" data-es="CLASES">CLASSES</th><th class="t" data-en="GOAL" data-es="OBJETIVO">GOAL</th></tr></thead>
+        <tbody>
+          <tr><td>Foundations</td><td class="num">10</td><td class="goal t" data-en="Survive in an English-speaking work environment" data-es="Sobrevivir en un entorno laboral en inglés">Survive in an English-speaking work environment</td></tr>
+          <tr><td>Professional Communication</td><td class="num">12</td><td class="goal t" data-en="Active meetings, reports and emails without anxiety" data-es="Reuniones activas, reportes y emails sin ansiedad">Active meetings, reports and emails without anxiety</td></tr>
+          <tr><td>Advanced Business</td><td class="num">12</td><td class="goal t" data-en="Lead meetings, give presentations, network internationally" data-es="Liderar reuniones, presentaciones, networking internacional">Lead meetings, give presentations, network internationally</td></tr>
+          <tr><td class="t" data-en="Monthly maintenance" data-es="Mantenimiento mensual">Monthly maintenance</td><td class="num" style="font-size:.9rem">4/mo</td><td class="goal t" data-en="Keep sharp after completing the track" data-es="Mantener el nivel después de completar el track">Keep sharp after completing the track</td></tr>
+        </tbody>
+      </table>
+      <a href="mailto:camilamihalyczo@gmail.com?subject=Business English — info request" class="track-cta t" data-en="→ I'M INTERESTED IN THIS TRACK" data-es="→ ME INTERESA ESTE TRACK">→ I'M INTERESTED IN THIS TRACK</a>
+    </div>
+  </div>
+
+  <!-- TRACK 2: ENGLISH FOR CREATIVES -->
+  <div class="track c-ec">
+    <div class="track-hd" onclick="toggleTrack(this)">
+      <div class="track-bar"></div>
+      <div class="track-info">
+        <span class="track-name">ENGLISH FOR CREATIVE PROFESSIONALS</span>
+        <div class="track-right">
+          <span class="track-tag t" data-en="ENGLISH · DESIGNERS · CREATORS" data-es="INGLÉS · DISEÑADORES · CREADORES">ENGLISH · DESIGNERS · CREATORS</span>
+          <span class="track-toggle">+</span>
+        </div>
+      </div>
+    </div>
+    <div class="track-content">
+      <p class="track-intro" data-lang="en">Designers, illustrators, videographers, content creators — this track is for you.</p>
+      <p class="track-intro" data-lang="es">Diseñadores, ilustradores, videógrafos, content creators — este track es para vos.</p>
+      <table class="lvl-table">
+        <thead><tr><th class="t" data-en="LEVEL" data-es="NIVEL">LEVEL</th><th style="text-align:center;width:90px" class="t" data-en="CLASSES" data-es="CLASES">CLASSES</th><th class="t" data-en="GOAL" data-es="OBJETIVO">GOAL</th></tr></thead>
+        <tbody>
+          <tr><td>Creative Basics</td><td class="num">10</td><td class="goal t" data-en="Design vocabulary, describe your work and creative process" data-es="Vocabulario de diseño, describir tu trabajo y proceso creativo">Design vocabulary, describe your work and creative process</td></tr>
+          <tr><td>Client Communication</td><td class="num">12</td><td class="goal t" data-en="Proposals, briefings, feedback with international clients" data-es="Propuestas, briefings, feedback con clientes internacionales">Proposals, briefings, feedback with international clients</td></tr>
+          <tr><td>Industry English</td><td class="num">12</td><td class="goal t" data-en="Pitches, portfolio reviews, international networking" data-es="Pitches, revisiones de portfolio, networking internacional">Pitches, portfolio reviews, international networking</td></tr>
+          <tr><td class="t" data-en="Monthly maintenance" data-es="Mantenimiento mensual">Monthly maintenance</td><td class="num" style="font-size:.9rem">4/mo</td><td class="goal t" data-en="Keep sharp after completing the track" data-es="Mantener el nivel después de completar el track">Keep sharp after completing the track</td></tr>
+        </tbody>
+      </table>
+      <a href="mailto:camilamihalyczo@gmail.com?subject=English for Creatives — info request" class="track-cta t" data-en="→ I'M INTERESTED IN THIS TRACK" data-es="→ ME INTERESA ESTE TRACK">→ I'M INTERESTED IN THIS TRACK</a>
+    </div>
+  </div>
+
+  <!-- TRACK 3: EXAM PREP -->
+  <div class="track c-ep">
+    <div class="track-hd" onclick="toggleTrack(this)">
+      <div class="track-bar"></div>
+      <div class="track-info">
+        <span class="track-name">EXAM PREPARATION <span class="pill-sm">FLEXIBLE</span></span>
+        <div class="track-right">
+          <span class="track-tag t" data-en="ENGLISH · ALL LEVELS" data-es="INGLÉS · TODOS LOS NIVELES">ENGLISH · ALL LEVELS</span>
+          <span class="track-toggle">+</span>
+        </div>
+      </div>
+    </div>
+    <div class="track-content">
+      <p class="track-intro" data-lang="en">Adapted to your timeline — steady prep, focused sprint, or emergency mode.</p>
+      <p class="track-intro" data-lang="es">Adaptado a tu timeline — preparación sostenida, sprint concentrado, o modo emergencia.</p>
+      <table class="lvl-table">
+        <thead><tr><th class="t" data-en="MODE" data-es="MODALIDAD">MODE</th><th style="text-align:center;width:90px" class="t" data-en="CLASSES" data-es="CLASES">CLASSES</th><th class="t" data-en="FOR WHO" data-es="PARA QUIÉN">FOR WHO</th></tr></thead>
+        <tbody>
+          <tr><td class="t" data-en="3 months before" data-es="3 meses antes">3 months before</td><td class="num">24</td><td class="goal t" data-en="Steady prep, 2× a week, room to breathe" data-es="Prep sostenida, 2 veces por semana, tiempo para respirar">Steady prep, 2× a week, room to breathe</td></tr>
+          <tr><td class="t" data-en="1 month before" data-es="1 mes antes">1 month before</td><td class="num">12</td><td class="goal t" data-en="Focused sprint, 3× a week" data-es="Sprint concentrado, 3 veces por semana">Focused sprint, 3× a week</td></tr>
+          <tr><td><span class="t" data-en="Emergency mode" data-es="Modo emergencia">Emergency mode</span> <span class="pill-sm">INTENSIVE</span></td><td class="num">10</td><td class="goal t" data-en="2 weeks to exam day — daily sessions, we make it work" data-es="2 semanas para el examen — clases diarias, lo hacemos funcionar">2 weeks to exam day — daily sessions, we make it work</td></tr>
+        </tbody>
+      </table>
+      <a href="mailto:camilamihalyczo@gmail.com?subject=Exam Preparation — info request" class="track-cta t" data-en="→ I'M INTERESTED IN THIS TRACK" data-es="→ ME INTERESA ESTE TRACK">→ I'M INTERESTED IN THIS TRACK</a>
+    </div>
+  </div>
+
+  <!-- TRACK 4: BUSINESS SPANISH -->
+  <div class="track c-bs">
+    <div class="track-hd" onclick="toggleTrack(this)">
+      <div class="track-bar"></div>
+      <div class="track-info">
+        <span class="track-name">BUSINESS SPANISH</span>
+        <div class="track-right">
+          <span class="track-tag t" data-en="SPANISH · PROFESSIONALS" data-es="ESPAÑOL · PROFESIONALES">SPANISH · PROFESSIONALS</span>
+          <span class="track-toggle">+</span>
+        </div>
+      </div>
+    </div>
+    <div class="track-content">
+      <p class="track-intro" data-lang="en">Spanish for the workplace — with the weight and particularities of Rioplatense.</p>
+      <p class="track-intro" data-lang="es">El español del mundo laboral — con el peso y las particularidades del rioplatense.</p>
+      <table class="lvl-table">
+        <thead><tr><th class="t" data-en="LEVEL" data-es="NIVEL">LEVEL</th><th style="text-align:center;width:90px" class="t" data-en="CLASSES" data-es="CLASES">CLASSES</th><th class="t" data-en="GOAL" data-es="OBJETIVO">GOAL</th></tr></thead>
+        <tbody>
+          <tr><td>Foundations</td><td class="num">10</td><td class="goal t" data-en="Emails, basic meetings, professional introductions" data-es="Emails, reuniones básicas, presentarse profesionalmente">Emails, basic meetings, professional introductions</td></tr>
+          <tr><td>Professional Communication</td><td class="num">12</td><td class="goal t" data-en="Negotiation, reports, Rioplatense formal expressions" data-es="Negociación, reportes, modismos formales rioplatenses">Negotiation, reports, Rioplatense formal expressions</td></tr>
+          <tr><td>Advanced Business</td><td class="num">12</td><td class="goal t" data-en="Presentations, networking, persuasive writing" data-es="Presentaciones, networking, escritura persuasiva">Presentations, networking, persuasive writing</td></tr>
+          <tr><td class="t" data-en="Monthly maintenance" data-es="Mantenimiento mensual">Monthly maintenance</td><td class="num" style="font-size:.9rem">4/mo</td><td class="goal t" data-en="Keep and polish what you've learned" data-es="Mantener y pulir lo aprendido">Keep and polish what you've learned</td></tr>
+        </tbody>
+      </table>
+      <a href="mailto:camilamihalyczo@gmail.com?subject=Business Spanish — info request" class="track-cta t" data-en="→ I'M INTERESTED IN THIS TRACK" data-es="→ ME INTERESA ESTE TRACK">→ I'M INTERESTED IN THIS TRACK</a>
+    </div>
+  </div>
+
+  <!-- TRACK 5: SURVIVAL SPANISH -->
+  <div class="track c-ss">
+    <div class="track-hd" onclick="toggleTrack(this)">
+      <div class="track-bar"></div>
+      <div class="track-info">
+        <span class="track-name">SURVIVAL SPANISH — ARGENTINA READY</span>
+        <div class="track-right">
+          <span class="track-tag t" data-en="SPANISH · FOREIGNERS · TRAVELLERS" data-es="ESPAÑOL · EXTRANJEROS · VIAJEROS">SPANISH · FOREIGNERS · TRAVELLERS</span>
+          <span class="track-toggle">+</span>
+        </div>
+      </div>
+    </div>
+    <div class="track-content">
+      <p class="track-intro" data-lang="en">For anyone coming to Argentina — or who wants to understand what people here actually say.</p>
+      <p class="track-intro" data-lang="es">Para quien viene a Argentina o quiere entender lo que la gente de acá realmente dice.</p>
+      <table class="lvl-table">
+        <thead><tr><th class="t" data-en="LEVEL" data-es="NIVEL">LEVEL</th><th style="text-align:center;width:90px" class="t" data-en="CLASSES" data-es="CLASES">CLASSES</th><th class="t" data-en="GOAL" data-es="OBJETIVO">GOAL</th></tr></thead>
+        <tbody>
+          <tr><td>Survival</td><td class="num">8</td><td class="goal t" data-en="Transport, shopping, restaurants, emergencies" data-es="Transporte, compras, restaurantes, emergencias">Transport, shopping, restaurants, emergencies</td></tr>
+          <tr><td>Social Spanish</td><td class="num">10</td><td class="goal t" data-en="Argentine humour, basic lunfardo, porteño culture" data-es="Humor argentino, lunfardo básico, cultura porteña">Argentine humour, basic lunfardo, porteño culture</td></tr>
+          <tr><td>Living in Argentina</td><td class="num">12</td><td class="goal t" data-en="Bureaucracy, renting, working, actually integrating" data-es="Trámites, alquilar, trabajar, integrarse de verdad">Bureaucracy, renting, working, actually integrating</td></tr>
+        </tbody>
+      </table>
+      <a href="mailto:camilamihalyczo@gmail.com?subject=Survival Spanish — info request" class="track-cta t" data-en="→ I'M INTERESTED IN THIS TRACK" data-es="→ ME INTERESA ESTE TRACK">→ I'M INTERESTED IN THIS TRACK</a>
+    </div>
+  </div>
+
+  <!-- TRACK 6: SPECIALS -->
+  <div class="track c-sp">
+    <div class="track-hd" onclick="toggleTrack(this)">
+      <div class="track-bar"></div>
+      <div class="track-info">
+        <span class="track-name t" data-en="SPECIAL COURSES & WORKSHOPS" data-es="CURSOS ESPECIALES Y TALLERES">SPECIAL COURSES & WORKSHOPS</span>
+        <div class="track-right">
+          <span class="track-tag t" data-en="ENGLISH · SPANISH · SHORT FORMAT" data-es="INGLÉS · ESPAÑOL · FORMATO CORTO">ENGLISH · SPANISH · SHORT FORMAT</span>
+          <span class="track-toggle">+</span>
+        </div>
+      </div>
+    </div>
+    <div class="track-content">
+      <p class="track-intro" data-lang="en">Themed, short, with a very specific goal — and it shows.</p>
+      <p class="track-intro" data-lang="es">Temáticos, cortos, con un objetivo muy específico — y se nota.</p>
+      <div class="sp-grid">
+        <div class="sp c-sp"><span class="sp-tag t" data-en="ENGLISH · 8–10 CLASSES" data-es="INGLÉS · 8–10 CLASES">ENGLISH · 8–10 CLASSES</span><h4 class="sp-name">ENGLISH FOR TECH INTERVIEWS</h4><p class="sp-desc t" data-en="For developers applying to international companies. Technical vocab, mock interviews, and how to talk code without freezing up." data-es="Para developers que aplican a empresas extranjeras. Vocabulario técnico, mock interviews, y cómo hablar de código sin congelarte.">For developers applying to international companies. Technical vocab, mock interviews, and how to talk code without freezing up.</p></div>
+        <div class="sp c-sp"><span class="sp-tag t" data-en="ENGLISH · 8–10 CLASSES" data-es="INGLÉS · 8–10 CLASES">ENGLISH · 8–10 CLASSES</span><h4 class="sp-name">ENGLISH FOR SOCIAL MEDIA & CREATORS</h4><p class="sp-desc t" data-en="For creatives growing into English-speaking markets. Captions, scripts, pitches, DMs." data-es="Para creativos que quieren crecer en mercados de habla inglesa. Captions, scripts, pitches, DMs.">For creatives growing into English-speaking markets. Captions, scripts, pitches, DMs.</p></div>
+        <div class="sp c-sp"><span class="sp-tag t" data-en="SPANISH · 8–10 CLASSES" data-es="ESPAÑOL · 8–10 CLASES">SPANISH · 8–10 CLASSES</span><h4 class="sp-name">SPANISH THROUGH LATIN AMERICAN ART</h4><p class="sp-desc t" data-en="Cinema, music and visual art as a language class. For advanced learners who want to feel the culture, not just study it." data-es="Cine, música y arte visual como clase de idioma. Para avanzados que quieren sentir la cultura, no solo estudiarla.">Cinema, music and visual art as a language class. For advanced learners who want to feel the culture, not just study it.</p></div>
+        <div class="sp c-sp"><span class="sp-tag t" data-en="SPANISH · 6 CLASSES" data-es="ESPAÑOL · 6 CLASES">SPANISH · 6 CLASSES</span><h4 class="sp-name">RIOPLATENSE IMMERSION</h4><p class="sp-desc t" data-en="Argentine culture and language for advanced Spanish speakers. What textbooks will never teach you." data-es="Cultura y lengua argentina para hispanohablantes avanzados. Lo que los libros nunca te van a enseñar.">Argentine culture and language for advanced Spanish speakers. What textbooks will never teach you.</p></div>
+        <div class="sp c-sp"><span class="sp-tag t" data-en="SPANISH · 4–6 CLASSES" data-es="ESPAÑOL · 4–6 CLASES">SPANISH · 4–6 CLASSES</span><h4 class="sp-name">LUNFARDO & SLANG: REAL BUENOS AIRES SPANISH</h4><p class="sp-desc t" data-en="Short, themed, and fun. For anyone who wants to actually sound like they're from here." data-es="Corto, temático y divertido. Para quien quiere sonar como que realmente es de acá.">Short, themed, and fun. For anyone who wants to actually sound like they're from here.</p></div>
+        <div class="sp c-sp"><span class="sp-tag t" data-en="ANY LANGUAGE · GROUP FORMAT" data-es="CUALQUIER IDIOMA · GRUPAL">ANY LANGUAGE · GROUP FORMAT</span><h4 class="sp-name">GROUP WORKSHOPS — 4 TO 6 PEOPLE</h4><p class="sp-desc t" data-en="Small group classes on a specific topic. More dynamic, better value, and the conversational practice is better this way." data-es="Clases en grupo pequeño sobre un tema específico. Más dinámico, mejor precio, y la práctica conversacional es mejor así.">Small group classes on a specific topic. More dynamic, better value, and the conversational practice is better this way.</p></div>
+      </div>
+      <a href="mailto:camilamihalyczo@gmail.com?subject=Special Course — info request" class="track-cta t" data-en="→ I'M INTERESTED IN A WORKSHOP" data-es="→ ME INTERESA UN TALLER">→ I'M INTERESTED IN A WORKSHOP</a>
+    </div>
+  </div>
+</section>
+
+<!-- ③ FAQ -->
+<section id="faq">
+  <div class="sec-head">
+    <span class="sec-num">03</span>
+    <div class="sec-meta"><h2 class="sec-title t" data-en="FAQ" data-es="PREGUNTAS FRECUENTES">FAQ</h2></div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFaq(this)">
+      <span class="faq-qt" data-lang="en">Do I need to commit to a full package from the start?</span>
+      <span class="faq-qt" data-lang="es">¿Tengo que comprometer un paquete completo desde el principio?</span>
+      <span class="faq-icon">+</span>
+    </div>
+    <div class="faq-a" data-lang="en">No. We always start with a trial class. If the dynamic works, we agree on the package or track that best fits your goals and pace.</div>
+    <div class="faq-a" data-lang="es">No. Empezamos siempre con una clase de prueba. Si la dinámica funciona, acordamos el paquete o track que mejor se adapte a tus objetivos y tu ritmo.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFaq(this)">
+      <span class="faq-qt" data-lang="en">What's the difference between booking here vs. iTalki or Preply?</span>
+      <span class="faq-qt" data-lang="es">¿Cuál es la diferencia entre reservar acá y reservar en iTalki o Preply?</span>
+      <span class="faq-icon">+</span>
+    </div>
+    <div class="faq-a" data-lang="en">Platforms take a significant commission, which affects the final price. Booking directly gives you access to better pricing, the full extended packages, and more direct communication.</div>
+    <div class="faq-a" data-lang="es">Las plataformas cobran una comisión significativa. Al contratar directamente, accedés a mejores precios, los paquetes completos y una comunicación más directa.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFaq(this)">
+      <span class="faq-qt" data-lang="en">Can I take English and Spanish with you at the same time?</span>
+      <span class="faq-qt" data-lang="es">¿Puedo tomar inglés y español con vos al mismo tiempo?</span>
+      <span class="faq-icon">+</span>
+    </div>
+    <div class="faq-a" data-lang="en">Yes, though it's usually better to focus on one at a time to progress faster. If you have a specific goal involving both languages, we can talk and build something custom.</div>
+    <div class="faq-a" data-lang="es">Sí, aunque lo más habitual es enfocarse en uno a la vez para avanzar más rápido. Si tenés un objetivo que implica los dos idiomas, lo hablamos y armamos algo a medida.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFaq(this)">
+      <span class="faq-qt" data-lang="en">What platform do you use for online classes?</span>
+      <span class="faq-qt" data-lang="es">¿Qué plataforma usan para las clases online?</span>
+      <span class="faq-icon">+</span>
+    </div>
+    <div class="faq-a" data-lang="en">Zoom or Google Meet, depending on your preference.</div>
+    <div class="faq-a" data-lang="es">Zoom o Google Meet, según tu preferencia.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFaq(this)">
+      <span class="faq-qt" data-lang="en">Do you assign homework? What materials do students get?</span>
+      <span class="faq-qt" data-lang="es">¿Hay tarea? ¿Qué materiales reciben los alumnos?</span>
+      <span class="faq-icon">+</span>
+    </div>
+    <div class="faq-a" data-lang="en">Yes — after each class you get an activity sheet to practise what we covered, shared via Google Drive. You also get a summary of the class with key vocabulary, structures, and notes to review at your own pace. No textbook needed.</div>
+    <div class="faq-a" data-lang="es">Sí — después de cada clase recibís un activity sheet para practicar lo que vimos, compartido por Google Drive. También recibís un resumen de la clase con vocabulario clave, estructuras y notas para repasar cuando quieras. No hace falta ningún libro de texto.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFaq(this)">
+      <span class="faq-qt" data-lang="en">How long is each class? And the trial?</span>
+      <span class="faq-qt" data-lang="es">¿Cuánto dura cada clase? ¿Y la de prueba?</span>
+      <span class="faq-icon">+</span>
+    </div>
+    <div class="faq-a" data-lang="en">Regular classes are 60 minutes. The trial class is 30 minutes — it's more of a diagnostic session where we assess your level, talk about your goals, and see if we're a good fit. It's free and there's no commitment.</div>
+    <div class="faq-a" data-lang="es">Las clases regulares duran 60 minutos. La clase de prueba es de 30 minutos — es más una sesión de diagnóstico donde evaluamos tu nivel, hablamos de tus objetivos y vemos si hay buena onda. Es gratis y sin compromiso.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q" onclick="toggleFaq(this)">
+      <span class="faq-qt" data-lang="en">Can I book individual classes without committing to a package?</span>
+      <span class="faq-qt" data-lang="es">¿Puedo tomar clases sueltas sin comprometerme con un paquete?</span>
+      <span class="faq-icon">+</span>
+    </div>
+    <div class="faq-a" data-lang="en">Yes. Individual classes are available outside of any package — useful for conversation practice, specific topics, or if you just want to try before committing. Packages offer better value per class, but there's no obligation to go that route.</div>
+    <div class="faq-a" data-lang="es">Sí. Las clases sueltas están disponibles fuera de los paquetes — útiles para práctica de conversación, temas puntuales, o si querés probar antes de comprometerte. Los paquetes tienen mejor precio por clase, pero no hay obligación de tomarlos.</div>
+  </div>
+</section>
+
+<!-- ④ CONTACT — formulario -->
+<section id="contact">
+  <div class="sec-head">
+    <span class="sec-num">04</span>
+    <div class="sec-meta">
+      <h2 class="sec-title t" data-en="GET IN TOUCH" data-es="ESCRIBIME">GET IN TOUCH</h2>
+      <span class="sec-badge" style="color:var(--ep);border-color:var(--ep)" data-lang="en">I'LL WRITE BACK</span>
+      <span class="sec-badge" style="color:var(--ep);border-color:var(--ep)" data-lang="es">TE RESPONDO</span>
+    </div>
+  </div>
+  <div class="contact-form-wrap">
+    <div class="contact-form-left">
+      <h3 class="ch" data-lang="en">TELL ME WHAT<br>YOU'RE <em>LOOKING FOR.</em></h3>
+      <h3 class="ch" data-lang="es">CONTAME QUÉ<br><em>NECESITÁS.</em></h3>
+      <p class="csub" data-lang="en">Select the course you're interested in and leave your email. I'll get back to you with details, pricing, and availability — no commitment needed.</p>
+      <p class="csub" data-lang="es">Elegí el curso que te interesa y dejá tu email. Te escribo con detalles, precios y disponibilidad — sin compromiso.</p>
+    </div>
+    <div class="contact-form-right">
+      <form class="nl-form" id="nlForm" onsubmit="submitForm(event)">
+        <input class="nl-input" type="email" id="nlEmail" placeholder="your@email.com" required/>
+        <select class="nl-select" id="nlTopic">
+          <option value="" data-en="— Which course interests you? —" data-es="— ¿Qué curso te interesa? —">— Which course interests you? —</option>
+          <option value="Business English">Business English</option>
+          <option value="English for Creatives">English for Creative Professionals</option>
+          <option value="Exam Preparation">Exam Preparation</option>
+          <option value="Business Spanish">Business Spanish</option>
+          <option value="Survival Spanish">Survival Spanish / Argentina Ready</option>
+          <option value="Special Course">Special Course / Workshop</option>
+          <option value="Trial class">Trial class / Clase de prueba</option>
+        </select>
+        <button class="nl-btn" type="submit">
+          <span class="nl-btn-text t" data-en="SEND →" data-es="ENVIAR →">SEND →</span>
+          <span class="nl-btn-loading" style="display:none">···</span>
+        </button>
+      </form>
+      <p class="nl-success" id="nlSuccess" style="display:none">✓ Got it! I'll write back soon.</p>
+      <p class="nl-success" id="nlSuccessEs" style="display:none">✓ ¡Recibido! Te escribo pronto.</p>
+      <p class="nl-error" id="nlError" style="display:none">Something went wrong — <a href="mailto:camilamihalyczo@gmail.com" style="color:var(--cream)">email me directly</a>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ⑤ WHERE TO FIND ME — plataformas + mail -->
+<section id="platforms">
+  <div class="sec-head">
+    <span class="sec-num">05</span>
+    <div class="sec-meta">
+      <h2 class="sec-title t" data-en="WHERE TO FIND ME" data-es="DÓNDE ENCONTRARME">WHERE TO FIND ME</h2>
+      <span class="sec-badge" style="color:var(--be);border-color:var(--be)" data-lang="en">TRIAL CLASS FIRST, ALWAYS</span>
+      <span class="sec-badge" style="color:var(--be);border-color:var(--be)" data-lang="es">CLASE DE PRUEBA PRIMERO, SIEMPRE</span>
+    </div>
+  </div>
+  <div class="sec-body" style="padding:0">
+    <div class="plat-links-grid">
+      <a href="https://www.italki.com" target="_blank" class="plat-link-row">
+        <div class="plat-link-left">
+          <span class="plat-link-num">01</span>
+          <div>
+            <span class="plat-link-name">iTalki</span>
+            <span class="plat-link-sub t" data-en="English · Spanish — Trial lesson available" data-es="Inglés · Español — Clase de prueba disponible">English · Spanish — Trial lesson available</span>
+          </div>
+        </div>
+        <span class="plat-link-url">italki.com/camila →</span>
+      </a>
+      <a href="https://www.preply.com" target="_blank" class="plat-link-row">
+        <div class="plat-link-left">
+          <span class="plat-link-num">02</span>
+          <div>
+            <span class="plat-link-name">Preply</span>
+            <span class="plat-link-sub t" data-en="English · Spanish — TEFL certified" data-es="Inglés · Español — Certificación TEFL">English · Spanish — TEFL certified</span>
+          </div>
+        </div>
+        <span class="plat-link-url">preply.com/camila →</span>
+      </a>
+      <a href="https://www.tusclasesparticulares.com" target="_blank" class="plat-link-row">
+        <div class="plat-link-left">
+          <span class="plat-link-num">03</span>
+          <div>
+            <span class="plat-link-name">TusClasesParticulares</span>
+            <span class="plat-link-sub t" data-en="Spanish-speaking market · Bilingual profile" data-es="Mercado hispanoparlante · Perfil bilingüe">Spanish-speaking market · Bilingual profile</span>
+          </div>
+        </div>
+        <span class="plat-link-url">tusclasesparticulares.com →</span>
+      </a>
+      <a href="https://linkedin.com/in/camilamihalyczo" target="_blank" class="plat-link-row">
+        <div class="plat-link-left">
+          <span class="plat-link-num">04</span>
+          <div>
+            <span class="plat-link-name">LinkedIn</span>
+            <span class="plat-link-sub t" data-en="Professional profile & background" data-es="Perfil profesional y formación">Professional profile & background</span>
+          </div>
+        </div>
+        <span class="plat-link-url">linkedin.com/in/camilamihalyczo →</span>
+      </a>
+      <a href="mailto:camilamihalyczo@gmail.com" class="plat-link-row plat-link-email">
+        <div class="plat-link-left">
+          <span class="plat-link-num">✉</span>
+          <div>
+            <span class="plat-link-name t" data-en="Direct email" data-es="Email directo">Direct email</span>
+            <span class="plat-link-sub t" data-en="For full packages, custom courses, or any question" data-es="Para paquetes completos, cursos a medida, o cualquier consulta">For full packages, custom courses, or any question</span>
+          </div>
+        </div>
+        <span class="plat-link-url">camilamihalyczo@gmail.com →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-bottom">
+    <div class="foot-social">
+      <a href="https://www.italki.com" target="_blank" class="foot-icon" title="iTalki">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+      </a>
+      <a href="https://linkedin.com/in/camilamihalyczo" target="_blank" class="foot-icon" title="LinkedIn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+      </a>
+      <a href="mailto:camilamihalyczo@gmail.com" class="foot-icon" title="Email">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      </a>
+      <a href="https://www.preply.com" target="_blank" class="foot-icon" title="Preply">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      </a>
+    </div>
+    <nav class="foot-nav">
+      <a href="#about" class="t" data-en="Profile" data-es="Perfil">Profile</a>
+      <a href="#courses" class="t" data-en="Courses" data-es="Cursos">Courses</a>
+      <a href="#platforms" class="t" data-en="Platforms" data-es="Plataformas">Platforms</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contact" class="t" data-en="Contact" data-es="Contacto">Contact</a>
+    </nav>
+    <span class="foot-copy">© 2026 CAMILA MIHALYCZO · BUENOS AIRES</span>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+(function(){ emailjs.init({ publicKey: 'YOUR_EMAILJS_PUBLIC_KEY' }); })();
+
+let currentLang = 'en';
+function detectLang(){ return (navigator.language||'en').toLowerCase().startsWith('es') ? 'es' : 'en'; }
+function applyLang(lang){
+  currentLang = lang;
+  document.body.className = 'lang-' + lang;
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.textContent.toLowerCase() === lang));
+  document.querySelectorAll('.t[data-en][data-es]').forEach(el => { el.textContent = el.dataset[lang]; });
+  document.querySelectorAll('[data-lang]').forEach(el => { el.style.display = (el.dataset.lang === lang) ? '' : 'none'; });
+  ['nlSuccess','nlSuccessEs','nlError'].forEach(id => { const el=document.getElementById(id); if(el) el.style.display='none'; });
+}
+function setLang(lang){ applyLang(lang); localStorage.setItem('cm_lang', lang); }
+const saved = localStorage.getItem('cm_lang') || detectLang();
+applyLang(saved);
+
+function toggleMenu(){ document.getElementById('mobileMenu').classList.toggle('open'); }
+
+const COURSES = [
+  { cls:'cs-be', track:'BUSINESS ENGLISH',      name:'Foundations',                n:'10',  desc:'Survive in an English-speaking work environment' },
+  { cls:'cs-be', track:'BUSINESS ENGLISH',      name:'Professional Communication', n:'12',  desc:'Active meetings, reports and emails' },
+  { cls:'cs-be', track:'BUSINESS ENGLISH',      name:'Advanced Business',          n:'12',  desc:'Lead meetings, presentations, international networking' },
+  { cls:'cs-ec', track:'ENGLISH FOR CREATIVES', name:'Creative Basics',            n:'10',  desc:'Design vocab, describe your work and process' },
+  { cls:'cs-ec', track:'ENGLISH FOR CREATIVES', name:'Client Communication',       n:'12',  desc:'Proposals, briefings, feedback with international clients' },
+  { cls:'cs-ec', track:'ENGLISH FOR CREATIVES', name:'Industry English',           n:'12',  desc:'Pitches, portfolio reviews, international networking' },
+  { cls:'cs-ep', track:'EXAM PREPARATION',      name:'3 months before',            n:'24',  desc:'Steady prep, 2x a week, room to breathe' },
+  { cls:'cs-ep', track:'EXAM PREPARATION',      name:'1 month — Sprint',           n:'12',  desc:'Focused sprint, 3x a week' },
+  { cls:'cs-ep', track:'EXAM PREPARATION',      name:'Emergency mode',             n:'10',  desc:'2 weeks to exam day, daily sessions' },
+  { cls:'cs-bs', track:'BUSINESS SPANISH',      name:'Foundations',                n:'10',  desc:'Emails, basic meetings, professional introductions' },
+  { cls:'cs-bs', track:'BUSINESS SPANISH',      name:'Professional Communication', n:'12',  desc:'Negotiation, reports, Rioplatense expressions' },
+  { cls:'cs-bs', track:'BUSINESS SPANISH',      name:'Advanced Business',          n:'12',  desc:'Presentations, networking, persuasive writing' },
+  { cls:'cs-ss', track:'SURVIVAL SPANISH',      name:'Survival',                   n:'8',   desc:'Transport, shopping, restaurants, emergencies' },
+  { cls:'cs-ss', track:'SURVIVAL SPANISH',      name:'Social Spanish',             n:'10',  desc:'Argentine humour, lunfardo, porteno culture' },
+  { cls:'cs-ss', track:'SURVIVAL SPANISH',      name:'Living in Argentina',        n:'12',  desc:'Bureaucracy, renting, working, integrating for real' },
+  { cls:'cs-sp', track:'SPECIAL COURSES',       name:'English for Tech Interviews',n:'8+',  desc:'Mock interviews, tech vocab, talk code confidently' },
+  { cls:'cs-sp', track:'SPECIAL COURSES',       name:'English for Creators',       n:'8+',  desc:'Captions, scripts, pitches, DMs' },
+  { cls:'cs-sp', track:'SPECIAL COURSES',       name:'Spanish through Latin Art',  n:'8+',  desc:'Cinema, music, visual art as language class' },
+  { cls:'cs-sp', track:'SPECIAL COURSES',       name:'Rioplatense Immersion',      n:'6',   desc:'Culture and language — what textbooks never teach' },
+  { cls:'cs-sp', track:'SPECIAL COURSES',       name:'Lunfardo and Slang',         n:'4+',  desc:'Real Buenos Aires Spanish — short and fun' },
+];
+function buildCard(c){
+  return '<div class="cs-card '+c.cls+'"><span class="cs-card-track">'+c.track+'</span><div class="cs-card-name">'+c.name+'</div><div class="cs-card-info"><span class="cs-card-desc">'+c.desc+'</span><span class="cs-card-n">'+c.n+'</span></div></div>';
+}
+const scrollTrack = document.getElementById('scrollTrack');
+if(scrollTrack){ const html = COURSES.map(buildCard).join(''); scrollTrack.innerHTML = html + html; }
+
+function toggleTrack(hd){
+  const content = hd.nextElementSibling;
+  const icon = hd.querySelector('.track-toggle');
+  const open = content.classList.toggle('open');
+  icon.classList.toggle('open', open);
+  icon.textContent = open ? 'x' : '+';
+}
+
+function toggleFaq(q){
+  const allAnswers = q.parentElement.querySelectorAll('.faq-a');
+  const icon = q.querySelector('.faq-icon');
+  let anyOpen = false;
+  allAnswers.forEach(a => {
+    if(!a.dataset.lang || a.dataset.lang === currentLang){
+      const open = a.classList.toggle('open');
+      if(open) anyOpen = true;
+    }
+  });
+  icon.classList.toggle('open', anyOpen);
+  icon.textContent = anyOpen ? 'x' : '+';
+}
+
+async function submitForm(e){
+  e.preventDefault();
+  const email   = document.getElementById('nlEmail').value;
+  const topic   = document.getElementById('nlTopic').value;
+  const btnText = document.querySelector('.nl-btn-text');
+  const btnLoad = document.querySelector('.nl-btn-loading');
+  const succEN  = document.getElementById('nlSuccess');
+  const succES  = document.getElementById('nlSuccessEs');
+  const errEl   = document.getElementById('nlError');
+  btnText.style.display = 'none';
+  btnLoad.style.display = 'inline';
+  errEl.style.display = 'none';
+  try {
+    await emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', {
+      reply_to: email, topic: topic || 'General inquiry', to_email: 'camilamihalyczo@gmail.com',
+    });
+    btnLoad.style.display = 'none';
+    document.getElementById('nlForm').style.display = 'none';
+    if(currentLang === 'es') succES.style.display = 'block';
+    else succEN.style.display = 'block';
+  } catch(e2){
+    btnLoad.style.display = 'none';
+    btnText.style.display = 'inline';
+    errEl.style.display = 'block';
+  }
+}
+</script>
+</body>
+</html>
