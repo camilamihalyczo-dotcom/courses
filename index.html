@@ -34,11 +34,17 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;background:var(--ink);displa
 .lang-btn{font-family:var(--cond);font-size:.75rem;letter-spacing:.08em;padding:.3rem .7rem;background:transparent;color:rgba(255,255,255,.6);border:none;cursor:pointer;transition:background .15s,color .15s}
 .lang-btn.active{background:var(--cream);color:var(--ink);font-weight:700}
 .lang-btn:not(.active):hover{color:#fff}
-.nav-cta{font-family:var(--cond);font-size:.72rem;letter-spacing:.08em;color:var(--ink);background:var(--cream);padding:.4rem 1rem;text-decoration:none;transition:background .15s;border:1.5px solid var(--cream);white-space:nowrap;flex-shrink:0}
+.nav-cta{display:none;font-family:var(--cond);font-size:.72rem;letter-spacing:.08em;color:var(--ink);background:var(--cream);padding:.4rem 1rem;text-decoration:none;transition:background .15s;border:1.5px solid var(--cream);white-space:nowrap;flex-shrink:0}
 .nav-cta:hover{background:#fff}
 /* hamburger */
 .nav-hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:.4rem;flex-shrink:0}
 .nav-hamburger span{display:block;width:22px;height:2px;background:var(--cream);transition:transform .25s,opacity .25s}
+.lang-toggle-menu{
+  border:1.5px solid rgba(255,255,255,.4);
+}
+.lang-toggle-menu .lang-btn{
+  font-size:1rem;padding:.5rem 1.2rem;
+}
 /* mobile menu */
 .mobile-menu{
   position:fixed;inset:0;z-index:300;background:var(--ink);
@@ -82,15 +88,61 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;background:var(--ink);displa
 .hstat-l{font-size:.7rem;color:var(--ink2);letter-spacing:.06em;text-transform:uppercase;margin-top:.1rem;display:block}
 
 /* ── TRACKS PREVIEW (Edra-style) ── */
-.tracks-preview{padding:3.5rem 2.5rem;border-bottom:1px solid rgba(0,0,0,.1);background:var(--cream)}
+.tracks-preview{padding:3.5rem 2.5rem;border-bottom:1px solid rgba(0,0,0,.1);background:var(--w)}
 .tp-label{font-family:var(--cond);font-size:.68rem;letter-spacing:.18em;color:var(--ink2);margin-bottom:2.5rem;display:flex;align-items:center;gap:.75rem}
 .tp-label::after{content:'';flex:1;height:1px;background:rgba(0,0,0,.1)}
 .tp-stage{display:flex;align-items:flex-end;gap:10px;height:200px;margin-bottom:2rem}
 .tp-block{position:relative;flex:1;cursor:pointer;transition:flex .3s ease,transform .25s ease}
 .tp-block:hover{flex:2.5;transform:translateY(-8px)}
-.tp-block-inner{width:100%;height:100%;overflow:hidden}
-.tp-be{height:82%}.tp-ec{height:62%}.tp-ep{height:100%}
-.tp-bs{height:72%}.tp-ss{height:52%}.tp-sp{height:88%}
+.tp-block-inner{width:100%;height:100%;overflow:hidden;position:relative}
+/* vertical label inside block */
+/* class count shown on hover at top */
+.tp-count{
+  position:absolute;
+  top:.6rem;left:0;right:0;
+  text-align:center;
+  font-family:var(--cond);
+  font-size:1.1rem;
+  letter-spacing:.04em;
+  color:rgba(255,255,255,.0);
+  pointer-events:none;
+  transition:color .25s, opacity .25s;
+  line-height:1;
+}
+.tp-count::after{
+  content:'CLASSES';
+  display:block;
+  font-size:.5rem;
+  letter-spacing:.14em;
+  margin-top:.25rem;
+  color:inherit;
+  opacity:.7;
+}
+.tp-block:hover .tp-count{
+  color:rgba(255,255,255,.95);
+}
+/* also slightly dim the vlabel on hover so count stands out */
+.tp-block:hover .tp-vlabel{
+  color:rgba(255,255,255,.45);
+}
+.tp-vlabel{
+  position:absolute;
+  bottom:0;left:0;right:0;top:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:var(--cond);
+  font-size:.6rem;
+  letter-spacing:.14em;
+  color:rgba(255,255,255,.8);
+  white-space:nowrap;
+  pointer-events:none;
+  writing-mode:vertical-rl;
+  text-orientation:mixed;
+  transform:rotate(180deg);
+}
+.tp-be{height:82%}.tp-ec{height:78%}.tp-ep{height:100%}
+.tp-bs{height:88%}.tp-ss{height:86%}.tp-sp{height:92%}
 .tp-be .tp-block-inner{background:var(--be)}
 .tp-ec .tp-block-inner{background:var(--ec)}
 .tp-ep .tp-block-inner{background:var(--ep)}
@@ -595,6 +647,43 @@ body.lang-es [data-lang="es"].flex{display:flex}
 body.lang-es [data-lang="es"].grid{display:grid}
 /* elements that swap text inline */
 .t[data-en][data-es]{}
+
+/* ── FLOATING CTA ── */
+.float-cta{
+  position:fixed;
+  right:1.25rem;
+  bottom:1.5rem;
+  z-index:150;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-end;
+  gap:.5rem;
+}
+.float-book{
+  display:flex;align-items:center;gap:.6rem;
+  font-family:var(--cond);font-size:.8rem;letter-spacing:.1em;
+  color:var(--cream);background:var(--ink);
+  padding:.65rem 1.1rem;text-decoration:none;
+  border:2px solid var(--ink);
+  box-shadow:0 4px 16px rgba(0,0,0,.18);
+  transition:background .15s,transform .15s;
+  white-space:nowrap;
+}
+.float-book:hover{background:var(--be);border-color:var(--be);transform:translateY(-2px)}
+.float-book-dot{
+  width:8px;height:8px;border-radius:50%;
+  background:var(--ep);flex-shrink:0;
+  animation:pulse 2s ease-in-out infinite;
+}
+@keyframes pulse{
+  0%,100%{opacity:1;transform:scale(1)}
+  50%{opacity:.5;transform:scale(.8)}
+}
+/* Mobile: smaller */
+@media(max-width:640px){
+  .float-book{font-size:.72rem;padding:.55rem .9rem}
+  .float-cta{right:1rem;bottom:1.25rem}
+}
 </style>
 </head>
 <body class="lang-en">
@@ -603,7 +692,7 @@ body.lang-es [data-lang="es"].grid{display:grid}
 <nav>
   <div class="nav-brand">
     <span class="nav-logo">CAMILA MIHALYCZO</span>
-    <span class="nav-tagline t" data-en="Language Tutor · Buenos Aires" data-es="Tutora de Idiomas · Buenos Aires">Language Tutor · Buenos Aires</span>
+    <span class="nav-tagline t" data-en="Language Tutor · Buenos Aires" data-es="Tutorías de Idiomas · Buenos Aires">Language Tutor · Buenos Aires</span>
   </div>
   <ul class="nav-links">
     <li><a href="#about" class="t" data-en="PROFILE" data-es="PERFIL">PROFILE</a></li>
@@ -613,11 +702,6 @@ body.lang-es [data-lang="es"].grid{display:grid}
     <li><a href="#contact" class="t" data-en="CONTACT" data-es="CONTACTO">CONTACT</a></li>
   </ul>
   <div class="nav-right">
-    <div class="lang-toggle">
-      <button class="lang-btn active" onclick="setLang('en')">EN</button>
-      <button class="lang-btn" onclick="setLang('es')">ES</button>
-    </div>
-    <a href="#contact" class="nav-cta t" data-en="BOOK A CLASS" data-es="RESERVAR CLASE">BOOK A CLASS</a>
     <button class="nav-hamburger" onclick="toggleMenu()" aria-label="Menu">
       <span></span><span></span><span></span>
     </button>
@@ -637,9 +721,9 @@ body.lang-es [data-lang="es"].grid{display:grid}
     <li><a href="#contact" onclick="toggleMenu()" class="t" data-en="CONTACT" data-es="CONTACTO">CONTACT</a></li>
   </ul>
   <div class="mm-bottom">
-    <div class="lang-toggle">
-      <button class="lang-btn active" onclick="setLang('en')">EN</button>
-      <button class="lang-btn" onclick="setLang('es')">ES</button>
+    <div class="lang-toggle lang-toggle-menu">
+      <button class="lang-btn active" onclick="setLang('en');toggleMenu()">EN</button>
+      <button class="lang-btn" onclick="setLang('es');toggleMenu()">ES</button>
     </div>
     <a href="#contact" onclick="toggleMenu()" class="btn-solid t" data-en="BOOK A CLASS" data-es="RESERVAR CLASE">BOOK A CLASS</a>
   </div>
@@ -672,12 +756,12 @@ body.lang-es [data-lang="es"].grid{display:grid}
 <div class="hero hero-single">
   <div class="hero-left hero-left-full">
     <div class="hero-text">
-      <p class="hero-label t" data-en="LANGUAGE TUTOR · ONLINE · BUENOS AIRES" data-es="TUTORA DE IDIOMAS · EN LÍNEA · BUENOS AIRES">LANGUAGE TUTOR · ONLINE · BUENOS AIRES</p>
+      <p class="hero-label t" data-en="LANGUAGE TUTOR · ONLINE · BUENOS AIRES" data-es="TUTORÍAS DE IDIOMAS · EN LÍNEA · BUENOS AIRES">LANGUAGE TUTOR · ONLINE · BUENOS AIRES</p>
       <h1 class="hero-h">
         CAMILA<br>
         <span class="serif-line">Mihalyczo</span><br>
-        <span class="t" data-en="LANGUAGE" data-es="IDIOMAS">LANGUAGE</span><br>
-        <span style="color:var(--be)" class="t" data-en="TUTOR." data-es="TUTORA DE IDIOMAS">TUTOR.</span>
+        <span class="t" data-en="TUTOR OF" data-es="TUTORA DE">TUTOR OF</span><br>
+        <span style="color:var(--be)" class="t" data-en="LANGUAGES." data-es="IDIOMAS.">LANGUAGES.</span>
       </h1>
       <p class="hero-sub" data-lang="en">
         I teach <strong>English and Spanish</strong> to professionals, creatives, and developers who need a language that actually works in their real life — not textbook exercises.<br><br>
@@ -708,27 +792,27 @@ body.lang-es [data-lang="es"].grid{display:grid}
   <div class="tp-label t" data-en="COURSES & PACKAGES — OVERVIEW" data-es="CURSOS Y PAQUETES — VISTA GENERAL">COURSES & PACKAGES — OVERVIEW</div>
   <div class="tp-stage">
     <div class="tp-block tp-be">
-      <div class="tp-block-inner"><div class="tp-stripes"></div></div>
+      <div class="tp-block-inner"><div class="tp-stripes"></div><span class="tp-count">10–12</span><span class="tp-vlabel">BUSINESS ENGLISH</span></div>
       <div class="tp-tooltip"><span class="tp-tt-name">BUSINESS ENGLISH</span><span class="tp-tt-sub">Foundations · Communication · Advanced</span></div>
     </div>
     <div class="tp-block tp-ec">
-      <div class="tp-block-inner"><div class="tp-dots"></div></div>
+      <div class="tp-block-inner"><div class="tp-dots"></div><span class="tp-count">10–12</span><span class="tp-vlabel">ENG. CREATIVES</span></div>
       <div class="tp-tooltip"><span class="tp-tt-name">ENGLISH FOR CREATIVES</span><span class="tp-tt-sub">Basics · Clients · Industry</span></div>
     </div>
     <div class="tp-block tp-ep">
-      <div class="tp-block-inner"><div class="tp-grid"></div></div>
+      <div class="tp-block-inner"><div class="tp-grid"></div><span class="tp-count">10–24</span><span class="tp-vlabel">EXAM PREP</span></div>
       <div class="tp-tooltip"><span class="tp-tt-name">EXAM PREP</span><span class="tp-tt-sub">3 months · 1 month · Emergency</span></div>
     </div>
     <div class="tp-block tp-bs">
-      <div class="tp-block-inner"><div class="tp-stripes-v"></div></div>
+      <div class="tp-block-inner"><div class="tp-stripes-v"></div><span class="tp-count">10–12</span><span class="tp-vlabel">BUS. SPANISH</span></div>
       <div class="tp-tooltip"><span class="tp-tt-name">BUSINESS SPANISH</span><span class="tp-tt-sub">Foundations · Communication · Advanced</span></div>
     </div>
     <div class="tp-block tp-ss">
-      <div class="tp-block-inner"><div class="tp-checker"></div></div>
+      <div class="tp-block-inner"><div class="tp-checker"></div><span class="tp-count">8–12</span><span class="tp-vlabel">SURVIVAL SPANISH</span></div>
       <div class="tp-tooltip"><span class="tp-tt-name">SURVIVAL SPANISH</span><span class="tp-tt-sub">Survival · Social · Living in Argentina</span></div>
     </div>
     <div class="tp-block tp-sp">
-      <div class="tp-block-inner"><div class="tp-dots tp-dots-lg"></div></div>
+      <div class="tp-block-inner"><div class="tp-dots tp-dots-lg"></div><span class="tp-count">4–10</span><span class="tp-vlabel">SPECIAL COURSES</span></div>
       <div class="tp-tooltip"><span class="tp-tt-name">SPECIAL COURSES</span><span class="tp-tt-sub">Tech · Creators · Art · Lunfardo · Groups</span></div>
     </div>
   </div>
@@ -1300,5 +1384,13 @@ async function submitForm(e){
   }
 }
 </script>
+
+<!-- FLOATING CTA -->
+<div class="float-cta">
+  <a href="#contact" class="float-book">
+    <span class="float-book-dot"></span>
+    <span class="t" data-en="BOOK A CLASS" data-es="RESERVAR CLASE">BOOK A CLASS</span>
+  </a>
+</div>
 </body>
 </html>
