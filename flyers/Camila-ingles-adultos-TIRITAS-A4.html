@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Camila Mihalyczo — Inglés para profesionales con tiritas</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@1,900&display=swap" rel="stylesheet">
+<style>
+/* ===========================================================
+   FLYER A4 CON TIRITAS CORTABLES — INGLÉS PARA ADULTOS
+   El número se repite en cada tirita: si lo cambiás,
+   cambialo en las 9 (buscar y reemplazar).
+   =========================================================== */
+:root{
+  --cream:#F3EDE3; --ink:#0D0D0D; --ink2:#5a5650;
+  --be:#1B3FA0; --ec:#B03A2E; --ep:#1A7A4A; --bs:#C47A0B; --ss:#6B3FA0; --sp:#A0396B;
+  --serif:'Playfair Display',Georgia,serif;
+  --cond:'Bebas Neue',Impact,sans-serif;
+  --sans:'Inter',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+@page{size:A4;margin:0;}
+body{background:#fff;font-family:var(--sans);color:var(--ink);-webkit-font-smoothing:antialiased;}
+.sheet{position:relative;width:794px;height:1123px;overflow:hidden;background:var(--cream);display:flex;flex-direction:column;}
+
+.topbar{background:var(--ink);color:var(--cream);display:flex;align-items:center;justify-content:space-between;padding:12px 40px;}
+.topbar .brand{font-family:var(--cond);font-size:25px;letter-spacing:.12em;line-height:1;}
+.topbar .meta{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.55);text-align:right;line-height:1.5;}
+
+.ticker{border-bottom:2px solid var(--ink);padding:7px 40px;display:flex;gap:13px;justify-content:center;
+  font-family:var(--cond);font-size:13.5px;letter-spacing:.14em;}
+.ticker span{opacity:.45;}
+
+.top{padding:26px 40px 0;flex:1;display:flex;flex-direction:column;position:relative;}
+
+.kicker{display:flex;align-items:center;gap:9px;font-size:10px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--ink2);}
+.kicker i{width:11px;height:11px;background:var(--be);display:block;}
+h1{font-family:var(--cond);font-size:76px;line-height:.86;letter-spacing:.005em;margin-top:14px;text-transform:uppercase;}
+h1 .it{font-family:var(--serif);font-style:italic;font-weight:900;text-transform:none;font-size:63px;letter-spacing:-0.01em;}
+.dek{font-size:14px;line-height:1.55;color:#26241f;margin-top:14px;max-width:58ch;}
+.dek b{font-weight:600;}
+
+/* sello */
+.stamp{position:absolute;right:30px;top:16px;transform:rotate(-6deg);border:3px solid var(--be);padding:5px;background:rgba(243,237,227,.75);z-index:5;}
+.stamp .in{border:1.5px solid var(--be);padding:10px 16px;text-align:center;color:var(--be);}
+.stamp .l1{font-family:var(--cond);font-size:22px;line-height:.95;letter-spacing:.06em;}
+.stamp .l2{font-family:var(--cond);font-size:30px;line-height:1;letter-spacing:.06em;}
+.stamp .l3{font-size:8.5px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;margin-top:3px;}
+
+.shead{display:flex;align-items:baseline;gap:12px;border-bottom:2px solid var(--ink);padding-bottom:5px;margin-top:20px;}
+.shead .n{font-family:var(--cond);font-size:14px;letter-spacing:.1em;color:var(--ink2);}
+.shead h2{font-family:var(--cond);font-size:21px;letter-spacing:.1em;text-transform:uppercase;flex:1;}
+.shead .r{font-size:9.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--ink2);}
+
+.tracks{display:grid;grid-template-columns:1fr 1fr;gap:0 26px;}
+.track{display:grid;grid-template-columns:12px 1fr;gap:11px;align-items:center;padding:9px 0;border-bottom:1px solid rgba(13,13,13,.16);}
+.track .sq{width:12px;height:12px;}
+.track h3{font-family:var(--cond);font-size:18px;letter-spacing:.06em;line-height:1;text-transform:uppercase;}
+.track p{font-size:10.5px;color:var(--ink2);line-height:1.3;margin-top:2px;}
+
+.creds{display:flex;justify-content:space-between;gap:10px;margin-top:14px;border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);padding:9px 0;}
+.creds div{font-size:9.5px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;}
+.creds div span{display:block;font-weight:400;color:var(--ink2);letter-spacing:.06em;margin-top:2px;font-size:9px;}
+
+/* contacto */
+.contact{display:flex;align-items:center;gap:18px;background:var(--ink);color:var(--cream);padding:16px 24px;margin-top:16px;}
+.contact .cta{flex:1;}
+.contact .cta small{display:block;font-size:9px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.5);}
+.contact .cta .num{font-family:var(--cond);font-size:36px;letter-spacing:.04em;line-height:1.08;color:#fff;}
+.contact img{width:78px;height:78px;background:#fff;padding:2px;display:block;}
+.contact .site{font-family:var(--cond);font-size:15px;letter-spacing:.08em;line-height:1.2;text-align:right;}
+.contact .site span{display:block;font-family:var(--sans);font-size:8.5px;letter-spacing:.14em;color:rgba(255,255,255,.5);font-weight:600;margin-top:4px;}
+
+.cutline{display:flex;align-items:center;gap:10px;margin-top:auto;margin-bottom:10px;color:var(--ink2);
+  font-family:var(--cond);font-size:14px;letter-spacing:.16em;text-transform:uppercase;}
+.cutline .dash{flex:1;border-top:2px dashed rgba(13,13,13,.35);}
+
+/* ---------- TIRITAS ---------- */
+.strips{height:300px;display:grid;grid-template-columns:repeat(9,1fr);flex:none;}
+.strip{border-left:1.5px dashed rgba(13,13,13,.35);display:flex;align-items:center;justify-content:center;padding:14px 0;overflow:hidden;}
+.strip:first-child{border-left:none;}
+.strip .v{writing-mode:vertical-rl;transform:rotate(180deg);display:flex;align-items:center;gap:8px;}
+.strip .num{font-family:var(--cond);font-size:23px;letter-spacing:.05em;color:var(--ink);white-space:nowrap;}
+.strip .who{font-size:9.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--be);white-space:nowrap;}
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <div class="topbar">
+    <div class="brand">CAMILA MIHALYCZO</div>
+    <div class="meta">Language Tutor · Buenos Aires<br>Clases 100% online</div>
+  </div>
+
+  <div class="ticker">
+    BUSINESS ENGLISH <span>✦</span> ENGLISH FOR CREATIVES <span>✦</span> EXAM PREP <span>✦</span> ENGLISH FOR DEVS <span>✦</span> CONVERSACIÓN
+  </div>
+
+  <div class="top">
+    <!-- ====== SELLO ====== -->
+    <div class="stamp">
+      <div class="in">
+        <div class="l1">Clase de prueba</div>
+        <div class="l2">30 min · gratis</div>
+        <div class="l3">Sin compromiso</div>
+      </div>
+    </div>
+
+    <!-- ====== TITULAR ====== -->
+    <div class="kicker"><i></i> Para profesionales, creativos y desarrolladores</div>
+    <h1>Inglés que funciona<br>en tu <span class="it">trabajo real</span></h1>
+    <p class="dek">No ejercicios de libro de texto. Cada curso está armado alrededor de un objetivo concreto — <b>liderar una reunión, escribir propuestas a clientes internacionales, aprobar el First</b> — y avanza a tu ritmo.</p>
+
+    <!-- ====== TRACKS ====== -->
+    <div class="shead"><span class="n">01</span><h2>Cursos y paquetes</h2><span class="r">Clases de 60 min</span></div>
+    <div class="tracks">
+      <div class="track"><span class="sq" style="background:var(--be)"></span><div><h3>Business English</h3><p>Reuniones, reportes y emails sin ansiedad.</p></div></div>
+      <div class="track"><span class="sq" style="background:var(--ec)"></span><div><h3>English for Creatives</h3><p>Propuestas, briefings y feedback con clientes.</p></div></div>
+      <div class="track"><span class="sq" style="background:var(--ep)"></span><div><h3>Exam Prep — First / PET</h3><p>3 meses, 1 mes o modo emergencia.</p></div></div>
+      <div class="track"><span class="sq" style="background:var(--ss)"></span><div><h3>English for Developers</h3><p>Stand-ups, code reviews y entrevistas STAR.</p></div></div>
+      <div class="track" style="border-bottom:2px solid var(--ink);"><span class="sq" style="background:var(--sp)"></span><div><h3>Conversación y workshops</h3><p>Grupos de 4 a 6 personas, temáticos y cortos.</p></div></div>
+      <div class="track" style="border-bottom:2px solid var(--ink);"><span class="sq" style="background:var(--bs)"></span><div><h3>Español rioplatense</h3><p>Business y Survival Spanish para extranjeros.</p></div></div>
+    </div>
+
+    <!-- ====== CREDENCIALES ====== -->
+    <div class="creds">
+      <div>Cambridge First<span>Certificate B2–C1</span></div>
+      <div>TEFL Academy<span>Nivel 5</span></div>
+      <div>6+ años<span>Enseñando</span></div>
+      <div>iTalki · Preply<span>Tutora verificada</span></div>
+      <div>Activity Blog<span>Incluido en los cursos</span></div>
+    </div>
+
+    <!-- ====== CONTACTO ====== -->
+    <div class="contact">
+      <div class="cta">
+        <small>WhatsApp directo</small>
+        <div class="num">+54 11 5126 8940</div>
+      </div>
+      <img src="data:image/png;base64,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" alt="QR">
+      <div class="site">camila-tutor<br>.vercel.app<span>Cursos, precios y contacto</span></div>
+    </div>
+
+    <div class="cutline"><span>✂ Llevate el número</span><span class="dash"></span></div>
+  </div>
+
+  <!-- ====== TIRITAS CORTABLES (9) ====== -->
+  <div class="strips">
+    <div class="strip"><div class="v"><span class="num">+54 11 5126 8940</span><span class="who">Camila · Inglés</span></div></div>
+    <div class="strip"><div class="v"><span class="num">+54 11 5126 8940</span><span class="who">Camila · Inglés</span></div></div>
+    <div class="strip"><div class="v"><span class="num">+54 11 5126 8940</span><span class="who">Camila · Inglés</span></div></div>
+    <div class="strip"><div class="v"><span class="num">+54 11 5126 8940</span><span class="who">Camila · Inglés</span></div></div>
+    <div class="strip"><div class="v"><span class="num">+54 11 5126 8940</span><span class="who">Camila · Inglés</span></div></div>
+    <div class="strip"><div class="v"><span class="num">+54 11 5126 8940</span><span class="who">Camila · Inglés</span></div></div>
+    <div class="strip"><div class="v"><span class="num">+54 11 5126 8940</span><span class="who">Camila · Inglés</span></div></div>
+    <div class="strip"><div class="v"><span class="num">+54 11 5126 8940</span><span class="who">Camila · Inglés</span></div></div>
+    <div class="strip"><div class="v"><span class="num">+54 11 5126 8940</span><span class="who">Camila · Inglés</span></div></div>
+  </div>
+</div>
+</body>
+</html>
