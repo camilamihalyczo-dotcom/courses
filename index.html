@@ -1,1546 +1,378 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="es">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Camila Mihalyczo — Language Tutor</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,900&family=Bebas+Neue&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --cream:#F3EDE3; --ink:#0D0D0D; --ink2:#5a5650; --w:#FAFAF8;
-  --be:#1B3FA0; --ec:#B03A2E; --ep:#1A7A4A;
-  --bs:#C47A0B; --ss:#6B3FA0; --sp:#A0396B;
-  --serif:'Playfair Display',Georgia,serif;
-  --cond:'Bebas Neue',Impact,sans-serif;
-  --sans:'Inter',system-ui,sans-serif;
-}
-html{scroll-behavior:smooth}
-body{background:var(--w);color:var(--ink);font-family:var(--sans);overflow-x:hidden;line-height:1.6}
-
-/* ── NAV ── */
-:root{ --nav-h: 52px; }
-nav{
-  position:fixed;top:0;left:0;right:0;z-index:200;
-  background:var(--ink);
-  display:flex;justify-content:space-between;align-items:center;
-  padding:0 2.5rem;
-  height:var(--nav-h);
-  gap:1rem;min-width:0;
-}
-.nav-brand{display:flex;flex-direction:column;gap:.1rem;flex-shrink:0}
-.nav-logo{font-family:var(--cond);font-size:1.1rem;letter-spacing:.1em;color:var(--cream);line-height:1}
-.nav-tagline{font-size:.65rem;color:rgba(255,255,255,.45);letter-spacing:.05em}
-.nav-links{display:flex;list-style:none;gap:0;flex:1;justify-content:center;min-width:0}
-.nav-links a{
-  font-family:var(--cond);font-size:.85rem;letter-spacing:.1em;
-  color:rgba(255,255,255,.6);text-decoration:none;
-  padding:.45rem .9rem;
-  border-left:1px solid rgba(255,255,255,.12);
-  transition:color .15s;white-space:nowrap;
-}
-.nav-links a:hover{color:#fff}
-.nav-links li:first-child a{border-left:none}
-.nav-right{display:flex;align-items:center;gap:.75rem;flex-shrink:0}
-.lang-toggle{display:flex;border:1.5px solid rgba(255,255,255,.45);overflow:hidden;border-radius:2px;flex-shrink:0}
-.lang-btn{font-family:var(--cond);font-size:.8rem;letter-spacing:.08em;padding:.35rem .85rem;background:transparent;color:rgba(255,255,255,.6);border:none;cursor:pointer;transition:background .15s,color .15s}
-.lang-btn.active{background:var(--cream);color:var(--ink);font-weight:700}
-.lang-btn:not(.active):hover{color:#fff}
-.nav-cta{display:none;font-family:var(--cond);font-size:.8rem;letter-spacing:.08em;color:var(--ink);background:var(--cream);padding:.45rem 1.1rem;text-decoration:none;transition:background .15s;border:1.5px solid var(--cream);white-space:nowrap;flex-shrink:0}
-.nav-cta:hover{background:#fff}
-/* hamburger */
-.nav-hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:.4rem;flex-shrink:0}
-.nav-hamburger span{display:block;width:22px;height:2px;background:var(--cream);transition:transform .25s,opacity .25s}
-.lang-toggle-menu{
-  border:1.5px solid rgba(255,255,255,.4);
-}
-.lang-toggle-menu .lang-btn{
-  font-size:1rem;padding:.5rem 1.2rem;
-}
-/* mobile menu */
-.mobile-menu{
-  position:fixed;inset:0;z-index:300;background:var(--ink);
-  display:flex;flex-direction:column;
-  transform:translateX(100%);transition:transform .35s cubic-bezier(.4,0,.2,1);
-  padding:1.5rem 1.5rem 2rem;
-}
-.mobile-menu.open{transform:translateX(0)}
-.mm-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:3rem}
-.mm-close{background:none;border:1px solid rgba(255,255,255,.2);color:var(--cream);font-size:1.4rem;width:2.2rem;height:2.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center}
-.mm-links{list-style:none;display:flex;flex-direction:column;gap:0;flex:1}
-.mm-links li{border-bottom:1px solid rgba(255,255,255,.08)}
-.mm-links a{display:block;font-family:var(--cond);font-size:2rem;letter-spacing:.06em;color:rgba(255,255,255,.7);text-decoration:none;padding:1rem 0;transition:color .15s}
-.mm-links a:hover{color:#fff}
-.mm-bottom{display:flex;align-items:center;gap:1rem;margin-top:2rem;flex-wrap:wrap}
-
-/* ── TICKER ── */
-.ticker-wrap{margin-top:var(--nav-h);overflow:hidden;white-space:nowrap;background:var(--ink);padding:.5rem 0}
-.ticker-track{display:inline-flex;animation:tick 30s linear infinite}
-.ti{font-family:var(--cond);font-size:.8rem;letter-spacing:.14em;color:rgba(255,255,255,.35);padding:0 1.75rem}
-.ti b{color:rgba(255,255,255,.7)}
-@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-
-/* ── HERO — 2-column desktop, 1-col mobile ── */
-.hero{
-  padding-top:var(--nav-h);
-  min-height:100vh;
-  display:flex;flex-direction:column;
-  border-bottom:1px solid rgba(0,0,0,.1);
-}
-.hero-single{
-  flex:1;
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  align-items:center;
-}
-.hero-left-full{
-  padding:4rem 3rem 4rem 2.5rem;
-  display:flex;flex-direction:column;
-  justify-content:center;
-  gap:2rem;
-  border-right:1px solid rgba(0,0,0,.1);
-  height:100%;
-}
-.hero-text{}
-.hero-label{
-  font-family:var(--cond);font-size:.8rem;letter-spacing:.18em;
-  color:var(--ink2);margin-bottom:1.5rem;
-  display:flex;align-items:center;gap:.75rem;
-}
-.hero-label::before{content:'';display:inline-block;width:2rem;height:1px;background:var(--ink2)}
-.hero-h{
-  font-family:var(--cond);
-  font-size:clamp(3.5rem,7vw,7rem);
-  line-height:.9;letter-spacing:-.01em;
-  color:var(--ink);margin-bottom:1.75rem;
-}
-.hero-h .serif-line{
-  font-family:var(--serif);font-style:italic;
-  font-size:clamp(3rem,6.5vw,6.5rem);
-  color:var(--be);display:block;line-height:1;
-}
-.hero-sub{
-  font-size:1.05rem;color:var(--ink2);
-  line-height:1.75;max-width:44ch;margin-bottom:2rem;
-}
-.hero-sub strong{color:var(--ink);font-weight:600}
-.hero-btns{display:flex;gap:.75rem;flex-wrap:wrap}
-.btn-solid{
-  font-family:var(--cond);font-size:.95rem;letter-spacing:.1em;
-  background:var(--ink);color:var(--cream);
-  padding:.85rem 2rem;text-decoration:none;
-  border:2px solid var(--ink);transition:background .15s,color .15s;
-}
-.btn-solid:hover{background:var(--be);border-color:var(--be)}
-.btn-ghost{
-  font-family:var(--cond);font-size:.95rem;letter-spacing:.1em;
-  background:transparent;color:var(--ink);
-  padding:.85rem 2rem;text-decoration:none;
-  border:2px solid var(--ink);transition:background .15s,color .15s;
-}
-.btn-ghost:hover{background:var(--ink);color:var(--cream)}
-/* HERO RIGHT: stats in 2x2 grid */
-.hero-stats{
-  padding:3rem 2.5rem;
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:3rem 2rem;
-  align-content:center;
-  height:100%;
-}
-.hstat-n{font-family:var(--cond);font-size:3.5rem;line-height:1;color:var(--ink);display:block}
-.hstat-l{font-size:.75rem;color:var(--ink2);letter-spacing:.06em;text-transform:uppercase;margin-top:.35rem;display:block}
-
-/* ── TRACKS PREVIEW (Edra-style) ── */
-.tracks-preview{padding:3.5rem 2.5rem;border-bottom:1px solid rgba(0,0,0,.1);background:var(--w)}
-.tp-label{font-family:var(--cond);font-size:.68rem;letter-spacing:.18em;color:var(--ink2);margin-bottom:2.5rem;display:flex;align-items:center;gap:.75rem}
-.tp-label::after{content:'';flex:1;height:1px;background:rgba(0,0,0,.1)}
-.tp-stage{display:flex;align-items:flex-end;gap:10px;height:200px;margin-bottom:2rem}
-.tp-block{position:relative;flex:1;cursor:pointer;transition:flex .3s ease,transform .25s ease}
-.tp-block:hover{flex:2.5;transform:translateY(-8px)}
-.tp-block-inner{width:100%;height:100%;overflow:hidden;position:relative}
-/* vertical label inside block */
-/* class count shown on hover at top */
-.tp-count{
-  position:absolute;
-  top:.6rem;left:0;right:0;
-  text-align:center;
-  font-family:var(--cond);
-  font-size:1.1rem;
-  letter-spacing:.04em;
-  color:rgba(255,255,255,.0);
-  pointer-events:none;
-  transition:color .25s, opacity .25s;
-  line-height:1;
-}
-.tp-count::after{
-  content:'CLASSES';
-  display:block;
-  font-size:.5rem;
-  letter-spacing:.14em;
-  margin-top:.25rem;
-  color:inherit;
-  opacity:.7;
-}
-.tp-block:hover .tp-count{
-  color:rgba(255,255,255,.95);
-}
-/* also slightly dim the vlabel on hover so count stands out */
-.tp-block:hover .tp-vlabel{
-  color:rgba(255,255,255,.45);
-}
-.tp-vlabel{
-  position:absolute;
-  bottom:0;left:0;right:0;top:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-family:var(--cond);
-  font-size:.6rem;
-  letter-spacing:.14em;
-  color:rgba(255,255,255,.8);
-  white-space:nowrap;
-  pointer-events:none;
-  writing-mode:vertical-rl;
-  text-orientation:mixed;
-  transform:rotate(180deg);
-}
-/* desktop: horizontal text, bigger */
-@media(min-width:641px){
-  .tp-vlabel{
-    writing-mode:horizontal-tb;
-    transform:none;
-    font-size:.75rem;
-    letter-spacing:.1em;
-  }
-}
-.tp-be{height:82%}.tp-ec{height:78%}.tp-ep{height:100%}
-.tp-bs{height:88%}.tp-ss{height:86%}.tp-sp{height:92%}
-.tp-be .tp-block-inner{background:var(--be)}
-.tp-ec .tp-block-inner{background:var(--ec)}
-.tp-ep .tp-block-inner{background:var(--ep)}
-.tp-bs .tp-block-inner{background:var(--bs)}
-.tp-ss .tp-block-inner{background:var(--ss)}
-.tp-sp .tp-block-inner{background:var(--sp)}
-.tp-stripes{width:100%;height:100%;background:repeating-linear-gradient(90deg,rgba(255,255,255,.15) 0,rgba(255,255,255,.15) 2px,transparent 2px,transparent 8px)}
-.tp-stripes-v{width:100%;height:100%;background:repeating-linear-gradient(0deg,rgba(255,255,255,.15) 0,rgba(255,255,255,.15) 2px,transparent 2px,transparent 8px)}
-.tp-dots{width:100%;height:100%;background-image:radial-gradient(rgba(255,255,255,.2) 1px,transparent 1px);background-size:6px 6px}
-.tp-dots-lg{width:100%;height:100%;background-image:radial-gradient(rgba(255,255,255,.2) 1.5px,transparent 1.5px);background-size:10px 10px}
-.tp-grid{width:100%;height:100%;background-image:linear-gradient(rgba(255,255,255,.1) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.1) 1px,transparent 1px);background-size:12px 12px}
-.tp-checker{width:100%;height:100%;background-image:linear-gradient(45deg,rgba(255,255,255,.1) 25%,transparent 25%,transparent 75%,rgba(255,255,255,.1) 75%),linear-gradient(45deg,rgba(255,255,255,.1) 25%,transparent 25%,transparent 75%,rgba(255,255,255,.1) 75%);background-size:10px 10px;background-position:0 0,5px 5px}
-.tp-tooltip{position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:var(--ink);color:var(--cream);padding:.5rem .75rem;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .2s;z-index:10}
-.tp-block:hover .tp-tooltip{opacity:1}
-.tp-tt-name{font-family:var(--cond);font-size:.75rem;letter-spacing:.1em;display:block}
-.tp-tt-sub{font-size:.65rem;color:rgba(255,255,255,.55);display:block;margin-top:.15rem}
-.tp-cta{display:inline-block;font-family:var(--cond);font-size:.8rem;letter-spacing:.12em;color:var(--ink);text-decoration:none;border-bottom:1.5px solid var(--ink);padding-bottom:.1rem;transition:opacity .15s}
-.tp-cta:hover{opacity:.5}
-@media(max-width:640px){
-  .tracks-preview{padding:2rem 1.25rem}
-  .tp-stage{height:140px;gap:5px}
-  .tp-block:hover{flex:2;transform:translateY(-4px)}
-  .tp-tooltip{display:none}
-}
-
-.course-scroll-track{
-  display:flex;flex-direction:column;
-  animation:scrollUp 28s linear infinite;
-  padding:.75rem;
-  gap:.6rem;
-}
-.course-scroll-track:hover{animation-play-state:paused}
-
-@keyframes scrollUp{
-  0%  {transform:translateY(0)}
-  100%{transform:translateY(-50%)}
-}
-
-.cs-card{
-  border:1.5px solid rgba(0,0,0,.1);
-  padding:1rem 1.1rem;
-  background:#fff;
-  position:relative;
-  transition:border-color .2s, transform .2s;
-  cursor:default;
-  overflow:hidden;
-}
-.cs-card::before{
-  content:'';position:absolute;top:0;left:0;bottom:0;
-  width:4px;
-}
-.cs-card:hover{transform:translateX(3px)}
-
-.cs-card-track{
-  font-family:var(--cond);font-size:.6rem;letter-spacing:.14em;
-  margin-bottom:.3rem;display:block;
-}
-.cs-card-name{
-  font-family:var(--cond);font-size:.95rem;letter-spacing:.04em;
-  line-height:1.15;color:var(--ink);margin-bottom:.35rem;
-}
-.cs-card-info{
-  display:flex;align-items:center;justify-content:space-between;
-  gap:.5rem;
-}
-.cs-card-desc{font-size:.75rem;color:var(--ink2);line-height:1.4;flex:1}
-.cs-card-n{
-  font-family:var(--cond);font-size:1.4rem;letter-spacing:.02em;
-  flex-shrink:0;line-height:1;
-}
-
-/* card colour per track */
-.cs-be::before{background:var(--be)} .cs-be .cs-card-track,.cs-be .cs-card-n{color:var(--be)}
-.cs-be:hover{border-color:var(--be)}
-.cs-ec::before{background:var(--ec)} .cs-ec .cs-card-track,.cs-ec .cs-card-n{color:var(--ec)}
-.cs-ec:hover{border-color:var(--ec)}
-.cs-ep::before{background:var(--ep)} .cs-ep .cs-card-track,.cs-ep .cs-card-n{color:var(--ep)}
-.cs-ep:hover{border-color:var(--ep)}
-.cs-bs::before{background:var(--bs)} .cs-bs .cs-card-track,.cs-bs .cs-card-n{color:var(--bs)}
-.cs-bs:hover{border-color:var(--bs)}
-.cs-ss::before{background:var(--ss)} .cs-ss .cs-card-track,.cs-ss .cs-card-n{color:var(--ss)}
-.cs-ss:hover{border-color:var(--ss)}
-.cs-sp::before{background:var(--sp)} .cs-sp .cs-card-track,.cs-sp .cs-card-n{color:var(--sp)}
-.cs-sp:hover{border-color:var(--sp)}
-
-.hero-right-note{
-  font-size:.78rem;color:var(--ink2);line-height:1.6;
-  border-left:2px solid var(--be);padding-left:1rem;flex-shrink:0;
-}
-.hero-right-note strong{color:var(--ink);font-weight:600}
-
-/* ── SECTION STRUCTURE ── */
-.mq{overflow:hidden;white-space:nowrap;padding:.5rem 0;border-top:1px solid rgba(0,0,0,.1);border-bottom:1px solid rgba(0,0,0,.1)}
-.mq.dark{background:var(--ink)}
-.mq-track{display:inline-flex;animation:tick 22s linear infinite}
-.mq-track.rev{animation-direction:reverse}
-.mq-i{font-family:var(--cond);font-size:.95rem;letter-spacing:.12em;color:var(--ink);padding:0 1.75rem}
-.mq.dark .mq-i{color:rgba(255,255,255,.25)}
-.mq-i s{text-decoration:none;color:var(--be)}
-.mq.dark .mq-i s{color:rgba(255,255,255,.5)}
-
-section{border-bottom:1px solid rgba(0,0,0,.1)}
-.sec-head{display:flex;align-items:stretch;border-bottom:1px solid rgba(0,0,0,.1)}
-.sec-num{font-family:var(--cond);font-size:.75rem;letter-spacing:.12em;writing-mode:vertical-rl;color:rgba(255,255,255,.6);background:var(--ink);padding:1rem .8rem;flex-shrink:0;display:flex;align-items:center;border-right:1px solid rgba(0,0,0,.12)}
-.sec-meta{padding:1.25rem 2.5rem;display:flex;align-items:center;gap:1.25rem;flex:1;flex-wrap:wrap}
-.sec-title{font-family:var(--cond);font-size:clamp(1.6rem,3vw,2.3rem);letter-spacing:.04em;line-height:1;color:var(--ink)}
-.sec-badge{font-family:var(--cond);font-size:.68rem;letter-spacing:.12em;padding:.2rem .65rem;border:1.5px solid;flex-shrink:0}
-.sec-body{padding:3rem 2.5rem}
-
-/* ── ABOUT ── */
-.about-cols{display:grid;grid-template-columns:3fr 2fr;gap:3rem;align-items:start}
-.about-lede{font-family:var(--serif);font-style:italic;font-size:1.25rem;line-height:1.55;margin-bottom:1.5rem}
-.about-body{font-size:.94rem;color:var(--ink2);line-height:1.8}
-.about-body strong{color:var(--ink);font-weight:600}
-.about-body p+p{margin-top:1rem}
-.creds{border:1.5px solid rgba(0,0,0,.15)}
-.creds-hd{font-family:var(--cond);font-size:.75rem;letter-spacing:.14em;padding:.65rem 1rem;background:var(--ink);color:rgba(255,255,255,.7);border-bottom:1px solid rgba(0,0,0,.15)}
-.cred{display:flex;flex-direction:column;padding:.8rem 1rem;border-bottom:1px solid rgba(0,0,0,.08)}
-.cred:last-child{border-bottom:none}
-.ck{font-family:var(--cond);font-size:.6rem;letter-spacing:.14em;color:var(--be);margin-bottom:.15rem}
-.cv{font-size:.88rem;font-weight:500;color:var(--ink)}
-
-/* ── PLATFORM LINK ROWS ── */
-.plat-links-grid{display:flex;flex-direction:column}
-.plat-link-row{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:1.1rem 2.5rem;
-  border-bottom:1px solid rgba(0,0,0,.08);
-  text-decoration:none;
-  transition:background .15s;
-  gap:1rem;
-}
-.plat-link-row:last-child{border-bottom:none}
-.plat-link-row:hover{background:rgba(0,0,0,.03)}
-.plat-link-email{background:rgba(27,63,160,.04)}
-.plat-link-email:hover{background:rgba(27,63,160,.08)}
-.plat-link-left{display:flex;align-items:center;gap:1.25rem}
-.plat-link-num{
-  font-family:var(--cond);font-size:.85rem;letter-spacing:.1em;
-  color:var(--ink2);flex-shrink:0;width:1.5rem;text-align:center;
-}
-.plat-link-name{
-  font-family:var(--cond);font-size:1.1rem;letter-spacing:.04em;
-  color:var(--ink);display:block;line-height:1.2;
-}
-.plat-link-sub{
-  font-size:.78rem;color:var(--ink2);margin-top:.1rem;display:block;
-}
-.plat-link-url{
-  font-family:var(--cond);font-size:.72rem;letter-spacing:.08em;
-  color:var(--be);flex-shrink:0;
-}
-.plat-link-email .plat-link-num{color:var(--be)}
-.plat-link-email .plat-link-url{color:var(--be)}
-@media(max-width:640px){
-  .plat-link-row{padding:.9rem 1.25rem;flex-direction:column;align-items:flex-start;gap:.5rem}
-  .plat-link-url{font-size:.65rem}
-}
-
-/* ── CONTACT FORM WRAP (solo form, sin columna de links) ── */
-.contact-form-wrap{
-  display:grid;grid-template-columns:1fr 1fr;
-  background:var(--w);
-}
-.contact-form-left{padding:3.5rem 2.5rem}
-.contact-form-right{padding:3.5rem 2.5rem;border-left:1px solid rgba(0,0,0,.1);background:var(--w)}
-@media(max-width:900px){
-  .contact-form-wrap{grid-template-columns:1fr}
-  .contact-form-left{padding:2.5rem 1.25rem}
-  .contact-form-right{padding:2rem 1.25rem;border-left:none;border-top:1px solid rgba(0,0,0,.1)}
-}
-/* override ch/csub colors — now on light bg */
-.contact-form-wrap .ch{color:var(--ink)}
-.contact-form-wrap .ch em{color:var(--be)}
-.contact-form-wrap .csub{color:var(--ink2)}
-.testimonials-strip{border-top:1px solid rgba(0,0,0,.1);padding:2.5rem 2.5rem}
-.testi-strip-label{font-family:var(--cond);font-size:.68rem;letter-spacing:.18em;color:var(--ink2);margin-bottom:1.5rem;display:flex;align-items:center;gap:.75rem}
-.testi-strip-label::after{content:'';flex:1;height:1px;background:rgba(0,0,0,.1)}
-.testi-strip-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
-.testi-strip-card{padding:1.5rem;border:1.5px solid rgba(0,0,0,.08);position:relative}
-.testi-strip-card::before{content:'"';font-family:var(--serif);font-size:3rem;color:rgba(0,0,0,.06);position:absolute;top:.5rem;left:1rem;line-height:1}
-.testi-strip-text{font-family:var(--serif);font-style:italic;font-size:.95rem;color:var(--ink);line-height:1.55;margin-bottom:.75rem;padding-top:.5rem}
-.testi-strip-attr{font-family:var(--cond);font-size:.58rem;letter-spacing:.12em;color:var(--ink2)}
-@media(max-width:760px){.testi-strip-grid{grid-template-columns:1fr}.testimonials-strip{padding:2rem 1.25rem}}
-
-/* ---------- RESEÑAS VERIFICADAS · TusClases ---------- */
-.rv-note{font-size:.78rem;color:var(--ink2);margin:-.9rem 0 1.25rem;letter-spacing:.02em}
-.rv-card{background:var(--w);border:1.5px solid rgba(0,0,0,.12);padding:1.25rem}
-.rv-loading{font-family:var(--cond);font-size:.72rem;letter-spacing:.16em;color:var(--ink2);padding:1.25rem 0;text-align:center}
-#rv-block.rv-ok .rv-loading{display:none}
-#rv-block.rv-down{display:none}
-
-
-/* ── TRACK CTA ── */
-.track-cta{
-  display:inline-block;margin-top:1.25rem;
-  font-family:var(--cond);font-size:.8rem;letter-spacing:.1em;
-  color:var(--tc);text-decoration:none;
-  border-bottom:1.5px solid var(--tc);padding-bottom:.1rem;
-  transition:opacity .15s;
-}
-.track-cta:hover{opacity:.6}
-.stats-wall{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid rgba(0,0,0,.1)}
-.swall{padding:3rem 2.5rem;border-right:1px solid rgba(0,0,0,.1);display:flex;flex-direction:column;justify-content:space-between}
-.swall:last-child{border-right:none}
-.swall-n{font-family:var(--cond);font-size:clamp(3rem,5vw,4.5rem);line-height:.9;color:var(--ink);margin-bottom:1rem}
-.swall-l{font-size:.8rem;color:var(--ink2);line-height:1.5;max-width:18ch}
-
-/* ── COURSES ── */
-#courses .sec-body{padding:0}
-.track{border-bottom:1px solid rgba(0,0,0,.08)}
-.track:last-child{border-bottom:none}
-.track-hd{display:flex;align-items:stretch;border-bottom:1px solid rgba(0,0,0,.08);cursor:pointer;transition:background .15s;user-select:none}
-.track-hd:hover{background:rgba(0,0,0,.02)}
-.track-bar{width:5px;flex-shrink:0}
-.track-info{padding:1.25rem 1.5rem 1.25rem 2rem;flex:1;display:flex;align-items:center;justify-content:space-between;gap:.75rem;flex-wrap:wrap}
-.track-name{font-family:var(--cond);font-size:clamp(1.2rem,2.5vw,2rem);letter-spacing:.04em;line-height:1.1;flex:1;min-width:0}
-.track-right{display:flex;align-items:center;gap:.75rem;flex-shrink:0}
-.track-tag{font-family:var(--cond);font-size:.55rem;letter-spacing:.1em;padding:.2rem .5rem;border:1.5px solid currentColor;flex-shrink:0;white-space:nowrap}
-.track-toggle{font-family:var(--cond);font-size:1.3rem;color:var(--ink2);flex-shrink:0;transition:transform .3s;line-height:1}
-.track-toggle.open{transform:rotate(45deg)}
-.track-content{display:none;padding:0 2.5rem 2rem}
-.track-content.open{display:block}
-.track-intro{font-size:.85rem;color:var(--ink2);margin-bottom:1.25rem;padding-top:1.5rem;max-width:55ch}
-.lvl-table{width:100%;border-collapse:collapse;border:1.5px solid rgba(0,0,0,.1)}
-.lvl-table th{text-align:left;padding:.55rem 1rem;font-family:var(--cond);font-size:.6rem;letter-spacing:.12em;color:rgba(255,255,255,.7);background:var(--ink);border-bottom:1px solid rgba(0,0,0,.15)}
-.lvl-table td{padding:.85rem 1rem;font-size:.88rem;border-bottom:1px solid rgba(0,0,0,.06);vertical-align:top}
-.lvl-table tr:last-child td{border-bottom:none}
-.lvl-table tr:hover td{background:rgba(0,0,0,.025)}
-.lvl-table td:first-child{font-weight:600}
-.lvl-table td.num{font-family:var(--cond);font-size:1.2rem;letter-spacing:.04em;text-align:center}
-.lvl-table td.goal{color:var(--ink2);font-size:.83rem}
-.pill-sm{display:inline-block;font-family:var(--cond);font-size:.55rem;letter-spacing:.1em;padding:.1rem .4rem;border:1.5px solid currentColor;margin-left:.35rem;vertical-align:middle}
-.sp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1px;background:rgba(0,0,0,.08);margin-top:.5rem}
-.sp{padding:1.4rem 1.25rem;background:var(--w);position:relative;overflow:hidden}
-.sp::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%}
-.sp:hover{background:rgba(0,0,0,.02)}
-.sp-tag{font-family:var(--cond);font-size:.6rem;letter-spacing:.12em;display:block;margin-bottom:.4rem}
-.sp-name{font-family:var(--cond);font-size:1rem;letter-spacing:.04em;line-height:1.2;margin-bottom:.5rem;color:var(--ink)}
-.sp-desc{font-size:.8rem;color:var(--ink2);line-height:1.5}
-
-/* colour system */
-.c-be{--tc:var(--be)}.c-ec{--tc:var(--ec)}.c-ep{--tc:var(--ep)}
-.c-bs{--tc:var(--bs)}.c-ss{--tc:var(--ss)}.c-sp{--tc:var(--sp)}
-.track-bar,.track-name,.track-tag,.ck,.sp-tag,.lvl-table td.num,.track-toggle{color:var(--tc)}
-.track-bar{background:var(--tc)}
-.sp::before{background:var(--tc)}
-
-/* ── CTA BLOCK (animated, Inspirux/Ctrl-inspired) ── */
-.cta-block{
-  background:var(--ink);
-  padding:5rem 2.5rem;
-  display:flex;flex-direction:column;align-items:flex-start;
-  gap:2rem;
-  border-top:1px solid rgba(255,255,255,.06);
-  overflow:hidden;
-  position:relative;
-}
-/* animated diagonal stripe bg */
-.cta-block::before{
-  content:'';
-  position:absolute;inset:0;
-  background:repeating-linear-gradient(
-    -55deg,
-    transparent,transparent 40px,
-    rgba(255,255,255,.018) 40px,rgba(255,255,255,.018) 41px
-  );
-  pointer-events:none;
-}
-.cta-eyebrow{
-  font-family:var(--cond);font-size:.75rem;letter-spacing:.2em;
-  color:rgba(255,255,255,.35);
-  display:flex;align-items:center;gap:.75rem;
-}
-.cta-eyebrow::before{content:'';width:2rem;height:1px;background:rgba(255,255,255,.25)}
-.cta-headline{
-  font-family:var(--cond);
-  font-size:clamp(2.5rem,6vw,5.5rem);
-  letter-spacing:.02em;line-height:.92;
-  color:var(--cream);max-width:14ch;
-  position:relative;z-index:1;
-}
-.cta-headline em{font-family:var(--serif);font-style:italic;color:var(--be)}
-.cta-row{
-  display:flex;align-items:center;gap:2rem;flex-wrap:wrap;
-  position:relative;z-index:1;width:100%;
-}
-.cta-sub{font-size:.9rem;color:rgba(255,255,255,.45);max-width:40ch;line-height:1.65;flex:1}
-/* big animated email button */
-.cta-email-btn{
-  display:inline-flex;align-items:center;gap:1rem;
-  font-family:var(--cond);font-size:clamp(1rem,2vw,1.5rem);letter-spacing:.08em;
-  color:var(--ink);background:var(--cream);
-  padding:1.1rem 2rem;text-decoration:none;
-  border:2px solid var(--cream);
-  position:relative;overflow:hidden;
-  transition:color .3s;
-  flex-shrink:0;
-}
-.cta-email-btn::after{
-  content:'';
-  position:absolute;inset:0;
-  background:var(--be);
-  transform:translateX(-101%);
-  transition:transform .35s cubic-bezier(.4,0,.2,1);
-  z-index:0;
-}
-.cta-email-btn:hover::after{transform:translateX(0)}
-.cta-email-btn:hover{color:#fff;border-color:var(--be)}
-.cta-email-btn span{position:relative;z-index:1}
-.cta-arr{
-  font-size:1.4rem;transition:transform .3s;
-  position:relative;z-index:1;
-}
-.cta-email-btn:hover .cta-arr{transform:translate(4px,-4px)}
-/* marquee inside CTA */
-.cta-mq{overflow:hidden;white-space:nowrap;padding:.6rem 0;border-top:1px solid rgba(255,255,255,.06);width:100%;position:relative;z-index:1}
-.cta-mq-track{display:inline-flex;animation:tick 18s linear infinite reverse}
-.cta-mq-item{font-family:var(--cond);font-size:.85rem;letter-spacing:.12em;color:rgba(255,255,255,.15);padding:0 1.75rem}
-.cta-mq-item b{color:rgba(255,255,255,.4)}
-
-/* ── PLATFORMS ── */
-.platforms-grid{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid rgba(0,0,0,.1)}
-.plat{padding:2.5rem 2rem;border-right:1px solid rgba(0,0,0,.1);display:flex;flex-direction:column}
-.plat:last-child{border-right:none}
-.plat-idx{font-family:var(--cond);font-size:.65rem;letter-spacing:.18em;color:var(--ink2);margin-bottom:.5rem}
-.plat-name{font-family:var(--cond);font-size:1.8rem;letter-spacing:.04em;line-height:1;color:var(--ink);margin-bottom:.65rem}
-.plat-badge{display:inline-block;font-family:var(--cond);font-size:.6rem;letter-spacing:.12em;padding:.2rem .6rem;border:1.5px solid var(--be);color:var(--be);margin-bottom:1rem}
-.plat-desc{font-size:.85rem;color:var(--ink2);line-height:1.65;flex:1;margin-bottom:1.25rem}
-.plat-link{font-family:var(--cond);font-size:.75rem;letter-spacing:.1em;color:var(--be);text-decoration:none;border-bottom:1.5px solid var(--be);padding-bottom:.1rem;align-self:flex-start;transition:color .15s,border-color .15s}
-.plat-link:hover{color:var(--ec);border-color:var(--ec)}
-
-/* ── FAQ ── */
-#faq .sec-body{padding:0}
-.faq-item{border-bottom:1px solid rgba(0,0,0,.08)}
-.faq-q{display:flex;justify-content:space-between;align-items:center;padding:1.4rem 2.5rem;cursor:pointer;transition:background .15s;user-select:none}
-.faq-q:hover{background:rgba(0,0,0,.02)}
-.faq-qt{font-size:.95rem;font-weight:500;color:var(--ink);flex:1;padding-right:2rem}
-.faq-icon{font-family:var(--cond);font-size:1.1rem;color:var(--ink2);flex-shrink:0;transition:transform .25s}
-.faq-icon.open{transform:rotate(45deg)}
-.faq-a{display:none !important;padding:0 2.5rem 1.5rem;font-size:.9rem;color:var(--ink2);line-height:1.7;max-width:65ch}
-.faq-a.open{display:block !important}
-
-/* ── CONTACT ── */
-.contact-grid{display:grid;grid-template-columns:1fr 1fr}
-.contact-l{padding:3.5rem 2.5rem;border-right:1px solid rgba(0,0,0,.1)}
-.ch{font-family:var(--cond);font-size:clamp(2rem,4vw,3.5rem);letter-spacing:.02em;line-height:1;color:var(--ink);margin-bottom:.75rem}
-.ch em{font-family:var(--serif);font-style:italic;color:var(--be)}
-.csub{font-size:.93rem;color:var(--ink2);max-width:38ch;line-height:1.7;margin-bottom:2rem}
-.clinks{display:flex;flex-direction:column;border:1.5px solid rgba(0,0,0,.12)}
-.cl{display:flex;align-items:center;justify-content:space-between;padding:.95rem 1.25rem;text-decoration:none;border-bottom:1px solid rgba(0,0,0,.08);transition:background .15s}
-.cl:last-child{border-bottom:none}
-.cl:hover{background:rgba(0,0,0,.04)}
-.cl-info{display:flex;flex-direction:column;gap:.12rem}
-.cl-label{font-family:var(--cond);font-size:.6rem;letter-spacing:.14em;color:var(--be)}
-.cl-url{font-size:.88rem;font-weight:500;color:var(--ink)}
-.cl-arr{font-size:1rem;color:var(--ink2)}
-.contact-r{padding:3.5rem 2.5rem;background:var(--ink)}
-.tl{font-family:var(--cond);font-size:.68rem;letter-spacing:.15em;color:rgba(255,255,255,.35);margin-bottom:2rem;display:flex;align-items:center;gap:.75rem}
-.tl::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.1)}
-.testi{margin-bottom:1.75rem;padding-left:1.1rem;border-left:2.5px solid var(--be)}
-.testi-t{font-family:var(--serif);font-style:italic;font-size:1rem;color:var(--cream);line-height:1.5;margin-bottom:.4rem}
-.testi-a{font-family:var(--cond);font-size:.6rem;letter-spacing:.1em;color:rgba(255,255,255,.3)}
-
-/* ── FOOTER ── */
-footer{background:var(--ink);overflow:hidden}
-/* newsletter block */
-.foot-newsletter{
-  display:grid;grid-template-columns:1fr 1fr;gap:4rem;
-  padding:4rem 2.5rem;
-  border-bottom:1px solid rgba(255,255,255,.08);
-  align-items:start;
-}
-.foot-nl-label{font-family:var(--cond);font-size:.68rem;letter-spacing:.18em;color:rgba(255,255,255,.35);margin-bottom:.75rem;display:block}
-.foot-nl-h{font-family:var(--cond);font-size:clamp(1.4rem,2.5vw,2rem);letter-spacing:.02em;line-height:1.15;color:var(--cream);margin-bottom:.75rem}
-.foot-nl-sub{font-size:.85rem;color:rgba(255,255,255,.45);line-height:1.6}
-.nl-form{display:flex;flex-direction:column;gap:.75rem}
-.nl-input{
-  background:#fff;border:1.5px solid rgba(0,0,0,.18);
-  color:var(--ink);font-family:var(--sans);font-size:.9rem;
-  padding:.85rem 1.1rem;outline:none;
-  transition:border-color .2s;
-}
-.nl-input::placeholder{color:rgba(0,0,0,.35)}
-.nl-input:focus{border-color:var(--be)}
-.nl-select{
-  background:#fff;border:1.5px solid rgba(0,0,0,.18);
-  color:var(--ink);font-family:var(--sans);font-size:.85rem;
-  padding:.85rem 1.1rem;outline:none;cursor:pointer;
-  transition:border-color .2s;
-  -webkit-appearance:none;appearance:none;
-}
-.nl-select option{
-  background:#fff;
-  color:var(--ink);
-}
-.nl-select:focus{border-color:var(--be)}
-.nl-btn{
-  font-family:var(--cond);font-size:.9rem;letter-spacing:.1em;
-  background:var(--ink);color:var(--cream);
-  border:2px solid var(--ink);padding:.85rem 1.75rem;
-  cursor:pointer;align-self:flex-start;
-  position:relative;overflow:hidden;transition:color .3s;
-}
-.nl-btn::after{content:'';position:absolute;inset:0;background:var(--be);transform:translateX(-101%);transition:transform .3s cubic-bezier(.4,0,.2,1);z-index:0}
-.nl-btn:hover::after{transform:translateX(0)}
-.nl-btn:hover{color:#fff;border-color:var(--be)}
-.nl-btn span{position:relative;z-index:1}
-.nl-success{font-family:var(--cond);font-size:.85rem;letter-spacing:.08em;color:var(--ep);padding:.75rem 0}
-.nl-error{font-size:.8rem;color:var(--ec);padding:.5rem 0}
-/* big email */
-.foot-email-wrap{padding:2.5rem 2.5rem 0;overflow:hidden;border-bottom:1px solid rgba(255,255,255,.06)}
-.foot-email{
-  font-family:var(--cond);
-  font-size:clamp(2rem,6.5vw,6rem);
-  letter-spacing:-.01em;line-height:.85;
-  color:var(--cream);white-space:nowrap;display:block;
-  text-decoration:none;padding-bottom:2.5rem;
-  transition:color .2s;
-}
-.foot-email:hover{color:rgba(255,255,255,.45)}
-/* bottom bar */
-.foot-bottom{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:1.25rem 2.5rem;flex-wrap:wrap;gap:1rem;
-  border-bottom:1px solid rgba(255,255,255,.06);
-}
-.foot-social{display:flex;gap:.75rem;align-items:center}
-.foot-icon{
-  display:flex;align-items:center;justify-content:center;
-  width:2rem;height:2rem;
-  color:rgba(255,255,255,.4);
-  border:1px solid rgba(255,255,255,.12);
-  transition:color .15s,border-color .15s;
-  text-decoration:none;
-}
-.foot-icon:hover{color:var(--cream);border-color:rgba(255,255,255,.4)}
-.foot-nav{display:flex;gap:1.5rem;flex-wrap:wrap}
-.foot-nav a{font-family:var(--cond);font-size:.65rem;letter-spacing:.1em;color:rgba(255,255,255,.3);text-decoration:none;transition:color .15s}
-.foot-nav a:hover{color:rgba(255,255,255,.8)}
-.foot-copy{font-family:var(--cond);font-size:.65rem;letter-spacing:.1em;color:rgba(255,255,255,.2)}
-/* wordmark */
-.foot-wordmark-wrap{overflow:hidden}
-.foot-wordmark{
-  font-family:var(--cond);
-  font-size:clamp(5rem,18vw,16rem);
-  letter-spacing:-.02em;line-height:.8;
-  color:rgba(255,255,255,.04);
-  white-space:nowrap;display:block;padding:0 1rem;
-}
-
-/* ── RESPONSIVE ── */
-@media(max-width:1000px){
-  .hero-single{grid-template-columns:1fr}
-  .hero-left-full{border-right:none;border-bottom:1px solid rgba(0,0,0,.1)}
-  .hero-stats{grid-template-columns:1fr 1fr;padding:2.5rem 1.75rem}
-  .about-cols{grid-template-columns:1fr;gap:2rem}
-  .stats-wall{grid-template-columns:repeat(2,1fr)}
-  .platforms-grid{grid-template-columns:1fr}
-  .plat{border-right:none;border-bottom:1px solid rgba(0,0,0,.1)}
-  .plat:last-child{border-bottom:none}
-  .contact-grid{grid-template-columns:1fr}
-  .contact-l{border-right:none;border-bottom:1px solid rgba(0,0,0,.1)}
-  .foot-newsletter{grid-template-columns:1fr;gap:2rem;padding:3rem 1.75rem}
-  /* on single-col hero, scroll wrap needs explicit height */
-  .course-scroll-wrap{height:340px;flex:none}
-}
-@media(max-width:900px){
-  /* hide desktop nav links and CTA, show hamburger */
-  .nav-links{display:none}
-  .nav-cta{display:none}
-  .nav-hamburger{display:flex}
-  .nav-tagline{display:none}
-  /* always keep lang toggle visible on mobile */
-  .nav-right{gap:.6rem}
-  .lang-toggle{display:flex !important}
-}
-@media(max-width:640px){
-  nav{padding:.7rem 1rem;gap:.5rem}
-  .sec-meta{padding:1rem 1.25rem}
-  .sec-body{padding:1.5rem 1.25rem}
-  .faq-q{padding:1.1rem 1.25rem}
-  .faq-a{padding:0 1.25rem 1.25rem}
-  .contact-l,.contact-r{padding:2rem 1.25rem}
-  .track-content{padding:0 1rem 1.5rem}
-  .track-info{padding:.9rem 1rem .9rem 1rem}
-  .track-tag{display:none} /* hide on very small screens, name is enough */
-  .lvl-table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
-  .swall{padding:1.75rem 1.25rem}
-  .stats-wall{grid-template-columns:repeat(2,1fr)}
-  .foot-newsletter{padding:2rem 1.25rem}
-  .foot-email-wrap{padding:1.5rem 1.25rem 0}
-  .foot-bottom{padding:1rem 1.25rem;flex-direction:column;align-items:flex-start;gap:.75rem}
-  .cta-block{padding:2.5rem 1.25rem}
-  .cta-headline{font-size:clamp(2rem,8vw,3.5rem)}
-  .cta-row{flex-direction:column;align-items:flex-start}
-  .hero-stats{gap:1.5rem}
-  .course-scroll-wrap{height:300px;flex:none}
-  /* stack stats 2x2 */
-  .hero-stats{display:grid;grid-template-columns:1fr 1fr;gap:.75rem 2rem}
-}
-
-/* ── i18n: hide/show ── */
-[data-lang]{display:none}
-body.lang-en [data-lang="en"]{display:block}
-body.lang-en [data-lang="en"].inline{display:inline}
-body.lang-en [data-lang="en"].flex{display:flex}
-body.lang-en [data-lang="en"].grid{display:grid}
-body.lang-es [data-lang="es"]{display:block}
-body.lang-es [data-lang="es"].inline{display:inline}
-body.lang-es [data-lang="es"].flex{display:flex}
-body.lang-es [data-lang="es"].grid{display:grid}
-/* elements that swap text inline */
-.t[data-en][data-es]{}
-
-/* ── FLOATING CTA ── */
-.float-cta{
-  position:fixed;
-  right:1.25rem;
-  bottom:1.5rem;
-  z-index:150;
-  display:flex;
-  flex-direction:column;
-  align-items:flex-end;
-  gap:.5rem;
-}
-.float-book{
-  display:flex;align-items:center;gap:.6rem;
-  font-family:var(--cond);font-size:.8rem;letter-spacing:.1em;
-  color:var(--cream);background:var(--ink);
-  padding:.65rem 1.1rem;text-decoration:none;
-  border:2px solid var(--ink);
-  box-shadow:0 4px 16px rgba(0,0,0,.18);
-  transition:background .15s,transform .15s;
-  white-space:nowrap;
-}
-.float-book:hover{background:var(--be);border-color:var(--be);transform:translateY(-2px)}
-.float-book-dot{
-  width:8px;height:8px;border-radius:50%;
-  background:var(--ep);flex-shrink:0;
-  animation:pulse 2s ease-in-out infinite;
-}
-@keyframes pulse{
-  0%,100%{opacity:1;transform:scale(1)}
-  50%{opacity:.5;transform:scale(.8)}
-}
-/* Mobile: smaller */
-@media(max-width:640px){
-  .float-book{font-size:.72rem;padding:.55rem .9rem}
-  .float-cta{right:1rem;bottom:1.25rem}
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Track English Studio: entrenamiento 1 a 1 en inglés y plataforma interactiva para profesionales.">
+  <title>Track English Studio | 1-on-1 Training &amp; Interactive App</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@1,900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--cream:#f3ede3;--paper:#fafaf8;--ink:#0d0d0d;--muted:#5a5650;--blue:#1b3fa0;--green:#1a7a4a;--orange:#c47a0b;--red:#b03a2e;--serif:'Playfair Display',Georgia,serif;--display:'Bebas Neue',Impact,sans-serif;--sans:Inter,system-ui,sans-serif;--mono:'Space Mono',monospace}
+    html{scroll-behavior:smooth}
+    body{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.6;overflow-x:hidden}
+    a{color:inherit}
+    .mono,.eyebrow,.nav-tagline,.section-number,.section-label,.card-index,.track-tag,.price-note,.footer-list a,.copyright{font-family:var(--mono)}
+    nav{height:64px;position:fixed;inset:0 0 auto;z-index:10;background:var(--ink);color:var(--cream);display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;gap:2rem}
+    .brand{display:flex;flex-direction:column;line-height:1}
+    .brand-name{font:1.15rem var(--display);letter-spacing:.12em}
+    .nav-tagline{font-size:.5rem;letter-spacing:.08em;color:#aaa;margin-top:.25rem}
+    .nav-links{display:flex;align-items:center;gap:1.8rem;list-style:none;font: .75rem var(--mono);letter-spacing:.08em}
+    .nav-links a,.access-link{text-decoration:none;color:#bdbdbd;transition:color .2s}
+    .nav-links a:hover,.access-link:hover{color:#fff}
+    .nav-actions{display:flex;align-items:center;gap:1rem}
+    .access-link{font:.65rem var(--mono);white-space:nowrap}
+    .nav-cta,.button{font:700 .7rem var(--mono);letter-spacing:.04em;text-decoration:none;border:2px solid var(--ink);padding:.75rem 1rem;display:inline-block;transition:transform .15s,box-shadow .15s,background .15s}
+    .nav-cta{background:var(--cream);color:var(--ink);border-color:var(--cream);white-space:nowrap}
+    .button.primary{background:var(--blue);color:#fff;border-color:var(--ink);box-shadow:4px 4px 0 var(--ink)}
+    .button.primary:hover{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--ink)}
+    .button.secondary{background:transparent}
+    .menu-toggle{display:none;background:none;border:0;color:var(--cream);font-size:1.4rem}
+    .hero{padding:64px 2.5rem 0;min-height:calc(100vh - 64px);display:grid;grid-template-columns:1.35fr .65fr;border-bottom:1px solid #ddd}
+    .hero-main{padding:7rem 5rem 5rem 0;border-right:1px solid #ddd}
+    .eyebrow{font-size:.66rem;letter-spacing:.1em;color:var(--blue);margin-bottom:1.5rem}
+    h1{font:clamp(4rem,8.7vw,8.6rem)/.83 var(--display);letter-spacing:-.01em;max-width:9ch}
+    h1 em{font:italic clamp(3.2rem,7.5vw,7.5rem)/.9 var(--serif);color:var(--blue)}
+    .hero-copy{font-size:1rem;line-height:1.75;color:var(--muted);max-width:58ch;margin:2rem 0}
+    .hero-actions{display:flex;align-items:center;gap:1.2rem;flex-wrap:wrap}
+    .hero-note{font: .62rem var(--mono);color:var(--muted);letter-spacing:.03em}
+    .hero-aside{padding:7rem 0 4rem 3rem;display:flex;flex-direction:column;justify-content:space-between}
+    .aside-mark{font:clamp(5rem,12vw,10rem)/.8 var(--display);color:var(--blue);letter-spacing:-.03em}
+    .aside-copy{border-left:3px solid var(--blue);padding-left:1rem;font-size:.9rem;color:var(--muted);max-width:28ch}
+    .pillars{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid #ddd}
+    .pillar{padding:2rem 2.5rem;border-right:1px solid #ddd}
+    .pillar:last-child{border-right:0}
+    .pillar h3{font:1.1rem var(--display);letter-spacing:.05em;margin:.6rem 0}
+    .pillar p{font-size:.8rem;color:var(--muted);line-height:1.6}
+    .section-head{display:flex;align-items:stretch;border-bottom:1px solid #ddd}
+    .section-number{font-size:.7rem;letter-spacing:.1em;background:var(--ink);color:#aaa;padding:1.3rem .8rem;writing-mode:vertical-rl}
+    .section-heading{padding:1.4rem 2.5rem;display:flex;align-items:center;gap:1rem}
+    h2{font:clamp(2rem,4vw,3.4rem)/1 var(--display);letter-spacing:.03em}
+    .section-label{font-size:.6rem;color:var(--blue);letter-spacing:.08em}
+    .section-body{padding:3.5rem 2.5rem}
+    .tracks-intro{display:flex;justify-content:space-between;gap:2rem;align-items:end;margin-bottom:2rem}
+    .tracks-intro p{font-size:.85rem;color:var(--muted);max-width:52ch}
+    .tracks-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem}
+    .track-card{min-height:250px;border:2px solid var(--track-color);border-top:5px solid var(--track-color);background:#fff;padding:1.5rem;display:flex;flex-direction:column;box-shadow:4px 4px 0 var(--track-color);transition:transform .2s,border-color .2s,background .2s}
+    .track-card:hover{transform:translateY(-5px);border-color:var(--track-color);box-shadow:6px 6px 0 var(--track-color)}
+    .track-card[open]{background:var(--track-tint);border-color:var(--track-color)}
+    .track-card summary{list-style:none;cursor:pointer;display:flex;flex-direction:column;flex:1}
+    .track-card summary::-webkit-details-marker{display:none}
+    .track-card summary::after{content:'+';font:1.2rem var(--mono);color:var(--track-color);margin-top:auto;padding-top:1rem}
+    .track-card[open] summary::after{content:'−'}
+    .summary-action{font:700 .58rem var(--mono);letter-spacing:.04em;text-transform:uppercase;color:var(--track-color);margin-top:auto;padding-top:1rem}
+    .card-index{font-size:.65rem;color:var(--track-color)}
+    .track-card h3{font:1.45rem/1 var(--display);margin:1.5rem 0 .8rem;color:var(--ink)}
+    .track-card .track-copy{padding-top:1rem;margin-top:1rem;border-top:1px dashed var(--track-color);display:grid;gap:.8rem}
+    .track-card .track-copy p{font-size:.78rem;line-height:1.55;color:var(--muted);margin:0}
+    .track-card .track-copy strong{color:var(--ink)}
+    .track-tag{font-size:.55rem;color:var(--track-color);letter-spacing:.06em}
+    .track-item{display:flex;flex-direction:column}
+    .track-blue{--track-color:var(--blue);--track-tint:#eef2ff}
+    .track-red{--track-color:var(--red);--track-tint:#fff0ee}
+    .track-green{--track-color:var(--green);--track-tint:#edf8f1}
+    .track-orange{--track-color:var(--orange);--track-tint:#fff7e8}
+    .track-purple{--track-color:#6b3fa0;--track-tint:#f5effb}
+    .track-pink{--track-color:#a0396b;--track-tint:#fff0f6}
+    .tracks-cta{margin-top:3rem;border:2px solid var(--ink);background:var(--cream);padding:1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1.5rem}
+    .tracks-cta strong{display:block;font:700 .65rem var(--mono);color:var(--blue);letter-spacing:.05em;text-transform:uppercase;margin-bottom:.35rem}
+    .tracks-cta p{font-size:.82rem;color:var(--muted)}
+    @media(max-width:700px){.tracks-grid{grid-template-columns:1fr}.tracks-intro{display:block}.tracks-intro p{margin-top:1rem}.tracks-cta{align-items:flex-start;flex-direction:column}}
+    .platform{background:var(--ink);color:#fff;border-bottom:1px solid var(--ink)}
+    .platform .section-head{border-color:#333}
+    .platform .section-number{background:var(--cream);color:var(--ink)}
+    .platform .section-heading{padding-bottom:1.25rem}
+    .platform .section-label{color:#6f8cff}
+    .platform h2{color:#fff}
+    .platform-inner{max-width:1150px;margin:auto;padding:3.5rem 2.5rem 4rem}
+    .platform-intro-grid{display:grid;grid-template-columns:5fr 7fr;gap:2rem;align-items:start;margin-bottom:3.5rem;padding-bottom:2.5rem;border-bottom:1px solid #333}
+    .platform-intro{font:italic 1.7rem/1.35 var(--serif);color:var(--cream);max-width:18ch}
+    .platform-copy{color:#a0a0a0;max-width:58ch;font-size:.9rem;line-height:1.7}
+    .app-features{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-bottom:3rem}
+    .app-feature{min-height:175px;border:1px solid #3d3d3d;background:#1a1a1a;padding:1.5rem;display:flex;flex-direction:column;transition:border-color .2s}
+    .app-feature:hover{border-color:#6f8cff}
+    .app-feature::before{content:'// MÓDULO 0' attr(data-module);font:700 .58rem var(--mono);color:#6f8cff;margin-bottom:.7rem}
+    .app-feature strong{display:block;font:700 .85rem var(--mono);letter-spacing:.08em;color:#fff;margin-bottom:.75rem}
+    .app-feature span{font-size:.78rem;line-height:1.6;color:#888;margin-top:auto}
+    .class-kit{border:1px solid #3d3d3d;background:#181818;padding:1.5rem 2rem;display:flex;align-items:center;justify-content:space-between;gap:1.5rem}
+    .class-kit-label{font:700 .62rem var(--mono);color:#fff;text-transform:uppercase;letter-spacing:.06em}
+    .class-kit-label strong{background:var(--blue);padding:.2rem .4rem;margin-right:.5rem}
+    .class-kit p{font-size:.78rem;line-height:1.6;color:#a0a0a0;margin-top:.6rem;max-width:70ch}
+    .class-kit a{font:700 .65rem var(--mono);color:#fff;text-decoration:none;border:1px solid #fff;padding:.75rem 1rem;white-space:nowrap}
+    .class-kit a:hover{background:#fff;color:var(--ink)}
+    .pricing{background:var(--paper)}
+    .pricing .section-body{max-width:1100px;margin:auto}
+    .pricing-head{display:flex;justify-content:space-between;align-items:end;gap:1rem;margin-bottom:2.5rem;padding-bottom:1.5rem;border-bottom:2px solid var(--ink)}
+    .pricing-head h2{margin-top:.4rem}
+    .pricing-badge{font:700 .62rem var(--mono);text-transform:uppercase;background:#eae5d9;border:1px solid var(--ink);padding:.45rem .7rem;white-space:nowrap}
+    .diagnostic-card,.pricing-table-wrap,.format-card,.policy-card{border:2px solid var(--ink);background:#fff;box-shadow:4px 4px 0 var(--ink)}
+    .diagnostic-card{padding:1.5rem;margin-bottom:2rem;display:flex;justify-content:space-between;align-items:center;gap:1.5rem}
+    .diagnostic-card h3{font:1.25rem var(--display);letter-spacing:.03em;margin:.5rem 0}
+    .pricing-kicker{font:700 .62rem var(--mono);color:var(--blue);text-transform:uppercase;letter-spacing:.05em}
+    .pricing-copy{font-size:.8rem;color:var(--muted);line-height:1.6}
+    .pricing-table-wrap{margin-bottom:2.5rem;overflow:hidden}
+    .pricing-includes{padding:1rem 1.25rem;border-bottom:2px solid var(--ink);background:#f0ede4;font-size:.8rem;color:#3a3a3a}
+    .price-table{width:100%;border-collapse:collapse;background:#fff}
+    .price-table th,.price-table td{text-align:left;padding:1.1rem 1.25rem;border-bottom:1px solid #ddd;vertical-align:top}
+    .price-table th{font:700 .6rem var(--mono);letter-spacing:.08em;text-transform:uppercase;background:#faf6ed}
+    .price-table td{font-size:.8rem}
+    .price-table td:first-child{font-weight:700;color:var(--ink)}
+    .price-table tbody tr:hover{background:#fbf9f4}
+    .price-list{text-decoration:line-through;color:var(--muted);font-family:var(--mono)}
+    .price{font:700 1rem var(--mono);white-space:nowrap}
+    .price-note{font-size:.58rem;color:var(--blue);display:block;margin-top:.25rem;font-family:var(--mono)}
+    .price-saving{font:700 .7rem var(--mono);color:var(--blue)}
+    .formats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem;margin-bottom:2.5rem}
+    .format-card{padding:1.5rem;box-shadow:3px 3px 0 var(--ink)}
+    .format-card h4{font:1.35rem var(--display);margin:.45rem 0}
+    .policy-card{background:#eae5d9;padding:1.5rem}
+    .policy-card h4{font:1.15rem var(--display);margin-bottom:1rem}
+    .policy-list{list-style:none;display:grid;gap:.7rem;font-size:.75rem;color:#3a3a3a}
+    .policy-list li{display:flex;gap:.6rem}
+    .policy-list li::before{content:'—';font:700 .8rem var(--mono);color:var(--blue)}
+    .booking{background:var(--paper)}
+    .booking-inner{max-width:1050px;margin:auto}
+    .booking-head{display:flex;justify-content:space-between;align-items:end;gap:1rem;margin-bottom:2.5rem;padding-bottom:1.5rem;border-bottom:2px solid var(--ink)}
+    .booking-head h2{margin-top:.4rem}
+    .booking-badge{font:700 .62rem var(--mono);text-transform:uppercase;background:#eae5d9;border:1px solid var(--ink);padding:.45rem .7rem;white-space:nowrap}
+    .booking-points{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:2rem}
+    .booking-point{border:2px solid var(--ink);background:#fff;padding:1.1rem;box-shadow:2px 2px 0 var(--ink)}
+    .booking-point strong{display:block;font:700 .62rem var(--mono);color:var(--blue);margin-bottom:.45rem}
+    .booking-point p{font-size:.75rem;line-height:1.55;color:#4a4a4a}
+    .calendar-shell{border:2px solid var(--ink);background:#fff;padding:.5rem;box-shadow:6px 6px 0 var(--ink);margin-bottom:2.5rem;overflow:hidden}
+    .calendar{width:100%;height:680px;background:#faf6ed;border:1px solid rgba(0,0,0,.2)}
+    .calendar iframe{width:100%;height:100%;border:0}
+    .booking-escape{border:2px solid var(--ink);background:#faf6ed;padding:1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1.5rem}
+    .booking-escape strong{display:block;font:700 .65rem var(--mono);text-transform:uppercase;margin-bottom:.35rem}
+    .booking-escape p{font-size:.75rem;color:var(--muted)}
+    .booking-links{display:flex;gap:.75rem;flex-shrink:0}
+    .booking-links a{font:700 .62rem var(--mono);text-decoration:none;text-transform:uppercase;padding:.7rem 1rem;border:2px solid var(--ink);background:#fff;box-shadow:2px 2px 0 var(--ink)}
+    .booking-links a:last-child{background:var(--blue);color:#fff}
+    .booking-links a:hover{background:var(--ink);color:#fff}
+    footer{background:var(--ink);color:var(--cream);padding:3.5rem 2.5rem 1.25rem}
+    .footer-top{display:grid;grid-template-columns:1fr 1fr;gap:3rem;padding-bottom:3rem;border-bottom:1px solid #333}
+    footer h2{font-size:clamp(3rem,7vw,7rem);color:var(--cream)}
+    .footer-list{columns:2;list-style:none;font:.65rem/2 var(--mono);letter-spacing:.04em;color:#aaa}
+    .footer-list a{text-decoration:none}
+    .footer-list a:hover{color:#fff}
+    .footer-bottom{display:flex;justify-content:space-between;gap:1rem;padding-top:1.2rem;flex-wrap:wrap}
+    .copyright{font-size:.58rem;color:#777;letter-spacing:.04em}
+    .footer-social{display:flex;gap:1rem;font:.65rem var(--mono)}
+    .footer-social a{text-decoration:none;color:#aaa}
+    .footer-social a:hover{color:#fff}
+    @media(max-width:1000px){.nav-links{gap:.8rem}.tracks-grid{grid-template-columns:repeat(2,1fr)}.hero-main{padding-right:3rem}.platform-intro-grid{grid-template-columns:1fr}.app-features{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:700px){nav{padding:0 1rem;height:58px}.nav-links{display:none}.nav-links.open{position:absolute;top:58px;left:0;right:0;display:flex;flex-direction:column;align-items:stretch;gap:0;background:var(--ink);padding:.5rem 1rem 1rem;border-top:1px solid #333}.nav-links.open li{border-bottom:1px solid #333}.nav-links.open a{display:block;padding:.8rem 0}.nav-cta{display:none}.menu-toggle{display:block}.nav-actions{margin-left:auto}.access-link{font-size:.55rem}.hero{padding:58px 1.25rem 0;display:block;min-height:auto}.hero-main{padding:5rem 0 3rem;border-right:0}.hero-aside{padding:2rem 0 3rem;border-top:1px solid #ddd;gap:2rem}.aside-mark{font-size:7rem}.pillars{grid-template-columns:1fr}.pillar{padding:1.5rem 1.25rem;border-right:0;border-bottom:1px solid #ddd}.section-heading{padding:1.1rem 1.25rem}.section-body{padding:2.5rem 1.25rem}.tracks-grid{grid-template-columns:1fr;gap:1.25rem}.track-item{min-width:0}.track-card{min-height:0;padding:1.2rem;box-shadow:3px 3px 0 var(--track-color)}.track-card:hover{transform:none;box-shadow:3px 3px 0 var(--track-color)}.track-card h3{font-size:1.35rem;margin:1.1rem 0 .7rem}.track-card .track-copy{gap:.7rem}.track-card .track-copy p{font-size:.76rem}.platform .section-heading{padding:1.1rem 1.25rem}.platform-inner{padding:2.5rem 1.25rem 3rem}.platform-intro-grid{display:block;margin-bottom:2rem;padding-bottom:2rem}.platform-copy{margin-top:1.5rem}.app-features{grid-template-columns:1fr;gap:1rem;margin-bottom:2rem}.app-feature{min-height:145px;padding:1.25rem}.class-kit{align-items:flex-start;flex-direction:column;padding:1.25rem}.class-kit a{width:100%;text-align:center}.pricing-head{display:block}.pricing-badge{display:inline-block;margin-top:1rem}.diagnostic-card{align-items:flex-start;flex-direction:column}.diagnostic-card .button{width:100%;text-align:center}.formats-grid{grid-template-columns:1fr}.price-table th,.price-table td{padding:.8rem .65rem;font-size:.72rem}.price{font-size:.85rem}.booking-head{display:block}.booking-badge{display:inline-block;margin-top:1rem}.booking-points{grid-template-columns:1fr;gap:.8rem}.calendar-shell{padding:.3rem;box-shadow:4px 4px 0 var(--ink)}.calendar{height:680px}.booking-escape{align-items:flex-start;flex-direction:column;padding:1.25rem}.booking-links{width:100%;flex-direction:column}.booking-links a{text-align:center}.agenda-wrap{grid-template-columns:1fr;gap:2rem}footer{padding:2.5rem 1.25rem 1rem}.footer-top{grid-template-columns:1fr;gap:2rem}.footer-list{columns:1}.footer-bottom{flex-direction:column}}
+  </style>
 </head>
-<body class="lang-en">
+<body>
+  <nav>
+    <a class="brand" href="#" aria-label="Track English Studio">
+      <span class="brand-name">TRACK ENGLISH STUDIO</span>
+      <span class="nav-tagline">1-ON-1 TRAINING &amp; INTERACTIVE APP</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#tracks">Tracks</a></li>
+      <li><a href="#metodo">Método</a></li>
+      <li><a href="#precios">Precios</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a class="access-link" href="https://activityblog.vercel.app/" target="_blank" rel="noopener">Acceso Alumnos ↗</a>
+      <a class="nav-cta" href="#agenda">Agendar Nivelación</a>
+      <button class="menu-toggle" aria-label="Abrir menú" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
+    </div>
+  </nav>
 
-<!-- NAV -->
-<nav>
-  <div class="nav-brand">
-    <span class="nav-logo">CAMILA MIHALYCZO</span>
-    <span class="nav-tagline t" data-en="Language Tutor · Buenos Aires" data-es="Tutorías de Idiomas · Buenos Aires">Language Tutor · Buenos Aires</span>
-  </div>
-  <ul class="nav-links">
-    <li><a href="#about" class="t" data-en="PROFILE" data-es="PERFIL">PROFILE</a></li>
-    <li><a href="#courses" class="t" data-en="COURSES" data-es="CURSOS">COURSES</a></li>
-    <li><a href="#platforms" class="t" data-en="PLATFORMS" data-es="PLATAFORMAS">PLATFORMS</a></li>
-    <li><a href="#faq">FAQ</a></li>
-    <li><a href="#contact" class="t" data-en="CONTACT" data-es="CONTACTO">CONTACT</a></li>
-  </ul>
-  <div class="nav-right">
-    <button class="nav-hamburger" onclick="toggleMenu()" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
-</nav>
-<!-- MOBILE MENU -->
-<div class="mobile-menu" id="mobileMenu">
-  <div class="mm-header">
-    <span class="nav-logo">CAMILA MIHALYCZO</span>
-    <button class="mm-close" onclick="toggleMenu()">×</button>
-  </div>
-  <ul class="mm-links">
-    <li><a href="#about" onclick="toggleMenu()" class="t" data-en="PROFILE" data-es="PERFIL">PROFILE</a></li>
-    <li><a href="#courses" onclick="toggleMenu()" class="t" data-en="COURSES" data-es="CURSOS">COURSES</a></li>
-    <li><a href="#platforms" onclick="toggleMenu()" class="t" data-en="PLATFORMS" data-es="PLATAFORMAS">PLATFORMS</a></li>
-    <li><a href="#faq" onclick="toggleMenu()">FAQ</a></li>
-    <li><a href="#contact" onclick="toggleMenu()" class="t" data-en="CONTACT" data-es="CONTACTO">CONTACT</a></li>
-  </ul>
-  <div class="mm-bottom">
-    <div class="lang-toggle lang-toggle-menu">
-      <button class="lang-btn active" onclick="setLang('en');toggleMenu()">EN</button>
-      <button class="lang-btn" onclick="setLang('es');toggleMenu()">ES</button>
-    </div>
-    <a href="#contact" onclick="toggleMenu()" class="btn-solid t" data-en="BOOK A FREE CLASS" data-es="RESERVAR CLASE GRATIS">BOOK A FREE CLASS</a>
-  </div>
-</div>
-
-<!-- TICKER -->
-<div class="ticker-wrap">
-  <div class="ticker-track">
-    <span class="ti"><b>ENGLISH TUTOR</b></span><span class="ti">·</span>
-    <span class="ti"><b>TUTORA DE ESPAÑOL</b></span><span class="ti">·</span>
-    <span class="ti"><b>CAMBRIDGE CERTIFIED</b></span><span class="ti">·</span>
-    <span class="ti"><b>BUENOS AIRES</b></span><span class="ti">·</span>
-    <span class="ti"><b>TEFL NIVEL 5</b></span><span class="ti">·</span>
-    <span class="ti"><b>BUSINESS ENGLISH</b></span><span class="ti">·</span>
-    <span class="ti"><b>ESPAÑOL RIOPLATENSE</b></span><span class="ti">·</span>
-    <span class="ti"><b>CREATIVE PROFESSIONALS</b></span><span class="ti">·</span>
-    <span class="ti"><b>ENGLISH TUTOR</b></span><span class="ti">·</span>
-    <span class="ti"><b>TUTORA DE ESPAÑOL</b></span><span class="ti">·</span>
-    <span class="ti"><b>CAMBRIDGE CERTIFIED</b></span><span class="ti">·</span>
-    <span class="ti"><b>BUENOS AIRES</b></span><span class="ti">·</span>
-    <span class="ti"><b>TEFL NIVEL 5</b></span><span class="ti">·</span>
-    <span class="ti"><b>BUSINESS ENGLISH</b></span><span class="ti">·</span>
-    <span class="ti"><b>ESPAÑOL RIOPLATENSE</b></span><span class="ti">·</span>
-    <span class="ti"><b>CREATIVE PROFESSIONALS</b></span><span class="ti">·</span>
-  </div>
-</div>
-
-<!-- HERO — full width single column -->
-<section style="border:none;padding:0">
-<div class="hero hero-single">
-  <!-- LEFT: name + bio + CTAs -->
-  <div class="hero-left-full">
-    <div class="hero-text">
-      <p class="hero-label t" data-en="LANGUAGE TUTOR · ONLINE · BUENOS AIRES" data-es="TUTORÍAS DE IDIOMAS · EN LÍNEA · BUENOS AIRES">LANGUAGE TUTOR · ONLINE · BUENOS AIRES</p>
-      <h1 class="hero-h">
-        CAMILA<br>
-        <span class="serif-line">Mihalyczo</span><br>
-        <span class="t" data-en="TUTOR OF" data-es="TUTORA DE">TUTOR OF</span><br>
-        <span style="color:var(--be)" class="t" data-en="LANGUAGES." data-es="IDIOMAS.">LANGUAGES.</span>
-      </h1>
-      <p class="hero-sub" data-lang="en">
-        I teach <strong>English and Spanish</strong> to professionals, creatives, and developers who need a language that actually works in their real life — not textbook exercises.<br><br>
-        Cambridge certified. TEFL Level 5. <strong>Buenos Aires native.</strong>
-      </p>
-      <p class="hero-sub" data-lang="es">
-        Enseño <strong>inglés y español</strong> a profesionales, creativos y desarrolladores que necesitan un idioma que funcione en su trabajo real — no ejercicios de libros de texto.<br><br>
-        Certificación Cambridge. TEFL Nivel 5. <strong>Porteña de nacimiento.</strong>
-      </p>
-      <div class="hero-btns">
-        <a href="#courses" class="btn-solid t" data-en="SEE ALL COURSES" data-es="VER TODOS LOS CURSOS">SEE ALL COURSES</a>
-        <a href="https://calendar.app.google/1nzZDCss9Lrhv8ZdA" target="_blank" class="btn-ghost t" data-en="FREE TRIAL CLASS" data-es="CLASE DE PRUEBA GRATIS">FREE TRIAL CLASS</a>
-      </div>
-      <p style="font-size:.78rem;letter-spacing:.04em;color:var(--ink2);margin-top:1.1rem" class="t" data-en="Your timezone, your pace · no package required to start · self-paced review with Activity Blog" data-es="Tu horario, tu ritmo · sin paquete obligatorio para empezar · repaso a tu ritmo con Activity Blog">Your timezone, your pace · no package required to start · self-paced review with Activity Blog</p>
-    </div>
-  </div>
-  <!-- RIGHT: stats in 2x2 grid -->
-  <div class="hero-stats">
-    <div class="hstat"><span class="hstat-n">6+</span><span class="hstat-l t" data-en="years teaching" data-es="años enseñando">years teaching</span></div>
-    <div class="hstat"><span class="hstat-n">5</span><span class="hstat-l t" data-en="course tracks" data-es="tracks de cursos">course tracks</span></div>
-    <div class="hstat"><span class="hstat-n">2</span><span class="hstat-l t" data-en="languages" data-es="idiomas">languages</span></div>
-    <div class="hstat"><span class="hstat-n" style="color:var(--be)">100%</span><span class="hstat-l t" data-en="online, flexible" data-es="online, flexible">online, flexible</span></div>
-  </div>
-</div>
-</section>
-
-
-<!-- EDRA-STYLE TRACK PREVIEW — right after stats -->
-<div class="tracks-preview" id="tracksPreview">
-  <div class="tp-label t" data-en="COURSES & PACKAGES — OVERVIEW" data-es="CURSOS Y PAQUETES — VISTA GENERAL">COURSES & PACKAGES — OVERVIEW</div>
-  <div class="tp-stage">
-    <div class="tp-block tp-be">
-      <div class="tp-block-inner"><div class="tp-stripes"></div><span class="tp-count">10–12</span><span class="tp-vlabel">BUSINESS ENGLISH</span></div>
-      <div class="tp-tooltip"><span class="tp-tt-name">BUSINESS ENGLISH</span><span class="tp-tt-sub">Foundations · Communication · Advanced</span></div>
-    </div>
-    <div class="tp-block tp-ec">
-      <div class="tp-block-inner"><div class="tp-dots"></div><span class="tp-count">10–12</span><span class="tp-vlabel">ENGLISH FOR CREATIVES</span></div>
-      <div class="tp-tooltip"><span class="tp-tt-name">ENGLISH FOR CREATIVES</span><span class="tp-tt-sub">Basics · Clients · Industry</span></div>
-    </div>
-    <div class="tp-block tp-ep">
-      <div class="tp-block-inner"><div class="tp-grid"></div><span class="tp-count">10–24</span><span class="tp-vlabel">EXAM PREP</span></div>
-      <div class="tp-tooltip"><span class="tp-tt-name">EXAM PREP</span><span class="tp-tt-sub">3 months · 1 month · Emergency</span></div>
-    </div>
-    <div class="tp-block tp-bs">
-      <div class="tp-block-inner"><div class="tp-stripes-v"></div><span class="tp-count">10–12</span><span class="tp-vlabel">BUSINESS SPANISH</span></div>
-      <div class="tp-tooltip"><span class="tp-tt-name">BUSINESS SPANISH</span><span class="tp-tt-sub">Foundations · Communication · Advanced</span></div>
-    </div>
-    <div class="tp-block tp-ss">
-      <div class="tp-block-inner"><div class="tp-checker"></div><span class="tp-count">8–12</span><span class="tp-vlabel">SURVIVAL SPANISH</span></div>
-      <div class="tp-tooltip"><span class="tp-tt-name">SURVIVAL SPANISH</span><span class="tp-tt-sub">Survival · Social · Living in Argentina</span></div>
-    </div>
-    <div class="tp-block tp-sp">
-      <div class="tp-block-inner"><div class="tp-dots tp-dots-lg"></div><span class="tp-count">4–10</span><span class="tp-vlabel">SPECIAL COURSES</span></div>
-      <div class="tp-tooltip"><span class="tp-tt-name">SPECIAL COURSES</span><span class="tp-tt-sub">Devs · Creators · Art · Lunfardo · Groups</span></div>
-    </div>
-  </div>
-  <a href="#courses" class="tp-cta t" data-en="EXPLORE ALL COURSES ↓" data-es="VER TODOS LOS CURSOS ↓">EXPLORE ALL COURSES ↓</a>
-</div>
-
-<!-- ① ABOUT + TESTIMONIALS -->
-<section id="about">
-  <div class="sec-head">
-    <span class="sec-num">01</span>
-    <div class="sec-meta">
-      <h2 class="sec-title t" data-en="PROFILE" data-es="PERFIL">PROFILE</h2>
-      <span class="sec-badge" style="color:var(--be);border-color:var(--be)" data-lang="en">BUENOS AIRES · ONLINE</span>
-      <span class="sec-badge" style="color:var(--be);border-color:var(--be)" data-lang="es">BUENOS AIRES · EN LÍNEA</span>
-    </div>
-  </div>
-  <div class="sec-body">
-    <div class="about-cols">
-      <div>
-        <p class="about-lede" data-lang="en">I don't do generic. Every course is built around a real purpose — leading meetings in English, writing proposals for international clients, or sounding like someone who actually lives in Buenos Aires.</p>
-        <p class="about-lede" data-lang="es">No hago genérico. Cada curso está construido alrededor de un propósito real — liderar reuniones en inglés, escribir propuestas a clientes internacionales, o sonar como alguien que realmente vive en Buenos Aires.</p>
-        <div class="about-body" data-lang="en">
-          <p>I've been teaching English and Spanish for over six years — one-on-one, in groups, in person and on Zoom — to teens, adults, professionals, developers, and creatives.</p>
-          <p>I also study <strong>Multimedia Arts and Full Stack Development</strong>, which means I understand what my tech and design students actually do at work. When we practise vocabulary, it's the vocabulary they'll use tomorrow morning.</p>
-          <p>I speak <strong>Rioplatense Spanish</strong> as a native — the dialect of Buenos Aires. If you want to learn Spanish for Argentina specifically, or understand what people actually say here (not what textbooks teach), you're in the right place.</p>
-        </div>
-        <div class="about-body" data-lang="es">
-          <p>Enseño inglés y español desde hace más de seis años — clases individuales, grupos, presencial y por Zoom — a adolescentes, adultos, profesionales, desarrolladores y creativos.</p>
-          <p>Estudio <strong>Artes Multimediales y Desarrollo Full Stack</strong>, lo que me permite entender exactamente lo que hacen mis alumnos de tech y diseño. Cuando practicamos vocabulario, es el que van a usar mañana por la mañana.</p>
-          <p>Hablo <strong>español rioplatense</strong> como lengua materna — el dialecto de Buenos Aires. Si querés aprender español para Argentina o entender lo que la gente dice de verdad, estás en el lugar correcto.</p>
+  <main>
+    <section class="hero">
+      <div class="hero-main">
+        <p class="eyebrow">MODALIDAD 100% ONLINE // AGENDA ABIERTA</p>
+        <h1>EL INGLÉS QUE NO TE ENSEÑÓ <em>EL INSTITUTO.</em></h1>
+        <p class="hero-copy">Clases 1 a 1 adaptadas a tus reuniones, entrevistas y objetivos específicos. Incluye acceso a nuestra plataforma interactiva para ejercitar entre sesiones y Class Kit post-clase directo a tu mail.</p>
+        <div class="hero-actions">
+          <a class="button primary" href="#agenda">Agendar Sesión de Diagnóstico (30 min sin cargo)</a>
+          <span class="hero-note">SIN FÓRMULAS GENÉRICAS. CON DIRECCIÓN.</span>
         </div>
       </div>
-      <div class="creds">
-        <div class="creds-hd t" data-en="CREDENTIALS" data-es="CREDENCIALES">CREDENTIALS</div>
-        <div class="cred c-be"><span class="ck t" data-en="ENGLISH CERTIFICATION" data-es="CERTIFICACIÓN EN INGLÉS">ENGLISH CERTIFICATION</span><span class="cv">Cambridge First Certificate (B2–C1)</span></div>
-        <div class="cred c-be"><span class="ck t" data-en="TEACHING CERT" data-es="CERTIFICACIÓN DOCENTE">TEACHING CERT</span><span class="cv">TEFL Academy Level 5 <span class="t" data-en="(in progress)" data-es="(en curso)">(in progress)</span></span></div>
-        <div class="cred c-be"><span class="ck t" data-en="EXPERIENCE" data-es="EXPERIENCIA">EXPERIENCE</span><span class="cv t" data-en="6+ years — teens, adults, professionals" data-es="6+ años — adolescentes, adultos, profesionales">6+ years — teens, adults, professionals</span></div>
-        <div class="cred c-be"><span class="ck t" data-en="BACKGROUND" data-es="FORMACIÓN">BACKGROUND</span><span class="cv">Multimedia Arts · Full Stack Dev · DevOps</span></div>
-        <div class="cred c-be"><span class="ck t" data-en="NATIVE DIALECT" data-es="DIALECTO NATIVO">NATIVE DIALECT</span><span class="cv t" data-en="Rioplatense Spanish (Buenos Aires)" data-es="Español Rioplatense (Buenos Aires)">Rioplatense Spanish (Buenos Aires)</span></div>
-        <div class="cred c-be"><span class="ck t" data-en="PLATFORMS" data-es="PLATAFORMAS">PLATFORMS</span><span class="cv">iTalki · Preply · TusClasesParticulares</span></div>
+      <aside class="hero-aside">
+        <div class="aside-mark">01:1</div>
+        <p class="aside-copy">Un sistema de entrenamiento lingüístico diseñado alrededor de tu trabajo real, tus tiempos y tus objetivos.</p>
+      </aside>
+    </section>
+
+    <section class="pillars" id="metodo" aria-label="Pilares del método">
+      <article class="pillar"><span class="card-index">01 / ENTORNO PROPIO</span><h3>PRÁCTICA ASÍNCRONA</h3><p>Sentence Builder, Listening y Voice Lab para que el progreso continúe entre sesiones.</p></article>
+      <article class="pillar"><span class="card-index">02 / ZERO NOTE-TAKING</span><h3>TODO A TU MAIL</h3><p>Presentación, glosario técnico y Class Kit enviados después de cada clase.</p></article>
+      <article class="pillar"><span class="card-index">03 / MÉTODO A MEDIDA</span><h3>RITMO REALISTA</h3><p>Auditoría de hábitos de estudio (Active Recall, Pomodoro) y tareas calibradas a tu agenda.</p></article>
+    </section>
+
+    <section id="tracks">
+      <div class="section-head"><span class="section-number">01</span><div class="section-heading"><h2>ELEGÍ TU TRACK</h2><span class="section-label">ARQUITECTURA CURRICULAR // 08 ESPECIALIDADES</span></div></div>
+      <div class="section-body">
+        <div class="tracks-intro"><p>Cada track se adapta a tu nivel inicial con ejercicios en la plataforma y material de estudio directo en tu mail al terminar cada clase.</p><span class="section-label">TRACKS DE TRABAJO // A MEDIDA</span></div>
+        <div class="tracks-grid">
+          <details class="track-card track-blue">
+            <summary><span class="card-index">01</span><span class="track-tag">TECH / DEVELOPMENT</span><h3>English for Developers</h3></summary>
+            <div class="track-copy">
+              <p><strong>Descripción breve:</strong> Inglés de uso cotidiano en equipos de desarrollo: code reviews, standups y comunicación async con el equipo.</p>
+              <p><strong>A quién va dirigido:</strong> Software Engineers, DevOps, QA Automation y Tech Leads que trabajan en equipos distribuidos o para clientes del exterior.</p>
+              <p><strong>Casos de uso y situaciones que se entrenan:</strong> Estructura ágil para Dailies y Standups: comunicar blockers, updates y dependencias sin rodeos. Diplomacia técnica en Code Reviews: sugerir refactors y correcciones en PRs de GitHub sin sonar cortante. Pair programming en vivo y debuggeo colaborativo bajo presión. Comunicación asíncrona precisa en Slack/Jira para evitar llamadas innecesarias.</p>
+              <p><strong>Entregable en App &amp; Class Kit:</strong> Módulos de Sentence Builder con estructuras sintácticas para reportar incidencias. Glosario técnico por correo con conectores de mitigación y verbos de arquitectura de software.</p>
+            </div>
+          </details>
+          <details class="track-card track-red">
+            <summary><span class="card-index">02</span><span class="track-tag">TECH / DATA &amp; AI</span><h3>English for Data &amp; AI</h3></summary>
+            <div class="track-copy">
+              <p><strong>Descripción breve:</strong> Inglés para daily updates, pipelines, model reviews, dashboards y entrevistas técnicas.</p>
+              <p><strong>A quién va dirigido:</strong> Data Analysts, Data Engineers, Machine Learning Engineers y Científicos de Datos.</p>
+              <p><strong>Casos de uso y situaciones que se entrenan:</strong> Presentación ejecutiva de dashboards y métricas de negocio sin perderse en tecnicismos. Justificación de trade-offs en modelos predictivos (accuracy vs. latencia, costos de nube). Explicación fluida de pipelines de ETL, arquitecturas de datos y validación de calidad. Ronda de preguntas y respuestas técnicas (Q&amp;A) con stakeholders internacionales.</p>
+              <p><strong>Entregable en App &amp; Class Kit:</strong> Ejercicios de Listening situacional con casos reales de migración de datos y model testing. Glosario en PDF con terminología estadística, verbos de tendencia y métricas clave.</p>
+            </div>
+          </details>
+          <details class="track-card track-green">
+            <summary><span class="card-index">03</span><span class="track-tag">PROFESSIONAL</span><h3>Business English &amp; Leadership</h3></summary>
+            <div class="track-copy">
+              <p><strong>Descripción breve:</strong> Reuniones, mails y comunicación profesional en el trabajo — de cero a liderar reuniones y hacer networking internacional.</p>
+              <p><strong>A quién va dirigido:</strong> Managers, Project/Product Managers, Founders y profesionales corporativos.</p>
+              <p><strong>Casos de uso y situaciones que se entrenan:</strong> Moderación de calls: abrir reuniones, asignar turnos de palabra, sintetizar acuerdos y cerrar next steps. Redacción de correos ejecutivos asertivos (escalar temas urgentes, dar feedback, comunicar cambios). Manejo de objeciones y negociación de presupuestos, plazos y alcances. Matriz de Safe Topics y Small Talk estratégico para generar rapport antes de una reunión.</p>
+              <p><strong>Entregable en App &amp; Class Kit:</strong> Simulaciones de rol en vivo + plantillas de correos ejecutivos editables. Módulo en plataforma para ejercitar fórmulas de cortesía y diplomacia corporativa.</p>
+            </div>
+          </details>
+          <details class="track-card track-orange">
+            <summary><span class="card-index">04</span><span class="track-tag">PEOPLE / TALENT</span><h3>English for HR &amp; Recruiting</h3></summary>
+            <div class="track-copy">
+              <p><strong>Descripción breve:</strong> Entrevistas laborales internacionales: screening calls, negociación de ofertas, redacción de job descriptions y feedback constructivo.</p>
+              <p><strong>A quién va dirigido:</strong> Talent Acquisition, People Care, Recruiters Tech y HR Business Partners.</p>
+              <p><strong>Casos de uso y situaciones que se entrenan:</strong> Conducción de screening calls en inglés: evaluar perfiles con fluidez y naturalidad. Redacción precisa de Job Descriptions y mensajes directos de prospección en LinkedIn. Negociación de compensaciones, beneficios y presentación de ofertas económicas formales. Comunicación de feedback de rechazo constructivo y diplomático por mail o videollamada.</p>
+              <p><strong>Entregable en App &amp; Class Kit:</strong> Banco de preguntas por competencias en inglés y rúbricas de evaluación. Ejercicios en Voice Lab para calibrar tono empático y profesional en entrevistas.</p>
+            </div>
+          </details>
+          <details class="track-card track-purple">
+            <summary><span class="card-index">05</span><span class="track-tag">CREATIVE INDUSTRIES</span><h3>English for Creatives</h3></summary>
+            <div class="track-copy">
+              <p><strong>Descripción breve:</strong> Inglés para diseñadores y creativos: vocabulario de proceso, comunicación con clientes y networking de industria.</p>
+              <p><strong>A quién va dirigido:</strong> Diseñadores UI/UX, Directores de Arte, Ilustradores, Diseñadores de Producto y Branders.</p>
+              <p><strong>Casos de uso y situaciones que se entrenan:</strong> Conducción de Design Critiques: defender decisiones visuales y justificar testeos con usuarios. Presentación de sistemas de diseño (Design Systems), wireframes y prototipos a clientes internacionales. Walkthrough del portfolio propio: narrar el proceso creativo de inicio a fin con impacto. Manejo de feedback subjetivo de clientes sin perder la dirección del proyecto.</p>
+              <p><strong>Entregable en App &amp; Class Kit:</strong> Guía léxica de heurísticas de usabilidad, tipografía y composición visual. Glosario técnico por mail con adjetivos específicos de diseño e interacciones digitales.</p>
+            </div>
+          </details>
+          <details class="track-card track-pink">
+            <summary><span class="card-index">06</span><span class="track-tag">TRAVEL / EVERYDAY</span><h3>English for Travel</h3></summary>
+            <div class="track-copy">
+              <p><strong>Descripción breve:</strong> Inglés práctico para viajar: aeropuertos, alojamiento, moverte y resolver imprevistos en otro país.</p>
+              <p><strong>A quién va dirigido:</strong> Profesionales que viajan por conferencias, trabajo remoto nómade o turismo.</p>
+              <p><strong>Casos de uso y situaciones que se entrenan:</strong> Aeropuertos, migraciones y aduanas: responder con seguridad y concisión ante autoridades migratorias. Gestión en hoteles y alquileres: check-in, reclamos por servicios y pedidos especiales. Transporte, direcciones y compra de tickets en trenes/metros internacionales. Resolución de emergencias cotidianas: farmacias, consultas médicas o pérdida de equipaje.</p>
+              <p><strong>Entregable en App &amp; Class Kit:</strong> Diálogos situacionales en audio con acentos de distintos países. Cheat-sheet imprimible o para el celular con frases de supervivencia e imprevistos.</p>
+            </div>
+          </details>
+          <details class="track-card track-blue">
+            <summary><span class="card-index">07</span><span class="track-tag">CERTIFICATION</span><h3>Exam Preparation</h3></summary>
+            <div class="track-copy">
+              <p><strong>Descripción breve:</strong> Preparación para un examen internacional, con la intensidad ajustada al tiempo que te queda: desde 3 meses antes hasta modo emergencia.</p>
+              <p><strong>A quién va dirigido:</strong> Quienes necesitan certificar nivel para visas, becas o requerimientos corporativos (IELTS, TOEFL, Cambridge FCE/CAE/CPE).</p>
+              <p><strong>Casos de uso y situaciones que se entrenan:</strong> Estrategias específicas de tiempo para las secciones de Reading y Listening. Técnicas de redacción para ensayos y reportes (Task 1 y Task 2) según las rúbricas oficiales. Simulacros de Speaking individuales con feedback cronometrado y corrección fonética en vivo. Erradicación de errores gramaticales fósiles que penalizan la puntuación general.</p>
+              <p><strong>Entregable en App &amp; Class Kit:</strong> Modelos de respuestas banda 7+ / nivel C1 analizadas paso a paso. Corrección exhaustiva de redacciones con entregas asíncronas semanales en la plataforma.</p>
+            </div>
+          </details>
+          <details class="track-card track-purple">
+            <summary><span class="card-index">08</span><span class="track-tag">SHORT FORMAT</span><h3>Special Courses &amp; Sprints</h3></summary>
+            <div class="track-copy">
+              <p><strong>Descripción breve:</strong> Cursos cortos y puntuales: entrevistas técnicas en inglés y contenido para redes sociales/creadores.</p>
+              <p><strong>A quién va dirigido:</strong> Profesionales con un objetivo puntual e inmediato (1 a 4 semanas) que no buscan un programa anual.</p>
+              <p><strong>Casos de uso y situaciones que se entrenan:</strong> Sprint de Entrevistas Técnicas: simulaciones completas, método STAR y preparación de pitch personal. Creación de contenido en inglés: redacción de posts para LinkedIn, guiones para YouTube o hilos técnicos en X/Twitter. Ensayo intensivo para una presentación o keynote ante una audiencia global. Negociación salarial y contraofertas con reclutadores internacionales.</p>
+              <p><strong>Entregable en App &amp; Class Kit:</strong> Simulacro grabado o transcripto con desglose de puntos a corregir. Glosario express de vocabulario de alto impacto enfocado en tu objetivo inmediato.</p>
+            </div>
+          </details>
+        </div>
+        <div class="tracks-cta">
+          <div><strong>¿Dudas sobre cuál se alinea a tu rol?</strong><p>En la sesión inicial de diagnóstico de 30 minutos evaluamos tu nivel conversacional y definimos el track ideal sin costo.</p></div>
+          <a class="button primary" href="#agenda">Agendar Diagnóstico ↗</a>
+        </div>
       </div>
-    </div>
-  </div>
-  <!-- ====== RESEÑAS VERIFICADAS · TusClases ======
-       Reemplaza los 3 testimonios placeholder que estaban acá.
-       El contenido lo trae el widget desde tusclases.com.ar -->
-  <div class="testimonials-strip" id="rv-block">
-    <div class="testi-strip-label t" data-en="WHAT STUDENTS SAY" data-es="LO QUE DICEN LOS ALUMNOS">WHAT STUDENTS SAY</div>
-    <p class="rv-note t" data-en="Verified reviews from my TusClases profile." data-es="Reseñas verificadas de mi perfil de TusClases.">Verified reviews from my TusClases profile.</p>
-    <div class="rv-card">
-      <div class="rv-loading t" data-en="LOADING REVIEWS…" data-es="CARGANDO RESEÑAS…">LOADING REVIEWS…</div>
-      <!-- Tusclases Reviews v.1.0.1 -->
-      <script>
-      (function (i, s, o, g, a, m){
-          a = s.createElement(o), m = s.getElementsByTagName(o)[0];
-          a.async = 1; a.src = g;
-          m.parentNode.insertBefore(a, m)
-      }(window, document, 'script', 'https://d13nnzzfr74buh.cloudfront.net/widget-reviews_jq.min.js?v=795'));
-      </script>
-      <div id="my_tutor_reviews_widget" data-tutor="camila-mihalyczo" data-domain="https://www.tusclases.com.ar" data-cdn="https://d13nnzzfr74buh.cloudfront.net/" data-css-version="810">
-        <a href="https://www.tusclases.com.ar" target="_blank" rel="noopener"><img src="https://d13nnzzfr74buh.cloudfront.net/i/logo_tusclases_v3@2x.png" width="100" height="38" alt="Clases particulares" /></a>
+    </section>
+
+    <section class="platform" id="platform">
+      <div class="section-head"><span class="section-number">02</span><div class="section-heading"><h2>ACTIVITY BLOG</h2><span class="section-label">CAMPUS PRIVADO // ACCESO INCLUIDO</span></div></div>
+      <div class="platform-inner">
+        <div class="platform-intro-grid"><div><span class="section-label">CAMPUS PRIVADO // ACCESO INCLUIDO</span><h2>ACTIVITY<br>BLOG</h2></div><div><p class="platform-intro">La clase no termina cuando cerrás la videollamada.</p><p class="platform-copy">Activity Blog es el entorno asíncrono de Track English Studio: una plataforma propia diseñada para convertir cada encuentro en práctica concreta. El acceso a los 8 tracks está 100% incluido en todos los programas mensuales.</p></div></div>
+        <div class="app-features">
+          <article class="app-feature" data-module="1"><strong>SENTENCE BUILDER</strong><span>Construcción guiada para automatizar estructuras sintácticas complejas sin traducir mentalmente.</span></article>
+          <article class="app-feature" data-module="2"><strong>VOICE LAB</strong><span>Práctica oral asíncrona con reconocimiento de voz, ritmo y feedback de pronunciación.</span></article>
+          <article class="app-feature" data-module="3"><strong>LISTENING SITUACIONAL</strong><span>Audios contextuales de trabajo para calibrar comprensión en llamadas y entornos reales.</span></article>
+          <article class="app-feature" data-module="4"><strong>FLASHCARDS &amp; ACTIVE RECALL</strong><span>Repetición espaciada para asimilar vocabulario técnico y jerga específica de tu track.</span></article>
+          <article class="app-feature" data-module="5"><strong>CUESTIONARIOS &amp; QUIZZES</strong><span>Validación interactiva de conceptos clave para medir retención después de cada módulo.</span></article>
+          <article class="app-feature" data-module="6"><strong>READING &amp; WRITING</strong><span>Análisis de documentación técnica y práctica de redacción con corrección y feedback.</span></article>
+        </div>
+        <div class="class-kit"><div><div class="class-kit-label"><strong>Zero Note-Taking</strong> CLASS KIT DIRECTO A TU MAIL</div><p>Al finalizar cada sesión 1 a 1 recibís la presentación completa y el glosario técnico analizado en vivo, para que en clase te enfoques únicamente en hablar y pensar.</p></div><a href="https://activityblog.vercel.app/" target="_blank" rel="noopener">Acceso Alumnos ↗</a></div>
       </div>
-      <!-- End Widget -->
-    </div>
-  </div>
+    </section>
+
+    <section class="pricing" id="precios">
+      <div class="section-head"><span class="section-number">03</span><div class="section-heading"><h2>PLANES Y MODALIDADES</h2><span class="section-label">INVERSIÓN &amp; HONORARIOS // 2026</span></div></div>
+      <div class="section-body">
+        <div class="pricing-head"><div><span class="section-label">VALORES VIGENTES // ARS</span><h2>Elegí tu modalidad.</h2></div><span class="pricing-badge">Valores vigentes / ARS</span></div>
+        <div class="diagnostic-card"><div><span class="pricing-kicker">Sin cargo</span><h3>Sesión de Nivelación &amp; Auditoría Metodológica (30 min)</h3><p class="pricing-copy">Evaluamos tu soltura conversacional, detectamos blockers laborales reales, auditamos tu método de estudio (Active Recall, Pomodoro) y diseñamos el roadmap a medida con acceso a la app.</p></div><a class="button primary" href="#agenda">Agendar Prueba ↗</a></div>
+        <div class="pricing-table-wrap">
+          <div class="pricing-includes"><strong>Todos los programas incluyen:</strong> Clases 1 a 1 en vivo (60 min) + acceso continuo a la plataforma interactiva (Sentence Builder, Listening, Voice Lab) + <strong>Class Kit por correo tras cada sesión</strong>.</div>
+          <div style="overflow-x:auto"><table class="price-table"><thead><tr><th>Modalidad</th><th>Frecuencia</th><th>Precio Lista</th><th>Pago Anticipado (15% OFF)</th><th>Ahorro Mensual</th></tr></thead><tbody>
+            <tr><td>Track Regular</td><td>1 clase / semana (4 al mes)</td><td class="price-list">$120.000</td><td><span class="price">$102.000</span></td><td class="price-saving">-$18.000</td></tr>
+            <tr><td>Track Intensivo</td><td>2 clases / semana (8 al mes)</td><td class="price-list">$240.000</td><td><span class="price">$204.000</span></td><td class="price-saving">-$36.000</td></tr>
+            <tr><td>Clase Técnica Suelta</td><td>Sesión individual puntual (60 min)</td><td><span class="price">$30.000</span></td><td>—</td><td>Sin compromiso mensual</td></tr>
+          </tbody></table></div>
+        </div>
+        <div class="formats-grid">
+          <article class="format-card"><span class="pricing-kicker">Continuidad // Mediano Plazo</span><h4>Planes Trimestrales</h4><p class="pricing-copy">Facturación mensual fija congelando el 15% de descuento por pago anticipado ($102.000 o $204.000/mes) para procesos de mediano plazo, con objetivos trimestrales.</p></article>
+          <article class="format-card"><span class="pricing-kicker">Urgencia // Alta Demanda</span><h4>Sprints de Entrevistas y Exámenes</h4><p class="pricing-copy">Módulos intensivos de 4 u 8 clases focalizados en procesos de selección internacional o preparación para IELTS y TOEFL, con acceso a app y material diario por mail.</p></article>
+        </div>
+        <div class="policy-card"><h4>Políticas de Agenda y Compromiso</h4><ul class="policy-list"><li><span><strong>Reserva de cupo:</strong> La agenda mensual se bloquea acreditando el paquete con anterioridad al inicio de las clases.</span></li><li><span><strong>Reprogramaciones con aviso (48 hs):</strong> Las fechas se pueden reubicar sin penalidad notificando con al menos 48 horas de anticipación.</span></li><li><span><strong>Cancelaciones tardías:</strong> Las ausencias o avisos con menos de 48 horas no son reembolsables ni reprogramables.</span></li><li><span><strong>Programa de referidos:</strong> Beneficios y descuentos aplicables en tu cuota mensual por colegas recomendados que inicien su track.</span></li></ul></div>
+      </div>
+    </section>
+
+    <section class="booking" id="agenda">
+      <div class="section-head"><span class="section-number">04</span><div class="section-heading"><h2>AGENDÁ TU DIAGNÓSTICO</h2><span class="section-label">AUDITORÍA METODOLÓGICA // 30 MINUTOS SIN CARGO</span></div></div>
+      <div class="section-body">
+        <div class="booking-inner">
+          <div class="booking-head"><div><span class="section-label">AUDITORÍA METODOLÓGICA // 30 MINUTOS SIN CARGO</span><h2>Agendá tu diagnóstico.</h2></div><span class="booking-badge">100% Online · Google Meet</span></div>
+          <div class="booking-points">
+            <article class="booking-point"><strong>01 / DIAGNÓSTICO</strong><p>Evaluamos tu fluidez conversacional, rango de vocabulario y blockers reales al hablar en el trabajo.</p></article>
+            <article class="booking-point"><strong>02 / MÉTODO DE ESTUDIO</strong><p>Auditamos tus hábitos (Active Recall, Pomodoro) y ajustamos la carga horaria a tu rutina semanal.</p></article>
+            <article class="booking-point"><strong>03 / ROADMAP &amp; APP</strong><p>Elegimos el track adecuado y te mostramos cómo funciona la práctica asíncrona en Activity Blog.</p></article>
+          </div>
+          <div class="calendar-shell"><div class="calendar"><iframe src="https://calendar.app.google/WYJD3bVpQQiYtpnA7" title="Agendá tu sesión de nivelación" loading="lazy"></iframe></div></div>
+          <div class="booking-escape"><div><strong>¿No encontrás un horario que te sirva o tenés dudas?</strong><p>Escribinos directamente para coordinar un horario especial o consultar por planes corporativos.</p></div><div class="booking-links"><a href="mailto:trackenglish.studio@gmail.com">Email ↗</a><a href="https://instagram.com/trackenglish.studio" target="_blank" rel="noopener">Instagram ↗</a></div></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-top"><div><p class="eyebrow">TRACK ENGLISH STUDIO // BUENOS AIRES / REMOTO GLOBAL</p><h2>INGLÉS CON<br>DIRECCIÓN.</h2></div><ul class="footer-list"><li><a href="#tracks">English for Developers</a></li><li><a href="#tracks">English for Data &amp; AI</a></li><li><a href="#tracks">Business English</a></li><li><a href="#tracks">English for HR &amp; Recruiting</a></li><li><a href="#tracks">English for Creatives</a></li><li><a href="#tracks">English for Travel</a></li><li><a href="#tracks">Exam Preparation</a></li><li><a href="#tracks">Special Courses</a></li></ul></div>
+    <div class="footer-bottom"><p class="copyright">© 2026 TRACK ENGLISH STUDIO. BUENOS AIRES // REMOTO GLOBAL</p><div class="footer-social"><a href="https://www.instagram.com/trackenglish.studio/" target="_blank" rel="noopener">Instagram ↗</a><a href="mailto:trackenglish.studio@gmail.com">Mail ↗</a><a href="https://wa.me/541151268940" target="_blank" rel="noopener">WhatsApp ↗</a></div></div>
+  </footer>
   <script>
-/* Vigía del widget de TusClases.
-   Si en 7s no renderizó (CDN caído, bloqueador, slug cambiado), oculta
-   la sección entera en vez de dejar un título con un hueco debajo.
-   Para depurar: mirá la consola. */
-(function(){
-  var block = document.getElementById('rv-block');
-  var host  = document.getElementById('my_tutor_reviews_widget');
-  if(!block || !host) return;
-  var t0 = Date.now(), avisado = false;
-  var iv = setInterval(function(){
-    var cargo = host.getBoundingClientRect().height > 120;
-    if (cargo){                                  // renderizó (incluso tarde)
-      clearInterval(iv);
-      block.classList.remove('rv-down');
-      block.classList.add('rv-ok');
-    } else if (!avisado && Date.now() - t0 > 7000){
-      avisado = true;                            // se oculta, pero sigue esperando
-      block.classList.add('rv-down');
-      console.warn('[tusclases] el widget de reseñas no cargó en 7s — sección oculta');
-    } else if (Date.now() - t0 > 20000){
-      clearInterval(iv);                         // se rinde de verdad
-    }
-  }, 300);
-})();
-</script>
-</section>
+  const trackCards = document.querySelectorAll('.track-card');
 
-<!-- STATS -->
-<div class="stats-wall">
-  <div class="swall"><span class="swall-n">6+</span><span class="swall-l t" data-en="years teaching English and Spanish, online and in-person" data-es="años enseñando inglés y español, online y presencial">years teaching English and Spanish, online and in-person</span></div>
-  <div class="swall"><span class="swall-n">5</span><span class="swall-l t" data-en="course tracks — Business, Creative, Exam Prep, and more" data-es="tracks de cursos — Business, Creative, Exam Prep, y más">course tracks — Business, Creative, Exam Prep, y más</span></div>
-  <div class="swall"><span class="swall-n" style="color:var(--be)">2</span><span class="swall-l t" data-en="languages: English and Rioplatense Spanish, native level" data-es="idiomas: inglés y español rioplatense, nivel nativo">languages: English and Rioplatense Spanish, native level</span></div>
-  <div class="swall"><span class="swall-n">100%</span><span class="swall-l t" data-en="online, adapted to your timezone and schedule" data-es="online, adaptado a tu zona horaria y disponibilidad">online, adapted to your timezone and schedule</span></div>
-</div>
-
-<!-- MARQUEE dark — just before courses -->
-<div class="mq dark">
-  <div class="mq-track">
-    <span class="mq-i">BUSINESS ENGLISH <s>✦</s></span><span class="mq-i">ENGLISH FOR CREATIVES <s>✦</s></span><span class="mq-i">EXAM PREPARATION <s>✦</s></span><span class="mq-i">BUSINESS SPANISH <s>✦</s></span><span class="mq-i">SURVIVAL SPANISH <s>✦</s></span><span class="mq-i">SPECIAL COURSES <s>✦</s></span>
-    <span class="mq-i">BUSINESS ENGLISH <s>✦</s></span><span class="mq-i">ENGLISH FOR CREATIVES <s>✦</s></span><span class="mq-i">EXAM PREPARATION <s>✦</s></span><span class="mq-i">BUSINESS SPANISH <s>✦</s></span><span class="mq-i">SURVIVAL SPANISH <s>✦</s></span><span class="mq-i">SPECIAL COURSES <s>✦</s></span>
-  </div>
-</div>
-
-<!-- ② COURSES — with per-track CTA -->
-<section id="courses">
-  <div class="sec-head">
-    <span class="sec-num">02</span>
-    <div class="sec-meta">
-      <h2 class="sec-title t" data-en="COURSES & PACKAGES" data-es="CURSOS Y PAQUETES">COURSES & PACKAGES</h2>
-      <span class="sec-badge" style="color:var(--ec);border-color:var(--ec)" data-lang="en">BEYOND THE PLATFORMS</span>
-      <span class="sec-badge" style="color:var(--ec);border-color:var(--ec)" data-lang="es">MÁS ALLÁ DE LAS PLATAFORMAS</span>
-      <span class="sec-badge" style="color:var(--be);border-color:var(--be)" data-lang="en">EVERY TRACK INCLUDES ACTIVITY BLOG</span>
-      <span class="sec-badge" style="color:var(--be);border-color:var(--be)" data-lang="es">TODOS LOS TRACKS INCLUYEN ACTIVITY BLOG</span>
-    </div>
-  </div>
-
-  <!-- TRACK 1: BUSINESS ENGLISH -->
-  <div class="track c-be">
-    <div class="track-hd" onclick="toggleTrack(this)">
-      <div class="track-bar"></div>
-      <div class="track-info">
-        <span class="track-name">BUSINESS ENGLISH</span>
-        <div class="track-right">
-          <span class="track-tag t" data-en="ENGLISH · PROFESSIONALS" data-es="INGLÉS · PROFESIONALES">ENGLISH · PROFESSIONALS</span>
-          <span class="track-toggle">+</span>
-        </div>
-      </div>
-    </div>
-    <div class="track-content">
-      <p class="track-intro" data-lang="en">For professionals who need English at work — not someday, right now.</p>
-      <p class="track-intro" data-lang="es">Para profesionales que necesitan inglés en el trabajo — no algún día, sino ahora.</p>
-      <table class="lvl-table">
-        <thead><tr><th class="t" data-en="LEVEL" data-es="NIVEL">LEVEL</th><th style="text-align:center;width:90px" class="t" data-en="CLASSES" data-es="CLASES">CLASSES</th><th class="t" data-en="GOAL" data-es="OBJETIVO">GOAL</th></tr></thead>
-        <tbody>
-          <tr><td>Foundations</td><td class="num">10</td><td class="goal t" data-en="Survive in an English-speaking work environment" data-es="Sobrevivir en un entorno laboral en inglés">Survive in an English-speaking work environment</td></tr>
-          <tr><td>Professional Communication</td><td class="num">12</td><td class="goal t" data-en="Active meetings, reports and emails without anxiety" data-es="Reuniones activas, reportes y emails sin ansiedad">Active meetings, reports and emails without anxiety</td></tr>
-          <tr><td>Advanced Business</td><td class="num">12</td><td class="goal t" data-en="Lead meetings, give presentations, network internationally" data-es="Liderar reuniones, presentaciones, networking internacional">Lead meetings, give presentations, network internationally</td></tr>
-          <tr><td class="t" data-en="Monthly maintenance" data-es="Mantenimiento mensual">Monthly maintenance</td><td class="num" style="font-size:.9rem">4/mo</td><td class="goal t" data-en="Keep sharp after completing the track" data-es="Mantener el nivel después de completar el track">Keep sharp after completing the track</td></tr>
-        </tbody>
-      </table>
-      <a href="mailto:camilamihalyczo@gmail.com?subject=Business English — info request" class="track-cta t" data-en="→ I'M INTERESTED IN THIS TRACK" data-es="→ ME INTERESA ESTE TRACK">→ I'M INTERESTED IN THIS TRACK</a>
-    </div>
-  </div>
-
-  <!-- TRACK 2: ENGLISH FOR CREATIVES -->
-  <div class="track c-ec">
-    <div class="track-hd" onclick="toggleTrack(this)">
-      <div class="track-bar"></div>
-      <div class="track-info">
-        <span class="track-name">ENGLISH FOR CREATIVE PROFESSIONALS</span>
-        <div class="track-right">
-          <span class="track-tag t" data-en="ENGLISH · DESIGNERS · CREATORS" data-es="INGLÉS · DISEÑADORES · CREADORES">ENGLISH · DESIGNERS · CREATORS</span>
-          <span class="track-toggle">+</span>
-        </div>
-      </div>
-    </div>
-    <div class="track-content">
-      <p class="track-intro" data-lang="en">Designers, illustrators, videographers, content creators — this track is for you.</p>
-      <p class="track-intro" data-lang="es">Diseñadores, ilustradores, videógrafos, content creators — este track es para vos.</p>
-      <table class="lvl-table">
-        <thead><tr><th class="t" data-en="LEVEL" data-es="NIVEL">LEVEL</th><th style="text-align:center;width:90px" class="t" data-en="CLASSES" data-es="CLASES">CLASSES</th><th class="t" data-en="GOAL" data-es="OBJETIVO">GOAL</th></tr></thead>
-        <tbody>
-          <tr><td>Creative Basics</td><td class="num">10</td><td class="goal t" data-en="Design vocabulary, describe your work and creative process" data-es="Vocabulario de diseño, describir tu trabajo y proceso creativo">Design vocabulary, describe your work and creative process</td></tr>
-          <tr><td>Client Communication</td><td class="num">12</td><td class="goal t" data-en="Proposals, briefings, feedback with international clients" data-es="Propuestas, briefings, feedback con clientes internacionales">Proposals, briefings, feedback with international clients</td></tr>
-          <tr><td>Industry English</td><td class="num">12</td><td class="goal t" data-en="Pitches, portfolio reviews, international networking" data-es="Pitches, revisiones de portfolio, networking internacional">Pitches, portfolio reviews, international networking</td></tr>
-          <tr><td class="t" data-en="Monthly maintenance" data-es="Mantenimiento mensual">Monthly maintenance</td><td class="num" style="font-size:.9rem">4/mo</td><td class="goal t" data-en="Keep sharp after completing the track" data-es="Mantener el nivel después de completar el track">Keep sharp after completing the track</td></tr>
-        </tbody>
-      </table>
-      <a href="mailto:camilamihalyczo@gmail.com?subject=English for Creatives — info request" class="track-cta t" data-en="→ I'M INTERESTED IN THIS TRACK" data-es="→ ME INTERESA ESTE TRACK">→ I'M INTERESTED IN THIS TRACK</a>
-    </div>
-  </div>
-
-  <!-- TRACK 3: EXAM PREP -->
-  <div class="track c-ep">
-    <div class="track-hd" onclick="toggleTrack(this)">
-      <div class="track-bar"></div>
-      <div class="track-info">
-        <span class="track-name">EXAM PREPARATION <span class="pill-sm">FLEXIBLE</span></span>
-        <div class="track-right">
-          <span class="track-tag t" data-en="ENGLISH · ALL LEVELS" data-es="INGLÉS · TODOS LOS NIVELES">ENGLISH · ALL LEVELS</span>
-          <span class="track-toggle">+</span>
-        </div>
-      </div>
-    </div>
-    <div class="track-content">
-      <p class="track-intro" data-lang="en">Adapted to your timeline — steady prep, focused sprint, or emergency mode.</p>
-      <p class="track-intro" data-lang="es">Adaptado a tu timeline — preparación sostenida, sprint concentrado, o modo emergencia.</p>
-      <table class="lvl-table">
-        <thead><tr><th class="t" data-en="MODE" data-es="MODALIDAD">MODE</th><th style="text-align:center;width:90px" class="t" data-en="CLASSES" data-es="CLASES">CLASSES</th><th class="t" data-en="FOR WHO" data-es="PARA QUIÉN">FOR WHO</th></tr></thead>
-        <tbody>
-          <tr><td class="t" data-en="3 months before" data-es="3 meses antes">3 months before</td><td class="num">24</td><td class="goal t" data-en="Steady prep, 2× a week, room to breathe" data-es="Prep sostenida, 2 veces por semana, tiempo para respirar">Steady prep, 2× a week, room to breathe</td></tr>
-          <tr><td class="t" data-en="1 month before" data-es="1 mes antes">1 month before</td><td class="num">12</td><td class="goal t" data-en="Focused sprint, 3× a week" data-es="Sprint concentrado, 3 veces por semana">Focused sprint, 3× a week</td></tr>
-          <tr><td><span class="t" data-en="Emergency mode" data-es="Modo emergencia">Emergency mode</span> <span class="pill-sm">INTENSIVE</span></td><td class="num">10</td><td class="goal t" data-en="2 weeks to exam day — daily sessions, we make it work" data-es="2 semanas para el examen — clases diarias, lo hacemos funcionar">2 weeks to exam day — daily sessions, we make it work</td></tr>
-        </tbody>
-      </table>
-      <a href="mailto:camilamihalyczo@gmail.com?subject=Exam Preparation — info request" class="track-cta t" data-en="→ I'M INTERESTED IN THIS TRACK" data-es="→ ME INTERESA ESTE TRACK">→ I'M INTERESTED IN THIS TRACK</a>
-    </div>
-  </div>
-
-  <!-- TRACK 4: BUSINESS SPANISH -->
-  <div class="track c-bs">
-    <div class="track-hd" onclick="toggleTrack(this)">
-      <div class="track-bar"></div>
-      <div class="track-info">
-        <span class="track-name">BUSINESS SPANISH</span>
-        <div class="track-right">
-          <span class="track-tag t" data-en="SPANISH · PROFESSIONALS" data-es="ESPAÑOL · PROFESIONALES">SPANISH · PROFESSIONALS</span>
-          <span class="track-toggle">+</span>
-        </div>
-      </div>
-    </div>
-    <div class="track-content">
-      <p class="track-intro" data-lang="en">Spanish for the workplace — with the weight and particularities of Rioplatense.</p>
-      <p class="track-intro" data-lang="es">El español del mundo laboral — con el peso y las particularidades del rioplatense.</p>
-      <table class="lvl-table">
-        <thead><tr><th class="t" data-en="LEVEL" data-es="NIVEL">LEVEL</th><th style="text-align:center;width:90px" class="t" data-en="CLASSES" data-es="CLASES">CLASSES</th><th class="t" data-en="GOAL" data-es="OBJETIVO">GOAL</th></tr></thead>
-        <tbody>
-          <tr><td>Foundations</td><td class="num">10</td><td class="goal t" data-en="Emails, basic meetings, professional introductions" data-es="Emails, reuniones básicas, presentarse profesionalmente">Emails, basic meetings, professional introductions</td></tr>
-          <tr><td>Professional Communication</td><td class="num">12</td><td class="goal t" data-en="Negotiation, reports, Rioplatense formal expressions" data-es="Negociación, reportes, modismos formales rioplatenses">Negotiation, reports, Rioplatense formal expressions</td></tr>
-          <tr><td>Advanced Business</td><td class="num">12</td><td class="goal t" data-en="Presentations, networking, persuasive writing" data-es="Presentaciones, networking, escritura persuasiva">Presentations, networking, persuasive writing</td></tr>
-          <tr><td class="t" data-en="Monthly maintenance" data-es="Mantenimiento mensual">Monthly maintenance</td><td class="num" style="font-size:.9rem">4/mo</td><td class="goal t" data-en="Keep and polish what you've learned" data-es="Mantener y pulir lo aprendido">Keep and polish what you've learned</td></tr>
-        </tbody>
-      </table>
-      <a href="mailto:camilamihalyczo@gmail.com?subject=Business Spanish — info request" class="track-cta t" data-en="→ I'M INTERESTED IN THIS TRACK" data-es="→ ME INTERESA ESTE TRACK">→ I'M INTERESTED IN THIS TRACK</a>
-    </div>
-  </div>
-
-  <!-- TRACK 5: SURVIVAL SPANISH -->
-  <div class="track c-ss">
-    <div class="track-hd" onclick="toggleTrack(this)">
-      <div class="track-bar"></div>
-      <div class="track-info">
-        <span class="track-name">SURVIVAL SPANISH — ARGENTINA READY</span>
-        <div class="track-right">
-          <span class="track-tag t" data-en="SPANISH · FOREIGNERS · TRAVELLERS" data-es="ESPAÑOL · EXTRANJEROS · VIAJEROS">SPANISH · FOREIGNERS · TRAVELLERS</span>
-          <span class="track-toggle">+</span>
-        </div>
-      </div>
-    </div>
-    <div class="track-content">
-      <p class="track-intro" data-lang="en">For anyone coming to Argentina — or who wants to understand what people here actually say.</p>
-      <p class="track-intro" data-lang="es">Para quien viene a Argentina o quiere entender lo que la gente de acá realmente dice.</p>
-      <table class="lvl-table">
-        <thead><tr><th class="t" data-en="LEVEL" data-es="NIVEL">LEVEL</th><th style="text-align:center;width:90px" class="t" data-en="CLASSES" data-es="CLASES">CLASSES</th><th class="t" data-en="GOAL" data-es="OBJETIVO">GOAL</th></tr></thead>
-        <tbody>
-          <tr><td>Survival</td><td class="num">8</td><td class="goal t" data-en="Transport, shopping, restaurants, emergencies" data-es="Transporte, compras, restaurantes, emergencias">Transport, shopping, restaurants, emergencies</td></tr>
-          <tr><td>Social Spanish</td><td class="num">10</td><td class="goal t" data-en="Argentine humour, basic lunfardo, porteño culture" data-es="Humor argentino, lunfardo básico, cultura porteña">Argentine humour, basic lunfardo, porteño culture</td></tr>
-          <tr><td>Living in Argentina</td><td class="num">12</td><td class="goal t" data-en="Bureaucracy, renting, working, actually integrating" data-es="Trámites, alquilar, trabajar, integrarse de verdad">Bureaucracy, renting, working, actually integrating</td></tr>
-        </tbody>
-      </table>
-      <a href="mailto:camilamihalyczo@gmail.com?subject=Survival Spanish — info request" class="track-cta t" data-en="→ I'M INTERESTED IN THIS TRACK" data-es="→ ME INTERESA ESTE TRACK">→ I'M INTERESTED IN THIS TRACK</a>
-    </div>
-  </div>
-
-  <!-- TRACK 6: SPECIALS -->
-  <div class="track c-sp">
-    <div class="track-hd" onclick="toggleTrack(this)">
-      <div class="track-bar"></div>
-      <div class="track-info">
-        <span class="track-name t" data-en="SPECIAL COURSES & WORKSHOPS" data-es="CURSOS ESPECIALES Y TALLERES">SPECIAL COURSES & WORKSHOPS</span>
-        <div class="track-right">
-          <span class="track-tag t" data-en="ENGLISH · SPANISH · SHORT FORMAT" data-es="INGLÉS · ESPAÑOL · FORMATO CORTO">ENGLISH · SPANISH · SHORT FORMAT</span>
-          <span class="track-toggle">+</span>
-        </div>
-      </div>
-    </div>
-    <div class="track-content">
-      <p class="track-intro" data-lang="en">Themed, short, with a very specific goal — and it shows.</p>
-      <p class="track-intro" data-lang="es">Temáticos, cortos, con un objetivo muy específico — y se nota.</p>
-      <div class="sp-grid">
-        <div class="sp c-sp"><span class="sp-tag t" data-en="ENGLISH · 10-WEEK TRACK" data-es="INGLÉS · TRACK DE 10 SEMANAS">ENGLISH · 10-WEEK TRACK</span><h4 class="sp-name">ENGLISH FOR DEVELOPERS</h4><p class="sp-desc t" data-en="For developers applying to international companies or working with English-speaking teams. Grammar organized by real dev situations — daily stand-ups, bug reports, code reviews, conditionals for troubleshooting, passive voice for docs, Slack vs. email, and STAR-method mock interviews." data-es="Para developers que aplican a empresas extranjeras o trabajan con equipos de habla inglesa. Gramática organizada por situaciones reales de trabajo — daily stand-ups, reportar bugs, code reviews, conditionals para troubleshooting, passive voice para documentación, Slack vs. email, y mock interviews con método STAR.">For developers applying to international companies or working with English-speaking teams. Grammar organized by real dev situations — daily stand-ups, bug reports, code reviews, conditionals for troubleshooting, passive voice for docs, Slack vs. email, and STAR-method mock interviews.</p><p class="sp-desc t" style="margin-top:.6rem;padding-top:.6rem;border-top:1.5px solid var(--sp);font-weight:600;color:var(--sp)" data-en="✦ Fully mapped in Activity Blog — flashcards, glossary, and exercises for all 10 weeks of this track." data-es="✦ Completamente mapeado en Activity Blog — flashcards, glosario y ejercicios para las 10 semanas de este track.">✦ Fully mapped in Activity Blog — flashcards, glossary, and exercises for all 10 weeks of this track.</p></div>
-        <div class="sp c-sp"><span class="sp-tag t" data-en="ENGLISH · 8–10 CLASSES" data-es="INGLÉS · 8–10 CLASES">ENGLISH · 8–10 CLASSES</span><h4 class="sp-name">ENGLISH FOR SOCIAL MEDIA & CREATORS</h4><p class="sp-desc t" data-en="For creatives growing into English-speaking markets. Captions, scripts, pitches, DMs." data-es="Para creativos que quieren crecer en mercados de habla inglesa. Captions, scripts, pitches, DMs.">For creatives growing into English-speaking markets. Captions, scripts, pitches, DMs.</p></div>
-        <div class="sp c-sp"><span class="sp-tag t" data-en="SPANISH · 8–10 CLASSES" data-es="ESPAÑOL · 8–10 CLASES">SPANISH · 8–10 CLASSES</span><h4 class="sp-name">SPANISH THROUGH LATIN AMERICAN ART</h4><p class="sp-desc t" data-en="Cinema, music and visual art as a language class. For advanced learners who want to feel the culture, not just study it." data-es="Cine, música y arte visual como clase de idioma. Para avanzados que quieren sentir la cultura, no solo estudiarla.">Cinema, music and visual art as a language class. For advanced learners who want to feel the culture, not just study it.</p></div>
-        <div class="sp c-sp"><span class="sp-tag t" data-en="SPANISH · 6 CLASSES" data-es="ESPAÑOL · 6 CLASES">SPANISH · 6 CLASSES</span><h4 class="sp-name">RIOPLATENSE IMMERSION</h4><p class="sp-desc t" data-en="Argentine culture and language for advanced Spanish speakers. What textbooks will never teach you." data-es="Cultura y lengua argentina para hispanohablantes avanzados. Lo que los libros nunca te van a enseñar.">Argentine culture and language for advanced Spanish speakers. What textbooks will never teach you.</p></div>
-        <div class="sp c-sp"><span class="sp-tag t" data-en="SPANISH · 4–6 CLASSES" data-es="ESPAÑOL · 4–6 CLASES">SPANISH · 4–6 CLASSES</span><h4 class="sp-name">LUNFARDO & SLANG: REAL BUENOS AIRES SPANISH</h4><p class="sp-desc t" data-en="Short, themed, and fun. For anyone who wants to actually sound like they're from here." data-es="Corto, temático y divertido. Para quien quiere sonar como que realmente es de acá.">Short, themed, and fun. For anyone who wants to actually sound like they're from here.</p></div>
-        <div class="sp c-sp"><span class="sp-tag t" data-en="ANY LANGUAGE · GROUP FORMAT" data-es="CUALQUIER IDIOMA · GRUPAL">ANY LANGUAGE · GROUP FORMAT</span><h4 class="sp-name">GROUP WORKSHOPS — 4 TO 6 PEOPLE</h4><p class="sp-desc t" data-en="Small group classes on a specific topic. More dynamic, better value, and the conversational practice is better this way." data-es="Clases en grupo pequeño sobre un tema específico. Más dinámico, mejor precio, y la práctica conversacional es mejor así.">Small group classes on a specific topic. More dynamic, better value, and the conversational practice is better this way.</p></div>
-      </div>
-      <a href="mailto:camilamihalyczo@gmail.com?subject=Special Course — info request" class="track-cta t" data-en="→ I'M INTERESTED IN A WORKSHOP" data-es="→ ME INTERESA UN TALLER">→ I'M INTERESTED IN A WORKSHOP</a>
-    </div>
-  </div>
-</section>
-
-<!-- ③ FAQ -->
-<section id="faq">
-  <div class="sec-head">
-    <span class="sec-num">03</span>
-    <div class="sec-meta"><h2 class="sec-title t" data-en="FAQ" data-es="PREGUNTAS FRECUENTES">FAQ</h2></div>
-  </div>
-  <div class="faq-item">
-    <div class="faq-q" onclick="toggleFaq(this)">
-      <span class="faq-qt" data-lang="en">Do I need to commit to a full package from the start?</span>
-      <span class="faq-qt" data-lang="es">¿Tengo que comprometer un paquete completo desde el principio?</span>
-      <span class="faq-icon">+</span>
-    </div>
-    <div class="faq-a" data-lang="en">No. We always start with a trial class. If the dynamic works, we agree on the package or track that best fits your goals and pace.</div>
-    <div class="faq-a" data-lang="es">No. Empezamos siempre con una clase de prueba. Si la dinámica funciona, acordamos el paquete o track que mejor se adapte a tus objetivos y tu ritmo.</div>
-  </div>
-  <div class="faq-item">
-    <div class="faq-q" onclick="toggleFaq(this)">
-      <span class="faq-qt" data-lang="en">What's the difference between booking here vs. iTalki or Preply?</span>
-      <span class="faq-qt" data-lang="es">¿Cuál es la diferencia entre reservar acá y reservar en iTalki o Preply?</span>
-      <span class="faq-icon">+</span>
-    </div>
-    <div class="faq-a" data-lang="en">Platforms take a significant commission, which affects the final price. Booking directly gives you access to better pricing, the full extended packages, and more direct communication.</div>
-    <div class="faq-a" data-lang="es">Las plataformas cobran una comisión significativa. Al contratar directamente, accedés a mejores precios, los paquetes completos y una comunicación más directa.</div>
-  </div>
-  <div class="faq-item">
-    <div class="faq-q" onclick="toggleFaq(this)">
-      <span class="faq-qt" data-lang="en">Can I take English and Spanish with you at the same time?</span>
-      <span class="faq-qt" data-lang="es">¿Puedo tomar inglés y español con vos al mismo tiempo?</span>
-      <span class="faq-icon">+</span>
-    </div>
-    <div class="faq-a" data-lang="en">Yes, though it's usually better to focus on one at a time to progress faster. If you have a specific goal involving both languages, we can talk and build something custom.</div>
-    <div class="faq-a" data-lang="es">Sí, aunque lo más habitual es enfocarse en uno a la vez para avanzar más rápido. Si tenés un objetivo que implica los dos idiomas, lo hablamos y armamos algo a medida.</div>
-  </div>
-  <div class="faq-item">
-    <div class="faq-q" onclick="toggleFaq(this)">
-      <span class="faq-qt" data-lang="en">What platform do you use for online classes?</span>
-      <span class="faq-qt" data-lang="es">¿Qué plataforma usan para las clases online?</span>
-      <span class="faq-icon">+</span>
-    </div>
-    <div class="faq-a" data-lang="en">Zoom or Google Meet, depending on your preference.</div>
-    <div class="faq-a" data-lang="es">Zoom o Google Meet, según tu preferencia.</div>
-  </div>
-  <div class="faq-item">
-    <div class="faq-q" onclick="toggleFaq(this)">
-      <span class="faq-qt" data-lang="en">Do you assign homework? What materials do students get?</span>
-      <span class="faq-qt" data-lang="es">¿Hay tarea? ¿Qué materiales reciben los alumnos?</span>
-      <span class="faq-icon">+</span>
-    </div>
-    <div class="faq-a" data-lang="en">Yes — after each class you get access to <strong>Activity Blog</strong>, my own online practice platform: flashcards, glossary, quizzes, and writing exercises organized by class, so you can review at your own pace. You also get a summary of the class with key vocabulary and structures. No textbook needed.</div>
-    <div class="faq-a" data-lang="es">Sí — después de cada clase tenés acceso a <strong>Activity Blog</strong>, mi propia plataforma online de práctica: flashcards, glosario, quizzes y ejercicios de escritura organizados por clase, para repasar cuando quieras. También recibís un resumen de la clase con vocabulario y estructuras clave. No hace falta ningún libro de texto.</div>
-  </div>
-  <div class="faq-item">
-    <div class="faq-q" onclick="toggleFaq(this)">
-      <span class="faq-qt" data-lang="en">How long is each class? And the trial?</span>
-      <span class="faq-qt" data-lang="es">¿Cuánto dura cada clase? ¿Y la de prueba?</span>
-      <span class="faq-icon">+</span>
-    </div>
-    <div class="faq-a" data-lang="en">Regular classes are 60 minutes. The trial class is 30 minutes — it's more of a diagnostic session where we assess your level, talk about your goals, and see if we're a good fit. It's free and there's no commitment.</div>
-    <div class="faq-a" data-lang="es">Las clases regulares duran 60 minutos. La clase de prueba es de 30 minutos — es más una sesión de diagnóstico donde evaluamos tu nivel, hablamos de tus objetivos y vemos si hay buena onda. Es gratis y sin compromiso.</div>
-  </div>
-  <div class="faq-item">
-    <div class="faq-q" onclick="toggleFaq(this)">
-      <span class="faq-qt" data-lang="en">Can I book individual classes without committing to a package?</span>
-      <span class="faq-qt" data-lang="es">¿Puedo tomar clases sueltas sin comprometerme con un paquete?</span>
-      <span class="faq-icon">+</span>
-    </div>
-    <div class="faq-a" data-lang="en">Yes. Individual classes are available outside of any package — useful for conversation practice, specific topics, or if you just want to try before committing. Packages offer better value per class, but there's no obligation to go that route.</div>
-    <div class="faq-a" data-lang="es">Sí. Las clases sueltas están disponibles fuera de los paquetes — útiles para práctica de conversación, temas puntuales, o si querés probar antes de comprometerte. Los paquetes tienen mejor precio por clase, pero no hay obligación de tomarlos.</div>
-  </div>
-</section>
-
-<!-- ④ CONTACT — formulario -->
-<section id="contact">
-  <div class="sec-head">
-    <span class="sec-num">04</span>
-    <div class="sec-meta">
-      <h2 class="sec-title t" data-en="GET IN TOUCH" data-es="ESCRIBIME">GET IN TOUCH</h2>
-      <span class="sec-badge" style="color:var(--ep);border-color:var(--ep)" data-lang="en">I'LL WRITE BACK</span>
-      <span class="sec-badge" style="color:var(--ep);border-color:var(--ep)" data-lang="es">TE RESPONDO</span>
-    </div>
-  </div>
-  <div class="contact-form-wrap">
-    <div class="contact-form-left">
-      <h3 class="ch" data-lang="en">TELL ME WHAT<br>YOU'RE <em>LOOKING FOR.</em></h3>
-      <h3 class="ch" data-lang="es">CONTAME QUÉ<br><em>NECESITÁS.</em></h3>
-      <p class="csub" data-lang="en">Select the course you're interested in and leave your email. I'll get back to you with details, pricing, and availability — no commitment needed.</p>
-      <p class="csub" data-lang="es">Elegí el curso que te interesa y dejá tu email. Te escribo con detalles, precios y disponibilidad — sin compromiso.</p>
-    </div>
-    <div class="contact-form-right">
-      <form class="nl-form" id="nlForm" onsubmit="submitForm(event)">
-        <input class="nl-input" type="email" id="nlEmail" placeholder="your@email.com" required/>
-        <select class="nl-select" id="nlTopic">
-          <option value="" data-en="— Which course interests you? —" data-es="— ¿Qué curso te interesa? —">— Which course interests you? —</option>
-          <option value="Business English">Business English</option>
-          <option value="English for Creatives">English for Creative Professionals</option>
-          <option value="Exam Preparation">Exam Preparation</option>
-          <option value="Business Spanish">Business Spanish</option>
-          <option value="Survival Spanish">Survival Spanish / Argentina Ready</option>
-          <option value="Special Course">Special Course / Workshop</option>
-          <option value="Trial class">Trial class / Clase de prueba</option>
-        </select>
-        <button class="nl-btn" type="submit">
-          <span class="nl-btn-text t" data-en="SEND →" data-es="ENVIAR →">SEND →</span>
-          <span class="nl-btn-loading" style="display:none">···</span>
-        </button>
-        <a href="https://calendar.app.google/1nzZDCss9Lrhv8ZdA" target="_blank" class="nl-btn" style="background:transparent;border:1.5px solid var(--ink);text-align:center;text-decoration:none;display:flex;align-items:center;justify-content:center;cursor:pointer;">
-          <span class="nl-btn-text t" data-en="FREE TRIAL CLASS ↗" data-es="CLASE DE PRUEBA GRATIS ↗" style="color:var(--ink);font-weight:500">FREE TRIAL CLASS ↗</span>
-        </a>
-      </form>
-      <p class="nl-success" id="nlSuccess" style="display:none">✓ Got it! I'll write back soon.</p>
-      <p class="nl-success" id="nlSuccessEs" style="display:none">✓ ¡Recibido! Te escribo pronto.</p>
-      <p class="nl-error" id="nlError" style="display:none">Something went wrong — <a href="mailto:camilamihalyczo@gmail.com" style="color:var(--cream)">email me directly</a>.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ⑤ WHERE TO FIND ME — plataformas + mail -->
-<section id="platforms">
-  <div class="sec-head">
-    <span class="sec-num">05</span>
-    <div class="sec-meta">
-      <h2 class="sec-title t" data-en="WHERE TO FIND ME" data-es="DÓNDE ENCONTRARME">WHERE TO FIND ME</h2>
-      <span class="sec-badge" style="color:var(--be);border-color:var(--be)" data-lang="en">TRIAL CLASS FIRST, ALWAYS</span>
-      <span class="sec-badge" style="color:var(--be);border-color:var(--be)" data-lang="es">CLASE DE PRUEBA PRIMERO, SIEMPRE</span>
-    </div>
-  </div>
-  <div class="sec-body" style="padding:0">
-    <div class="plat-links-grid">
-      <a href="https://www.italki.com" target="_blank" class="plat-link-row">
-        <div class="plat-link-left">
-          <span class="plat-link-num">01</span>
-          <div>
-            <span class="plat-link-name">iTalki</span>
-            <span class="plat-link-sub t" data-en="English · Spanish — Trial lesson available" data-es="Inglés · Español — Clase de prueba disponible">English · Spanish — Trial lesson available</span>
-          </div>
-        </div>
-        <span class="plat-link-url">italki.com/camila →</span>
-      </a>
-      <a href="https://www.preply.com" target="_blank" class="plat-link-row">
-        <div class="plat-link-left">
-          <span class="plat-link-num">02</span>
-          <div>
-            <span class="plat-link-name">Preply</span>
-            <span class="plat-link-sub t" data-en="English · Spanish — TEFL certified" data-es="Inglés · Español — Certificación TEFL">English · Spanish — TEFL certified</span>
-          </div>
-        </div>
-        <span class="plat-link-url">preply.com/camila →</span>
-      </a>
-      <a href="https://www.tusclasesparticulares.com" target="_blank" class="plat-link-row">
-        <div class="plat-link-left">
-          <span class="plat-link-num">03</span>
-          <div>
-            <span class="plat-link-name">TusClasesParticulares</span>
-            <span class="plat-link-sub t" data-en="Spanish-speaking market · Bilingual profile" data-es="Mercado hispanoparlante · Perfil bilingüe">Spanish-speaking market · Bilingual profile</span>
-          </div>
-        </div>
-        <span class="plat-link-url">tusclasesparticulares.com →</span>
-      </a>
-      <a href="https://linkedin.com/in/camilamihalyczo" target="_blank" class="plat-link-row">
-        <div class="plat-link-left">
-          <span class="plat-link-num">04</span>
-          <div>
-            <span class="plat-link-name">LinkedIn</span>
-            <span class="plat-link-sub t" data-en="Professional profile & background" data-es="Perfil profesional y formación">Professional profile & background</span>
-          </div>
-        </div>
-        <span class="plat-link-url">linkedin.com/in/camilamihalyczo →</span>
-      </a>
-      <a href="https://wa.me/541151268940" target="_blank" class="plat-link-row">
-        <div class="plat-link-left">
-          <span class="plat-link-num">05</span>
-          <div>
-            <span class="plat-link-name">WhatsApp</span>
-            <span class="plat-link-sub t" data-en="Direct message · Quick conversation" data-es="Mensaje directo · Conversación rápida">Direct message · Quick conversation</span>
-          </div>
-        </div>
-        <span class="plat-link-url">+54 11 5126 8940 →</span>
-      </a>
-      <a href="#" onclick="return false" class="plat-link-row" style="opacity:.55;cursor:default">
-        <div class="plat-link-left">
-          <span class="plat-link-num">06</span>
-          <div>
-            <span class="plat-link-name">Instagram</span>
-            <span class="plat-link-sub t" data-en="Coming soon" data-es="Próximamente">Coming soon</span>
-          </div>
-        </div>
-        <span class="plat-link-url t" data-en="soon →" data-es="pronto →">soon →</span>
-      </a>
-      <a href="#" onclick="return false" class="plat-link-row" style="opacity:.55;cursor:default">
-        <div class="plat-link-left">
-          <span class="plat-link-num">07</span>
-          <div>
-            <span class="plat-link-name">TikTok</span>
-            <span class="plat-link-sub t" data-en="Coming soon" data-es="Próximamente">Coming soon</span>
-          </div>
-        </div>
-        <span class="plat-link-url t" data-en="soon →" data-es="pronto →">soon →</span>
-      </a>
-      <a href="mailto:camilamihalyczo@gmail.com" class="plat-link-row plat-link-email">
-        <div class="plat-link-left">
-          <span class="plat-link-num">✉</span>
-          <div>
-            <span class="plat-link-name t" data-en="Direct email" data-es="Email directo">Direct email</span>
-            <span class="plat-link-sub t" data-en="For full packages, custom courses, or any question" data-es="Para paquetes completos, cursos a medida, o cualquier consulta">For full packages, custom courses, or any question</span>
-          </div>
-        </div>
-        <span class="plat-link-url">camilamihalyczo@gmail.com →</span>
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <div class="foot-bottom">
-    <div class="foot-social">
-      <a href="https://www.italki.com" target="_blank" class="foot-icon" title="iTalki">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
-      </a>
-      <a href="https://linkedin.com/in/camilamihalyczo" target="_blank" class="foot-icon" title="LinkedIn">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-      </a>
-      <a href="mailto:camilamihalyczo@gmail.com" class="foot-icon" title="Email">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-      </a>
-      <a href="https://www.preply.com" target="_blank" class="foot-icon" title="Preply">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-      </a>
-    </div>
-    <nav class="foot-nav">
-      <a href="#about" class="t" data-en="Profile" data-es="Perfil">Profile</a>
-      <a href="#courses" class="t" data-en="Courses" data-es="Cursos">Courses</a>
-      <a href="#platforms" class="t" data-en="Platforms" data-es="Plataformas">Platforms</a>
-      <a href="#faq">FAQ</a>
-      <a href="#contact" class="t" data-en="Contact" data-es="Contacto">Contact</a>
-    </nav>
-    <span class="foot-copy">© 2026 CAMILA MIHALYCZO · BUENOS AIRES</span>
-  </div>
-</footer>
-
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-<script>
-(function(){ emailjs.init({ publicKey: 's-qJf0of7dIG085Ex' }); })();
-
-let currentLang = 'en';
-function detectLang(){ return (navigator.language||'en').toLowerCase().startsWith('es') ? 'es' : 'en'; }
-function applyLang(lang){
-  currentLang = lang;
-  document.body.className = 'lang-' + lang;
-  document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.textContent.toLowerCase() === lang));
-  document.querySelectorAll('.t[data-en][data-es]').forEach(el => { el.textContent = el.dataset[lang]; });
-  document.querySelectorAll('[data-lang]').forEach(el => {
-    // Don't auto-show faq-a — they're controlled by toggleFaq
-    if(el.classList.contains('faq-a')) {
-      if(el.dataset.lang !== lang) el.classList.remove('open');
-      return;
-    }
-    el.style.display = (el.dataset.lang === lang) ? '' : 'none';
-  });
-  ['nlSuccess','nlSuccessEs','nlError'].forEach(id => { const el=document.getElementById(id); if(el) el.style.display='none'; });
-}
-function setLang(lang){ applyLang(lang); localStorage.setItem('cm_lang', lang); }
-const saved = localStorage.getItem('cm_lang') || detectLang();
-applyLang(saved);
-
-function toggleMenu(){ document.getElementById('mobileMenu').classList.toggle('open'); }
-
-const COURSES = [
-  { cls:'cs-be', track:'BUSINESS ENGLISH',      name:'Foundations',                n:'10',  desc:'Survive in an English-speaking work environment' },
-  { cls:'cs-be', track:'BUSINESS ENGLISH',      name:'Professional Communication', n:'12',  desc:'Active meetings, reports and emails' },
-  { cls:'cs-be', track:'BUSINESS ENGLISH',      name:'Advanced Business',          n:'12',  desc:'Lead meetings, presentations, international networking' },
-  { cls:'cs-ec', track:'ENGLISH FOR CREATIVES', name:'Creative Basics',            n:'10',  desc:'Design vocab, describe your work and process' },
-  { cls:'cs-ec', track:'ENGLISH FOR CREATIVES', name:'Client Communication',       n:'12',  desc:'Proposals, briefings, feedback with international clients' },
-  { cls:'cs-ec', track:'ENGLISH FOR CREATIVES', name:'Industry English',           n:'12',  desc:'Pitches, portfolio reviews, international networking' },
-  { cls:'cs-ep', track:'EXAM PREPARATION',      name:'3 months before',            n:'24',  desc:'Steady prep, 2x a week, room to breathe' },
-  { cls:'cs-ep', track:'EXAM PREPARATION',      name:'1 month — Sprint',           n:'12',  desc:'Focused sprint, 3x a week' },
-  { cls:'cs-ep', track:'EXAM PREPARATION',      name:'Emergency mode',             n:'10',  desc:'2 weeks to exam day, daily sessions' },
-  { cls:'cs-bs', track:'BUSINESS SPANISH',      name:'Foundations',                n:'10',  desc:'Emails, basic meetings, professional introductions' },
-  { cls:'cs-bs', track:'BUSINESS SPANISH',      name:'Professional Communication', n:'12',  desc:'Negotiation, reports, Rioplatense expressions' },
-  { cls:'cs-bs', track:'BUSINESS SPANISH',      name:'Advanced Business',          n:'12',  desc:'Presentations, networking, persuasive writing' },
-  { cls:'cs-ss', track:'SURVIVAL SPANISH',      name:'Survival',                   n:'8',   desc:'Transport, shopping, restaurants, emergencies' },
-  { cls:'cs-ss', track:'SURVIVAL SPANISH',      name:'Social Spanish',             n:'10',  desc:'Argentine humour, lunfardo, porteno culture' },
-  { cls:'cs-ss', track:'SURVIVAL SPANISH',      name:'Living in Argentina',        n:'12',  desc:'Bureaucracy, renting, working, integrating for real' },
-  { cls:'cs-sp', track:'SPECIAL COURSES',       name:'English for Developers',     n:'10',  desc:'Stand-ups, bug reports, code reviews, STAR interviews — with Activity Blog' },
-  { cls:'cs-sp', track:'SPECIAL COURSES',       name:'English for Creators',       n:'8+',  desc:'Captions, scripts, pitches, DMs' },
-  { cls:'cs-sp', track:'SPECIAL COURSES',       name:'Spanish through Latin Art',  n:'8+',  desc:'Cinema, music, visual art as language class' },
-  { cls:'cs-sp', track:'SPECIAL COURSES',       name:'Rioplatense Immersion',      n:'6',   desc:'Culture and language — what textbooks never teach' },
-  { cls:'cs-sp', track:'SPECIAL COURSES',       name:'Lunfardo and Slang',         n:'4+',  desc:'Real Buenos Aires Spanish — short and fun' },
-];
-function buildCard(c){
-  return '<div class="cs-card '+c.cls+'"><span class="cs-card-track">'+c.track+'</span><div class="cs-card-name">'+c.name+'</div><div class="cs-card-info"><span class="cs-card-desc">'+c.desc+'</span><span class="cs-card-n">'+c.n+'</span></div></div>';
-}
-function toggleTrack(hd){
-  const content = hd.nextElementSibling;
-  const icon = hd.querySelector('.track-toggle');
-  const open = content.classList.toggle('open');
-  icon.classList.toggle('open', open);
-  icon.textContent = open ? '×' : '+';
-}
-
-function toggleFaq(q){
-  const icon = q.querySelector('.faq-icon');
-  const faqItem = q.parentElement;
-  const answer = faqItem.querySelector('.faq-a[data-lang="'+currentLang+'"]');
-  if(!answer) return;
-  // close all other open FAQs
-  document.querySelectorAll('.faq-a.open').forEach(a => {
-    if(a !== answer){
-      a.classList.remove('open');
-      const otherIcon = a.closest('.faq-item').querySelector('.faq-icon');
-      if(otherIcon){ otherIcon.classList.remove('open'); otherIcon.textContent = '+'; }
-    }
-  });
-  const open = answer.classList.toggle('open');
-  icon.classList.toggle('open', open);
-  icon.textContent = open ? '×' : '+';
-}
-
-async function submitForm(e){
-  e.preventDefault();
-  const email   = document.getElementById('nlEmail').value;
-  const topic   = document.getElementById('nlTopic').value;
-  const btnText = document.querySelector('.nl-btn-text');
-  const btnLoad = document.querySelector('.nl-btn-loading');
-  const succEN  = document.getElementById('nlSuccess');
-  const succES  = document.getElementById('nlSuccessEs');
-  const errEl   = document.getElementById('nlError');
-  btnText.style.display = 'none';
-  btnLoad.style.display = 'inline';
-  errEl.style.display = 'none';
-  try {
-    await emailjs.send('service_zhr98kg', 'template_cs794qw', {
-      reply_to: email, topic: topic || 'General inquiry', to_email: 'camilamihalyczo@gmail.com',
-    });
-    btnLoad.style.display = 'none';
-    document.getElementById('nlForm').style.display = 'none';
-    if(currentLang === 'es') succES.style.display = 'block';
-    else succEN.style.display = 'block';
-  } catch(e2){
-    btnLoad.style.display = 'none';
-    btnText.style.display = 'inline';
-    errEl.style.display = 'block';
+  function updateTrackLabel(card) {
+    const label = card.querySelector('.summary-action');
+    if (label) label.textContent = card.open ? 'Ver menos detalles' : 'Ver temario y situaciones';
+    card.querySelector('summary').setAttribute('aria-expanded', String(card.open));
   }
-}
-</script>
 
-<!-- FLOATING CTA -->
-<div class="float-cta">
-  <a href="#contact" class="float-book">
-    <span class="float-book-dot"></span>
-    <span class="t" data-en="BOOK A FREE CLASS" data-es="RESERVAR CLASE GRATIS">BOOK A FREE CLASS</span>
-  </a>
-</div>
+  trackCards.forEach((card) => {
+    const summary = card.querySelector('summary');
+    const label = document.createElement('span');
+    label.className = 'summary-action';
+    summary.appendChild(label);
+    updateTrackLabel(card);
+
+    card.addEventListener('toggle', () => updateTrackLabel(card));
+    summary.addEventListener('click', () => {
+      trackCards.forEach((otherCard) => {
+        if (otherCard !== card) otherCard.open = false;
+      });
+    });
+  });
+  </script>
 </body>
 </html>
