@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Informe de Nivelación - Business English - Bruno Olgiatti</title>
+<style>
+  @page {
+    size: A4 portrait;
+    margin: 12mm 14mm 12mm 14mm;
+  }
+
+  * {
+    box-sizing: border-box;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  body {
+    background-color: #0f172a;
+    color: #f1f5f9;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    font-size: 11px;
+    line-height: 1.4;
+  }
+
+  .report-container {
+    max-width: 820px;
+    margin: 0 auto;
+    background-color: #162534;
+    border: 1px solid #243d52;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+  }
+
+  /* Header */
+  .header {
+    background: linear-gradient(135deg, #1b3247 0%, #132230 100%);
+    border-bottom: 2px solid #38bdf8;
+    padding: 20px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .header-left h1 {
+    font-size: 11px;
+    letter-spacing: 1.8px;
+    color: #38bdf8;
+    margin: 0 0 4px 0;
+    text-transform: uppercase;
+    font-weight: 800;
+  }
+
+  .header-left h2 {
+    font-size: 18px;
+    color: #ffffff;
+    margin: 0 0 4px 0;
+    font-weight: 700;
+  }
+
+  .header-left p {
+    font-size: 11px;
+    color: #94a3b8;
+    margin: 0;
+  }
+
+  .level-badge-container {
+    text-align: right;
+  }
+
+  .level-badge {
+    background: rgba(56, 189, 248, 0.15);
+    border: 1.5px solid #38bdf8;
+    color: #38bdf8;
+    padding: 6px 14px;
+    border-radius: 30px;
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: inline-block;
+  }
+
+  .score-badge {
+    font-size: 10.5px;
+    color: #cbd5e1;
+    margin-top: 5px;
+    font-weight: 600;
+  }
+
+  /* Metadatos */
+  .meta-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    background-color: #192b3a;
+    border-bottom: 1px solid #243d52;
+    padding: 10px 24px;
+    gap: 10px;
+  }
+
+  .meta-item {
+    font-size: 10.5px;
+  }
+
+  .meta-label {
+    color: #64748b;
+    text-transform: uppercase;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  .meta-value {
+    color: #e2e8f0;
+    font-weight: 600;
+  }
+
+  /* Contenido */
+  .content-body {
+    padding: 20px 24px;
+  }
+
+  .section-card {
+    background-color: #1a2c3d;
+    border: 1px solid #27435b;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    overflow: hidden;
+    page-break-inside: avoid;
+  }
+
+  .section-title-bar {
+    background: #1e3549;
+    padding: 8px 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #27435b;
+  }
+
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .section-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #38bdf8;
+    box-shadow: 0 0 6px #38bdf8;
+  }
+
+  .section-score {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4ade80;
+    background: rgba(74, 222, 128, 0.12);
+    padding: 2px 8px;
+    border-radius: 12px;
+    border: 1px solid rgba(74, 222, 128, 0.3);
+  }
+
+  /* Tabla de resultados */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 10.5px;
+  }
+
+  th {
+    background-color: #152432;
+    color: #94a3b8;
+    text-transform: uppercase;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-align: left;
+    padding: 6px 12px;
+    border-bottom: 1px solid #243d52;
+  }
+
+  td {
+    padding: 7px 12px;
+    border-bottom: 1px solid #203547;
+    vertical-align: top;
+  }
+
+  tr:last-child td {
+    border-bottom: none;
+  }
+
+  .status-tag {
+    font-size: 9px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 4px;
+    display: inline-block;
+    text-transform: uppercase;
+  }
+
+  .status-correct {
+    background: rgba(74, 222, 128, 0.15);
+    color: #4ade80;
+    border: 1px solid #4ade80;
+  }
+
+  .status-incorrect {
+    background: rgba(248, 113, 113, 0.15);
+    color: #f87171;
+    border: 1px solid #f87171;
+  }
+
+  .status-blank {
+    background: rgba(148, 163, 184, 0.15);
+    color: #94a3b8;
+    border: 1px solid #94a3b8;
+  }
+
+  .feedback-box {
+    padding: 12px 14px;
+    background-color: #152432;
+    border-radius: 6px;
+    margin: 8px 12px 12px 12px;
+    border-left: 3px solid #38bdf8;
+  }
+
+  .feedback-title {
+    font-size: 10px;
+    font-weight: 700;
+    color: #38bdf8;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .feedback-text {
+    font-size: 10.5px;
+    color: #cbd5e1;
+    margin: 0;
+    line-height: 1.45;
+  }
+
+  .feedback-list {
+    margin: 6px 0 0 0;
+    padding-left: 18px;
+    color: #cbd5e1;
+  }
+
+  .feedback-list li {
+    margin-bottom: 4px;
+  }
+
+  /* Plan recomendado */
+  .plan-card {
+    background: linear-gradient(135deg, #1b3043 0%, #152837 100%);
+    border: 1px solid #38bdf8;
+    border-radius: 8px;
+    padding: 16px 18px;
+    margin-top: 14px;
+    page-break-inside: avoid;
+  }
+
+  .plan-title {
+    font-size: 12px;
+    font-weight: 800;
+    color: #38bdf8;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0 0 6px 0;
+  }
+
+  .plan-desc {
+    font-size: 10.5px;
+    color: #e2e8f0;
+    margin: 0 0 12px 0;
+    line-height: 1.45;
+  }
+
+  .schedule-box {
+    background-color: #121e29;
+    border: 1px solid #243d52;
+    border-radius: 6px;
+    padding: 10px 12px;
+    margin-bottom: 12px;
+  }
+
+  .schedule-item {
+    margin-bottom: 6px;
+    font-size: 10px;
+    color: #cbd5e1;
+  }
+
+  .schedule-item:last-child {
+    margin-bottom: 0;
+  }
+
+  .schedule-day {
+    color: #38bdf8;
+    font-weight: 700;
+    text-transform: uppercase;
+    display: inline-block;
+    width: 140px;
+  }
+
+  .plan-steps {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .step-pill {
+    background-color: #111e29;
+    border: 1px solid #233e54;
+    border-radius: 6px;
+    padding: 8px 10px;
+  }
+
+  .step-pill strong {
+    color: #4ade80;
+    display: block;
+    font-size: 10px;
+    margin-bottom: 2px;
+  }
+
+  .step-pill span {
+    color: #94a3b8;
+    font-size: 9.5px;
+  }
+
+  /* Footer */
+  .footer {
+    padding: 12px 24px;
+    background-color: #121e29;
+    border-top: 1px solid #243d52;
+    display: flex;
+    justify-content: space-between;
+    font-size: 9.5px;
+    color: #64748b;
+  }
+</style>
+</head>
+<body>
+
+<div class="report-container">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-left">
+      <h1>Business English Foundations — Diagnostic Report</h1>
+      <h2>TU INFORME DE NIVELACIÓN & DIAGNÓSTICO</h2>
+      <p>Análisis de competencias comunicativas en contexto profesional y laboral</p>
+    </div>
+    <div class="level-badge-container">
+      <div class="level-badge">Nivel Asignado: A2</div>
+      <div class="score-badge">Pre-Intermediate Foundations</div>
+    </div>
+  </div>
+
+  <!-- Metadatos -->
+  <div class="meta-grid">
+    <div class="meta-item">
+      <span class="meta-label">Estudiante</span>
+      <span class="meta-value">Bruno Olgiatti</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Fecha de Evaluación</span>
+      <span class="meta-value">07/09/2026</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Puntaje Global</span>
+      <span class="meta-value">14 / 40 pts (Receptivo Destacado)</span>
+    </div>
+  </div>
+
+  <div class="content-body">
+
+    <!-- Sección C: Reading -->
+    <div class="section-card">
+      <div class="section-title-bar">
+        <div class="section-title">
+          <div class="section-dot" style="background-color: #4ade80; box-shadow: 0 0 6px #4ade80;"></div>
+          1. Comprensión Lectora (Reading Comprehension)
+        </div>
+        <div class="section-score">8 / 8 pts (100%)</div>
+      </div>
+      <div class="feedback-box" style="margin: 10px 12px; border-left-color: #4ade80;">
+        <div class="feedback-title" style="color: #4ade80;">Tu mayor fortaleza: Comprensión Sobresaliente</div>
+        <p class="feedback-text">
+          Demostraste una comprensión lectora sólida y muy ágil. Tenés la capacidad de procesar y entender sin dificultad textos corporativos complejos de nivel B1 sobre metodologías de trabajo híbrido, herramientas de comunicación asincrónica (Slack/Boards), cuellos de botella operativos y prevención de burnout. Esta comprensión analítica es tu mayor activo para acelerar tu aprendizaje.
+        </p>
+      </div>
+    </div>
+
+    <!-- Sección B: Vocabulario -->
+    <div class="section-card">
+      <div class="section-title-bar">
+        <div class="section-title">
+          <div class="section-dot"></div>
+          2. Vocabulario Corporativo & Negocios
+        </div>
+        <div class="section-score">6 / 8 pts (75%)</div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 25%;">Término</th>
+            <th style="width: 30%;">Tu Respuesta</th>
+            <th style="width: 30%;">Respuesta Correcta</th>
+            <th style="width: 15%;">Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Stakeholder / Bottleneck</strong></td>
+            <td>b) Parte interesada / a) Cuello botella</td>
+            <td>b / a</td>
+            <td><span class="status-tag status-correct">Correcto</span></td>
+          </tr>
+          <tr>
+            <td><strong>Follow-up / Outsource / KPI</strong></td>
+            <td>c) Seguimiento / a) Tercerizar / c) KPI</td>
+            <td>c / a / c</td>
+            <td><span class="status-tag status-correct">Correcto</span></td>
+          </tr>
+          <tr>
+            <td><strong>Trade-off</strong></td>
+            <td>b) Balance entre opciones</td>
+            <td>b</td>
+            <td><span class="status-tag status-correct">Correcto</span></td>
+          </tr>
+          <tr>
+            <td><strong>Bandwidth</strong></td>
+            <td>a) Velocidad del módem</td>
+            <td>b) Tiempo / Capacidad de trabajo</td>
+            <td><span class="status-tag status-incorrect">Ajustar</span></td>
+          </tr>
+          <tr>
+            <td><strong>Milestone</strong></td>
+            <td><em>(En blanco)</em></td>
+            <td>c) Hito / Logro clave de proyecto</td>
+            <td><span class="status-tag status-blank">Sin responder</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Sección A: Gramática y Uso -->
+    <div class="section-card">
+      <div class="section-title-bar">
+        <div class="section-title">
+          <div class="section-dot" style="background-color: #f87171; box-shadow: 0 0 6px #f87171;"></div>
+          3. Gramática y Uso del Inglés (Use of English)
+        </div>
+        <div class="section-score" style="color: #f87171; background: rgba(248,113,113,0.12); border-color: rgba(248,113,113,0.3);">0 / 10 pts</div>
+      </div>
+      <div class="feedback-box">
+        <div class="feedback-title">Puntos clave para destrabar tu sintaxis</div>
+        <ul class="feedback-list">
+          <li><strong>Distinción entre sustantivos y verbos:</strong> Hay una tendencia natural a recurrir al sustantivo en lugar de conjugar el verbo (por ejemplo, escribir <em>delivery</em> en vez de <em>was delivered</em>, o <em>managment</em> en lugar de <em>has managed</em>). Trabajar sobre esta diferencia te va a dar mucha seguridad.</li>
+          <li><strong>Estructuras fijas y ortografía de oficina:</strong> En <em>look forward to</em> respondiste <em>looking foward</em> (omitiendo la preposición obligatoria <em>to</em> y con un detalle de tipeo en <em>forward</em>). Automatizar estas frases fijas te evitará dudas al escribir.</li>
+          <li><strong>Manejo de tiempos operativos:</strong> Al dejar los condicionales, modales (<em>must/should</em>) y voz pasiva sin responder, el diagnóstico confirma que tu punto de partida ideal es afianzar y automatizar las estructuras base de <strong>nivel A2</strong>.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Sección D: Writing Lab (Personalizada) -->
+    <div class="section-card">
+      <div class="section-title-bar">
+        <div class="section-title">
+          <div class="section-dot" style="background-color: #fbbf24; box-shadow: 0 0 6px #fbbf24;"></div>
+          4. Producción Escrita (Writing Lab)
+        </div>
+        <div class="section-score" style="color: #fbbf24; background: rgba(251,191,36,0.12); border-color: rgba(251,191,36,0.3);">Diagnóstico de Activación</div>
+      </div>
+      <div class="feedback-box" style="border-left-color: #fbbf24;">
+        <p class="feedback-text">
+          Al no haber completado la consigna de redacción, hay reflejado un patrón muy común en profesionales de perfil analítico o técnico en <strong>nivel A2</strong>: contás con un vocabulario receptivo muy amplio y entendés los textos a la perfección, pero hay un bloqueo al momento de redactar un mensaje formal propio sin contar con una plantilla previa.
+        </p>
+        <p class="feedback-text" style="margin-top: 6px;">
+          Tu desafío no es la falta de términos técnicos, sino la necesidad de incorporar un método paso a paso que te permita estructurar correos y mensajes de Slack con rapidez y sin dudar.
+        </p>
+      </div>
+    </div>
+
+    <!-- Plan Recomendado (Personalizado para Bruno) -->
+    <div class="plan-card">
+      <div class="plan-title">🎯 Tu Plan de Entrenamiento: Track "English for Data & AI" (Nivel A2)</div>
+      <p class="plan-desc">
+        Diseñé este programa a tu medida para <strong>transformar tu excelente comprensión lectora en fluidez activa</strong> al momento de escribir y participar en reuniones de trabajo en entornos de datos, tecnología e inteligencia artificial.
+      </p>
+
+      <!-- Cronograma de la dinámica -->
+      <div class="schedule-box">
+        <div class="schedule-item">
+          <span class="schedule-day">Viernes (60 min):</span>
+          <span><strong>Input & Orden Sintáctico:</strong> Desmontaje de estructuras clave, corrección de confusiones de raíz (verbos vs. sustantivos técnicos) y práctica guiada de patrones laborales.</span>
+        </div>
+        <div class="schedule-item">
+          <span class="schedule-day">Sábado (60 min):</span>
+          <span><strong>Activación & Simulación Real:</strong> Puesta en práctica sin filtro: role-plays en vivo, standups técnicos, simulaciones con stakeholders y feedback en tiempo real.</span>
+        </div>
+        <div class="schedule-item">
+          <span class="schedule-day">Domingo a Jueves:</span>
+          <span><strong>Asimilación Web (Asincrónica):</strong> Micro-prácticas ágiles en plataforma (flashcards inteligentes, micro-writing y listening interactivo) para consolidar lo visto en clase.</span>
+        </div>
+      </div>
+
+      <!-- Ejes de trabajo -->
+      <div class="plan-steps">
+        <div class="step-pill">
+          <strong>1. The 4-Step Technical Email</strong>
+          <span>Plantillas para reportar blockers, avances de sprints y pedidos de accesos/datos sin trabarte.</span>
+        </div>
+        <div class="step-pill">
+          <strong>2. Precisión Verbal Operativa</strong>
+          <span>Eliminar confusiones (deliver/delivery) y dominar Present Simple, Continuous y compromisos con WILL.</span>
+        </div>
+        <div class="step-pill">
+          <strong>3. Regla Preposición + -ING</strong>
+          <span>Automatizar frases como <em>responsible for analyzing</em>, <em>instead of deploying</em> y <em>look forward to</em>.</span>
+        </div>
+        <div class="step-pill">
+          <strong>4. Data Standup Fluency (A2+)</strong>
+          <span>Fórmulas para explicar gráficos, métricas clave (KPIs), trade-offs y avances de pipelines en dailies.</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <span>Evaluación oficial Business English — Nivelación de Ingreso</span>
+    <span>Tutora: Camila Mihalyczo</span>
+  </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Business English Foundations — Class 4 Active Integration</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      margin: 0;
+      padding: 24px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: #0f172a;
+      color: #1e293b;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* SLIDE CONTAINER (16:9 PANORAMIC) */
+    .slide {
+      width: 1020px;
+      height: 573.75px;
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 14px;
+      padding: 30px 42px;
+      margin-bottom: 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+      page-break-after: always;
+      break-after: page;
+    }
+
+    /* HEADER */
+    .slide-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 10px;
+      margin-bottom: 12px;
+    }
+
+    .kicker {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #0284c7;
+      font-weight: 800;
+    }
+
+    .slide-title {
+      font-size: 23px;
+      font-weight: 800;
+      color: #0f172a;
+      letter-spacing: -0.02em;
+      margin-top: 2px;
+    }
+
+    .badge {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 12px;
+      background: #f0f9ff;
+      border: 1px solid #bae6fd;
+      border-radius: 20px;
+      color: #0284c7;
+    }
+
+    .badge-oral {
+      background: #ecfdf5;
+      border-color: #a7f3d0;
+      color: #059669;
+    }
+
+    /* BODY CONTENT */
+    .slide-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    /* FOOTER */
+    .slide-footer {
+      border-top: 1px solid #e2e8f0;
+      padding-top: 10px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: #64748b;
+      font-weight: 600;
+    }
+
+    /* CARDS & GRIDS */
+    .card-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .card-grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 12px 14px;
+    }
+
+    .card-title {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: #0284c7;
+      margin-bottom: 5px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .card-text {
+      font-size: 12.5px;
+      color: #334155;
+      line-height: 1.45;
+    }
+
+    .card-subtext {
+      font-size: 11px;
+      color: #64748b;
+      margin-top: 4px;
+      line-height: 1.35;
+    }
+
+    /* SCENARIO BOXES (SCAFFOLDING) */
+    .scenario-container {
+      display: grid;
+      grid-template-columns: 1fr 1.3fr;
+      gap: 14px;
+      align-items: stretch;
+    }
+
+    .scenario-meta {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .role-tag {
+      font-size: 10.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 4px;
+      display: inline-block;
+      margin-bottom: 3px;
+    }
+
+    .role-teacher {
+      background: #fef3c7;
+      color: #b45309;
+      border: 1px solid #fde68a;
+    }
+
+    .role-student {
+      background: #ecfdf5;
+      color: #047857;
+      border: 1px solid #a7f3d0;
+    }
+
+    .scaffolding-box {
+      background: #f0fdf4;
+      border: 1.5px dashed #86efac;
+      border-radius: 8px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .scaffolding-title {
+      font-size: 11.5px;
+      font-weight: 800;
+      color: #166534;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .chunk-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .chunk-item {
+      font-size: 12px;
+      color: #14532d;
+      background: rgba(255, 255, 255, 0.75);
+      padding: 5px 8px;
+      border-radius: 4px;
+      border-left: 3px solid #16a34a;
+    }
+
+    /* FEEDBACK TABLE */
+    .table-feedback {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+
+    .table-feedback th {
+      background: #1e293b;
+      color: #f8fafc;
+      text-align: left;
+      padding: 8px 12px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .table-feedback td {
+      padding: 8px 12px;
+      border-bottom: 1px solid #e2e8f0;
+      line-height: 1.4;
+    }
+
+    .col-wrong {
+      color: #b91c1c;
+      font-weight: 600;
+      background: #fef2f2;
+      width: 45%;
+    }
+
+    .col-right {
+      color: #15803d;
+      font-weight: 700;
+      background: #f0fdf4;
+      width: 55%;
+    }
+
+    /* AGENDA LIST */
+    .agenda-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .agenda-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 8px 14px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+    }
+
+    .agenda-icon {
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 26px;
+      height: 26px;
+      background: #e0f2fe;
+      color: #0284c7;
+      border-radius: 6px;
+    }
+
+    .agenda-time {
+      font-size: 11.5px;
+      font-weight: 800;
+      color: #0284c7;
+      min-width: 70px;
+    }
+
+    .agenda-text {
+      font-size: 12.5px;
+      color: #334155;
+      font-weight: 500;
+    }
+
+    /* PRINT STYLES */
+    @media print {
+      body { background: transparent !important; padding: 0; }
+      .slide { box-shadow: none; border: none; margin: 0; width: 100vw; height: 100vh; border-radius: 0; }
+      @page { size: A4 landscape; margin: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- SLIDE 1: COVER -->
+  <section class="slide" id="slide-1">
+    <div class="slide-header">
+      <span class="kicker">Business English // Foundations</span>
+      <span class="badge badge-oral"><i class="fa-solid fa-microphone-lines"></i> 100% Oral Production</span>
+    </div>
+    <div class="slide-content" style="justify-content: center; align-items: flex-start;">
+      <span style="color: #059669; font-size: 12px; font-weight: 800; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.08em;">[ Active Integration &amp; Case Scenarios ]</span>
+      <h1 style="font-size: 38px; font-weight: 800; line-height: 1.15; color: #0f172a; margin-bottom: 12px;">ORAL INTEGRATION LAB<br>&amp; SIMULATIONS</h1>
+      <p style="font-size: 15.5px; color: #475569; max-width: 740px; line-height: 1.45; margin-bottom: 22px;">
+        Sesión de práctica oral intensiva: puesta en escena de situaciones reales de oficina, standups, resolución de demoras con proveedores y llamadas de salud sin guiones fijos.
+      </p>
+      <div style="font-size: 12px; color: #334155; display: flex; gap: 20px; font-weight: 700;">
+        <span>⏱️ Teacher Talking Time (TTT) ≤ 25%</span>
+        <span>🗣️ Student Talking Time (STT) ≥ 75%</span>
+        <span>🎯 Target: Pre-Intermediate (A2)</span>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <span>Business English Foundations — Class 04</span>
+      <span>Slide 01 of 10</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 2: TIME-BOXED AGENDA -->
+  <section class="slide" id="slide-2">
+    <div class="slide-header">
+      <div>
+        <span class="kicker">Structure</span>
+        <h2 class="slide-title">Agenda de Activación Oral (60 Min)</h2>
+      </div>
+      <span class="badge badge-oral"><i class="fa-solid fa-stopwatch"></i> Timeboxed</span>
+    </div>
+    <div class="slide-content">
+      <div class="agenda-list">
+        <div class="agenda-item">
+          <span class="agenda-icon"><i class="fa-solid fa-comments"></i></span>
+          <span class="agenda-time">[ 05 MIN ]</span>
+          <span class="agenda-text"><b>Warm-up Drill:</b> The Conversation Loop &amp; Spontaneous Coffee Talk.</span>
+        </div>
+        <div class="agenda-item">
+          <span class="agenda-icon"><i class="fa-solid fa-users"></i></span>
+          <span class="agenda-time">[ 12 MIN ]</span>
+          <span class="agenda-text"><b>Roleplay 1:</b> Weekly Standup — Routine tasks vs. Current projects (-ING).</span>
+        </div>
+        <div class="agenda-item">
+          <span class="agenda-icon"><i class="fa-solid fa-truck-ramp-box"></i></span>
+          <span class="agenda-time">[ 12 MIN ]</span>
+          <span class="agenda-text"><b>Roleplay 2:</b> Managing Supplier Delays &amp; Commitments with WILL.</span>
+        </div>
+        <div class="agenda-item">
+          <span class="agenda-icon"><i class="fa-solid fa-phone-volume"></i></span>
+          <span class="agenda-time">[ 12 MIN ]</span>
+          <span class="agenda-text"><b>Roleplay 3:</b> Slack Call — Sick Leave Notice &amp; Workload Handover.</span>
+        </div>
+        <div class="agenda-item">
+          <span class="agenda-icon"><i class="fa-solid fa-bolt"></i></span>
+          <span class="agenda-time">[ 10 MIN ]</span>
+          <span class="agenda-text"><b>Rapid-Fire Syntax &amp; Delayed Feedback:</b> Pizarra correctiva en vivo.</span>
+        </div>
+        <div class="agenda-item">
+          <span class="agenda-icon"><i class="fa-solid fa-list-check"></i></span>
+          <span class="agenda-time">[ 09 MIN ]</span>
+          <span class="agenda-text"><b>Wrap-up &amp; Activity Blog Tasks:</b> Cierre, balance y asignación de micro-writing.</span>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <span>Class Structure</span>
+      <span>Slide 02 of 10</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 3: WARM-UP DRILL (REDESIGNED) -->
+  <section class="slide" id="slide-3">
+    <div class="slide-header">
+      <div>
+        <span class="kicker">Stage 1 // 05 Min</span>
+        <h2 class="slide-title">Spontaneous Warm-up: The Coffee Chat</h2>
+      </div>
+      <span class="badge"><i class="fa-solid fa-rotate"></i> The Conversation Loop</span>
+    </div>
+
+    <div class="slide-content" style="gap: 12px;">
+      <div style="display: grid; grid-template-columns: 1fr 1.25fr; gap: 14px; align-items: stretch;">
+        
+        <!-- LEFT PANEL: TRIGGERS & PROMPTS -->
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          
+          <div class="card" style="padding: 10px 14px;">
+            <span class="card-title" style="margin-bottom: 4px;">
+              <i class="fa-solid fa-mug-hot"></i> Trigger 1: Energy &amp; Day Check
+            </span>
+            <p class="card-text" style="font-size: 11.5px; margin-bottom: 4px;">
+              <i>"Morning Angeles! How is your day going so far? Are you having a busy week?"</i>
+            </p>
+            <p class="card-subtext" style="font-size: 10.5px;">
+              👉 <b>Answer with detail:</b> Estado general + 1 tarea clave.
+            </p>
+          </div>
+
+          <div class="card" style="padding: 10px 14px;">
+            <span class="card-title" style="margin-bottom: 4px;">
+              <i class="fa-solid fa-cloud-sun"></i> Trigger 2: Weekend &amp; Weather
+            </span>
+            <p class="card-text" style="font-size: 11.5px; margin-bottom: 4px;">
+              <i>"Did you have a relaxing weekend? How is the weather over there today?"</i>
+            </p>
+            <p class="card-subtext" style="font-size: 10.5px;">
+              👉 <b>Answer with detail:</b> Descanso / aire libre + temperatura.
+            </p>
+          </div>
+
+          <!-- PRO BOUNCE-BACK PHRASES -->
+          <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 10px 12px;">
+            <span style="font-size: 10.5px; font-weight: 800; color: #166534; text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+              <i class="fa-solid fa-arrow-turn-down-left"></i> Professional Bounce-Backs:
+            </span>
+            <ul style="list-style: none; display: flex; flex-direction: column; gap: 4px; font-size: 10.5px; color: #14532d;">
+              <li>• <b>"How about yourself?"</b> <span style="color: #64748b;">(La más formal)</span></li>
+              <li>• <b>"How are things on your side / on your end?"</b></li>
+              <li>• <b>"How is your week treating you so far?"</b></li>
+              <li>• <b>"What about you? How is your day going?"</b></li>
+              <li>• <b>"Did you have a good [weekend/morning] too?"</b></li>
+            </ul>
+          </div>
+
+        </div>
+
+        <!-- RIGHT PANEL: THE GOLDEN RULE & REAL MODELS -->
+        <div style="background: #ffffff; border: 1.5px solid #0284c7; border-radius: 10px; padding: 12px 14px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 12px rgba(2, 132, 199, 0.08);">
+          
+          <div>
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0; padding-bottom: 6px; margin-bottom: 8px;">
+              <span style="font-size: 11px; font-weight: 800; color: #0284c7; text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center; gap: 6px;">
+                <i class="fa-solid fa-shield-halved"></i> The Golden Rule: Never answer with just 1 word
+              </span>
+              <span style="font-size: 9.5px; font-weight: 700; background: #fee2e2; color: #991b1b; padding: 2px 6px; border-radius: 4px;">NO MONOSÍLABOS</span>
+            </div>
+            <p style="font-size: 10.5px; color: #64748b; margin-bottom: 8px;">
+              Evitá decir solo <i>"Fine"</i> o <i>"Good"</i>. Agregá siempre: <b>(1) Un detalle corto + (2) Devolución de pregunta:</b>
+            </p>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 7px;">
+            
+            <div style="background: #f8fafc; border-left: 3px solid #16a34a; border-radius: 4px; padding: 6px 10px;">
+              <div style="font-size: 10px; font-weight: 700; color: #dc2626; text-decoration: line-through;">❌ "Fine." / "Good."</div>
+              <div style="font-size: 11px; color: #14532d; font-weight: 600; margin-top: 1px;">
+                ✅ "Pretty good! A bit busy with logistics reports, but all under control. <b>How about yourself?</b>"
+              </div>
+            </div>
+
+            <div style="background: #f8fafc; border-left: 3px solid #16a34a; border-radius: 4px; padding: 6px 10px;">
+              <div style="font-size: 10px; font-weight: 700; color: #dc2626; text-decoration: line-through;">❌ "Tired."</div>
+              <div style="font-size: 11px; color: #14532d; font-weight: 600; margin-top: 1px;">
+                ✅ "A little tired today, to be honest! I need another coffee. <b>How are things on your side?</b>"
+              </div>
+            </div>
+
+            <div style="background: #f8fafc; border-left: 3px solid #16a34a; border-radius: 4px; padding: 6px 10px;">
+              <div style="font-size: 10px; font-weight: 700; color: #dc2626; text-decoration: line-through;">❌ "Normal." / "Same."</div>
+              <div style="font-size: 11px; color: #14532d; font-weight: 600; margin-top: 1px;">
+                ✅ "Same as usual! Checking emails and organizing my week. <b>How is your week treating you so far?</b>"
+              </div>
+            </div>
+
+            <div style="background: #f8fafc; border-left: 3px solid #16a34a; border-radius: 4px; padding: 6px 10px;">
+              <div style="font-size: 10px; font-weight: 700; color: #dc2626; text-decoration: line-through;">❌ "Good weekend."</div>
+              <div style="font-size: 11px; color: #14532d; font-weight: 600; margin-top: 1px;">
+                ✅ "It was very relaxing! I spent Sunday outdoors and rested. <b>Did you have a good weekend too?</b>"
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span>Stage 1 • Spontaneous Small Talk Drill</span>
+      <span>Slide 03 of 10</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 4: ROLEPLAY 1 - WEEKLY STANDUP -->
+  <section class="slide" id="slide-4">
+    <div class="slide-header">
+      <div>
+        <span class="kicker">Roleplay 1 // 12 Min</span>
+        <h2 class="slide-title">Daily Standup: Routines vs. Projects (-ING)</h2>
+      </div>
+      <span class="badge badge-oral"><i class="fa-solid fa-headset"></i> Simulation Drill</span>
+    </div>
+    <div class="slide-content">
+      <div class="scenario-container">
+        <div class="scenario-meta">
+          <div>
+            <span class="role-tag role-teacher"><i class="fa-solid fa-user-tie"></i> Teacher: David (Operations Manager)</span>
+            <p style="font-size: 12px; color: #334155; margin-top: 4px;">
+              "Morning Angeles, could you please give us a quick status update on your priorities?"
+            </p>
+          </div>
+          <div style="margin-top: 8px;">
+            <span class="role-tag role-student"><i class="fa-solid fa-user"></i> Student: Angeles (Logistics Coordinator)</span>
+            <p style="font-size: 11.5px; color: #64748b; margin-top: 2px;">
+              <b>Tu misión oral:</b> Mencionar 1 responsabilidad habitual de tu rutina y 2 tareas en progreso esta semana.
+            </p>
+          </div>
+        </div>
+
+        <div class="scaffolding-box">
+          <div class="scaffolding-title"><i class="fa-solid fa-puzzle-piece"></i> Useful Phrases (Usá estas fórmulas):</div>
+          <div class="chunk-list">
+            <div class="chunk-item"><b>Routine:</b> "Every morning, I check incoming correspondence and invoices."</div>
+            <div class="chunk-item"><b>Preposition:</b> "I am responsible for <b>managing</b> supplier accounts and databases."</div>
+            <div class="chunk-item"><b>In Progress:</b> "Currently / This week, I am <b>working on</b> the export consignment notes."</div>
+            <div class="chunk-item"><b>In Progress:</b> "At the moment, I am <b>contacting</b> carriers to confirm delivery dates."</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <span>Present Simple vs. Present Continuous</span>
+      <span>Slide 04 of 10</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 5: ROLEPLAY 2 - THE SUPPLIER DELAY -->
+  <section class="slide" id="slide-5">
+    <div class="slide-header">
+      <div>
+        <span class="kicker">Roleplay 2 // 12 Min</span>
+        <h2 class="slide-title">Handling Delays: Apologies &amp; Commitments with WILL</h2>
+      </div>
+      <span class="badge badge-oral"><i class="fa-solid fa-triangle-exclamation"></i> Business Friction</span>
+    </div>
+    <div class="slide-content">
+      <div class="scenario-container">
+        <div class="scenario-meta">
+          <div>
+            <span class="role-tag role-teacher"><i class="fa-solid fa-user-tie"></i> Teacher: Mr. Davis (Internal Stakeholder)</span>
+            <p style="font-size: 12px; color: #334155; margin-top: 4px;">
+              "Angeles, where is the agricultural logistics report? We needed it on Wednesday."
+            </p>
+          </div>
+          <div style="margin-top: 8px;">
+            <span class="role-tag role-student"><i class="fa-solid fa-user"></i> Student: Angeles (Commercialization Consultant)</span>
+            <p style="font-size: 11.5px; color: #64748b; margin-top: 2px;">
+              <b>Tu misión oral:</b> Pedir disculpas diplomáticas, explicar que el proveedor retrasó los datos (data, no date) y comprometerte a entregarlo mañana antes de EOD con <b>WILL</b>.
+            </p>
+          </div>
+        </div>
+
+        <div class="scaffolding-box">
+          <div class="scaffolding-title"><i class="fa-solid fa-shield-check"></i> Useful Phrases (Manejo de demoras):</div>
+          <div class="chunk-list">
+            <div class="chunk-item"><b>Formal Apology:</b> "Please accept my sincere apologies for the delay."</div>
+            <div class="chunk-item"><b>The Blocker:</b> "Unfortunately, I was waiting for <b>data</b> from the supplier..."</div>
+            <div class="chunk-item"><b>Firm Commitment:</b> "However, <b>I will send</b> the updated report tomorrow before EOD."</div>
+            <div class="chunk-item"><b>Appreciation:</b> "Thank you very much for your patience and understanding."</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <span>Professional Apologies &amp; Commitments</span>
+      <span>Slide 05 of 10</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 6: ROLEPLAY 3 - SICK LEAVE & HANDOVER -->
+  <section class="slide" id="slide-6">
+    <div class="slide-header">
+      <div>
+        <span class="kicker">Roleplay 3 // 12 Min</span>
+        <h2 class="slide-title">Slack Audio Call: Sick Leave &amp; Workload Handover</h2>
+      </div>
+      <span class="badge badge-oral"><i class="fa-solid fa-phone"></i> Emergency Call</span>
+    </div>
+    <div class="slide-content">
+      <div class="scenario-container">
+        <div class="scenario-meta">
+          <div>
+            <span class="role-tag role-teacher"><i class="fa-solid fa-user-tie"></i> Teacher: Carlos (Team Leader)</span>
+            <p style="font-size: 12px; color: #334155; margin-top: 4px;">
+              "Hi Angeles! I saw your Slack notification. Is everything okay?"
+            </p>
+          </div>
+          <div style="margin-top: 8px;">
+            <span class="role-tag role-student"><i class="fa-solid fa-user"></i> Student: Angeles (Team Member)</span>
+            <p style="font-size: 11.5px; color: #64748b; margin-top: 2px;">
+              <b>Tu misión oral:</b> Explicar que tenés dolor de cabeza/migraña usando <i>under the weather</i>, que te tomás el día de reposo y que mañana te ponés al día.
+            </p>
+          </div>
+        </div>
+
+        <div class="scaffolding-box">
+          <div class="scaffolding-title"><i class="fa-solid fa-notes-medical"></i> Useful Phrases (Salud y Ausencia):</div>
+          <div class="chunk-list">
+            <div class="chunk-item"><b>Health Status:</b> "I woke up feeling a bit <b>under the weather</b> with a headache."</div>
+            <div class="chunk-item"><b>The Action:</b> "So, I decided to <b>take a sick day</b> today to rest."</div>
+            <div class="chunk-item"><b>Backup:</b> "For any urgent matters regarding consignment notes, Mariana can assist."</div>
+            <div class="chunk-item"><b>Catch up:</b> "<b>I will catch up on</b> all pending emails tomorrow morning."</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <span>Workplace Well-being</span>
+      <span>Slide 06 of 10</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 7: RAPID-FIRE SYNTAX DRILL -->
+  <section class="slide" id="slide-7">
+    <div class="slide-header">
+      <div>
+        <span class="kicker">Drill // 05 Min</span>
+        <h2 class="slide-title">Rapid-Fire: Spot the Error &amp; Correct It Out Loud</h2>
+      </div>
+      <span class="badge"><i class="fa-solid fa-bolt"></i> Speed Drill</span>
+    </div>
+
+    <div class="slide-content">
+      <p style="font-size: 12.5px; color: #475569; font-weight: 600; margin-bottom: 4px;">
+        Leé cada frase en silencio, detectá el error de transferencia y <b>decila en voz alta de la forma correcta</b>:
+      </p>
+      <div class="card-grid-2">
+        <div class="card" style="border-left: 3px solid #ef4444;">
+          <span class="card-title" style="color: #b91c1c;">1. Compromiso futuro</span>
+          <p class="card-text">❌ <i>"I send the report to the supplier tomorrow."</i></p>
+          <p class="card-subtext">👉 <b>Decilo bien:</b> "I ____________ the report tomorrow."</p>
+        </div>
+        <div class="card" style="border-left: 3px solid #ef4444;">
+          <span class="card-title" style="color: #b91c1c;">2. Regla de Preposición</span>
+          <p class="card-text">❌ <i>"I am responsible of organize the invoices."</i></p>
+          <p class="card-subtext">👉 <b>Decilo bien:</b> "I am responsible ____________ ____________ the invoices."</p>
+        </div>
+        <div class="card" style="border-left: 3px solid #ef4444;">
+          <span class="card-title" style="color: #b91c1c;">3. Cierre de Email</span>
+          <p class="card-text">❌ <i>"I look forward to receive your feedback."</i></p>
+          <p class="card-subtext">👉 <b>Decilo bien:</b> "I look forward to ____________ your feedback."</p>
+        </div>
+        <div class="card" style="border-left: 3px solid #ef4444;">
+          <span class="card-title" style="color: #b91c1c;">4. Expresión de Salud</span>
+          <p class="card-text">❌ <i>"I am bad today, I have bad head."</i></p>
+          <p class="card-subtext">👉 <b>Decilo bien:</b> "I am feeling ____________ ____________ ____________ today."</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span>Oral Accuracy Drill</span>
+      <span>Slide 07 of 10</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 8: DELAYED FEEDBACK MATRIX -->
+  <section class="slide" id="slide-8">
+    <div class="slide-header">
+      <div>
+        <span class="kicker">Coaching Stage // 05 Min</span>
+        <h2 class="slide-title">Delayed Feedback: Oral Polish Board</h2>
+      </div>
+      <span class="badge badge-oral"><i class="fa-solid fa-pen-to-square"></i> Live Correction</span>
+    </div>
+    <div class="slide-content">
+      <p style="font-size: 12px; color: #64748b; margin-bottom: 2px;">
+        Pizarra de pulido para registrar en vivo lo producido durante los role-plays:
+      </p>
+      <table class="table-feedback">
+        <thead>
+          <tr>
+            <th>You Said (Spontaneous / Transfer)</th>
+            <th>More Natural Business English (Target Chunk)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="col-wrong">"I waiting two days date for the supplier..."</td>
+            <td class="col-right">"I was waiting for <b>data</b> from the supplier..."</td>
+          </tr>
+          <tr>
+            <td class="col-wrong">"I send reporter tomorrow before EOD."</td>
+            <td class="col-right">"<b>I will send</b> the report tomorrow before EOD."</td>
+          </tr>
+          <tr>
+            <td class="col-wrong">"Please accepted my sincerely apologies..."</td>
+            <td class="col-right">"Please <b>accept my sincere apologies</b> for the delay."</td>
+          </tr>
+          <tr>
+            <td class="col-wrong">"Instead to call them, I send email."</td>
+            <td class="col-right">"<b>Instead of calling</b> them, I sent an email."</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="slide-footer">
+      <span>Delayed Feedback Stage</span>
+      <span>Slide 08 of 10</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 9: LEXICAL RECAP TOOLKIT -->
+  <section class="slide" id="slide-9">
+    <div class="slide-header">
+      <div>
+        <span class="kicker">Lexicon // Reference</span>
+        <h2 class="slide-title">Key Lexical Chunks (Clases 1 a 3)</h2>
+      </div>
+      <span class="badge"><i class="fa-solid fa-bookmark"></i> Core Vocabulary</span>
+    </div>
+    <div class="slide-content">
+      <div class="card-grid-3">
+        <div class="card">
+          <span class="card-title"><i class="fa-solid fa-spinner"></i> Actions in Progress</span>
+          <p class="card-text"><b>Currently + -ing</b></p>
+          <p class="card-subtext">"Currently, I am working on export consignment notes."</p>
+        </div>
+        <div class="card">
+          <span class="card-title"><i class="fa-solid fa-briefcase"></i> Duty &amp; Preposition</span>
+          <p class="card-text"><b>Responsible for + -ing</b></p>
+          <p class="card-subtext">"I am responsible for coordinating logistics and invoices."</p>
+        </div>
+        <div class="card">
+          <span class="card-title"><i class="fa-solid fa-clock"></i> Future Commitment</span>
+          <p class="card-text"><b>I will + verb base</b></p>
+          <p class="card-subtext">"I will send the confirmed report before EOD tomorrow."</p>
+        </div>
+      </div>
+      <div class="card-grid-3" style="margin-top: 8px;">
+        <div class="card">
+          <span class="card-title"><i class="fa-solid fa-heart-pulse"></i> Health Status</span>
+          <p class="card-text"><b>Feeling under the weather</b></p>
+          <p class="card-subtext">"I am feeling under the weather due to a mild headache."</p>
+        </div>
+        <div class="card">
+          <span class="card-title"><i class="fa-solid fa-bed"></i> Short-Term Absence</span>
+          <p class="card-text"><b>Take a sick day</b></p>
+          <p class="card-subtext">"I will take a sick day today and catch up tomorrow."</p>
+        </div>
+        <div class="card">
+          <span class="card-title"><i class="fa-solid fa-envelope-open-text"></i> Email Closing</span>
+          <p class="card-text"><b>Look forward to + -ing</b></p>
+          <p class="card-subtext">"I look forward to receiving your confirmation soon."</p>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <span>Consolidated Formulas</span>
+      <span>Slide 09 of 10</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 10: ACTION ITEMS & ACTIVITY BLOG (UPDATED) -->
+  <section class="slide" id="slide-10">
+    <div class="slide-header">
+      <div>
+        <span class="kicker">Homework // Asynchronous Practice</span>
+        <h2 class="slide-title">Action Items &amp; Next Steps</h2>
+      </div>
+      <span class="badge"><i class="fa-solid fa-laptop-code"></i> Activity Blog</span>
+    </div>
+
+    <div class="slide-content">
+      <p style="font-size: 13px; color: #475569; font-weight: 600; margin-bottom: 2px;">
+        Completá tus módulos semanales en la plataforma antes de la próxima clase:
+      </p>
+
+      <div class="agenda-list">
+        
+        <!-- TASK 1: VOICE LAB -->
+        <div class="agenda-item" style="border-left: 4px solid #0284c7;">
+          <span class="agenda-icon" style="background: #e0f2fe; color: #0284c7;">
+            <i class="fa-solid fa-microphone-lines"></i>
+          </span>
+          <span class="agenda-time" style="color: #0284c7;">VOICE LAB</span>
+          <span class="agenda-text">
+            <b>Entrenamiento de Voz:</b> Completá los 5 desafíos con micrófono (enfoque en <i>consignment notes</i>, disculpas formales, <i>data</i> y <i>under the weather</i>).
+          </span>
+        </div>
+
+        <!-- TASK 2: SENTENCE BUILDER & GRAMMAR -->
+        <div class="agenda-item" style="border-left: 4px solid #16a34a;">
+          <span class="agenda-icon" style="background: #dcfce7; color: #16a34a;">
+            <i class="fa-solid fa-layer-group"></i>
+          </span>
+          <span class="agenda-time" style="color: #16a34a;">SINTAXIS</span>
+          <span class="agenda-text">
+            <b>Sentence Builder &amp; Fill-in-the-blanks:</b> Ordená los bloques de oraciones y completá los espacios con tiempos verbales y preposiciones (-ING).
+          </span>
+        </div>
+
+        <!-- TASK 3: READING & WRITING -->
+        <div class="agenda-item" style="border-left: 4px solid #d97706;">
+          <span class="agenda-icon" style="background: #fef3c7; color: #d97706;">
+            <i class="fa-solid fa-pen-to-square"></i>
+          </span>
+          <span class="agenda-time" style="color: #d97706;">WRITING</span>
+          <span class="agenda-text">
+            <b>Micro-Writing Lab:</b> Redactá el mensaje formal de 4 pasos avisando una ausencia médica y coordinando el backup de tareas con WILL.
+          </span>
+        </div>
+
+        <!-- TASK 4: LISTENING -->
+        <div class="agenda-item" style="border-left: 4px solid #8b5cf6;">
+          <span class="agenda-icon" style="background: #ede9fe; color: #8b5cf6;">
+            <i class="fa-solid fa-headphones"></i>
+          </span>
+          <span class="agenda-time" style="color: #8b5cf6;">LISTENING</span>
+          <span class="agenda-text">
+            <b>Audio Standup &amp; Transcripción:</b> Escuchá la reunión semanal y respondé las 4 preguntas de comprensión auditiva en el blog.
+          </span>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <span>Plataforma: activityblog.vercel.app • Password: datos24</span>
+      <span>Slide 10 of 10</span>
+    </div>
+  </section>
+
+  <!-- KEYBOARD NAVIGATION SCRIPT -->
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    let currentSlide = 0;
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === ' ') {
+        if (currentSlide < slides.length - 1) {
+          currentSlide++;
+          slides[currentSlide].scrollIntoView({ behavior: 'smooth' });
+        }
+      } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+        if (currentSlide > 0) {
+          currentSlide--;
+          slides[currentSlide].scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    });
+  </script>
+</body>
+</html>

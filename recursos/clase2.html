@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Class 2 - The Agile Survival Playbook</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+    :root {
+      --bg-dark: #0d1117;
+      --card-bg: #161b22;
+      --border-color: #30363d;
+      --text-main: #f0f6fc;
+      --text-muted: #8b949e;
+      --accent-cyan: #38bdf8;
+      --accent-green: #2ea043;
+      --accent-amber: #d29922;
+      --accent-purple: #a371f7;
+      --tip-bg: rgba(210, 153, 34, 0.1);
+      --tip-border: #d29922;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: #010409;
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* SLIDE CONTAINER (16:9 PANORAMIC) */
+    .slide {
+      width: 1020px;
+      height: 573.75px;
+      background-color: var(--bg-dark);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 34px 44px;
+      margin-bottom: 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+      page-break-after: always;
+      break-after: page;
+    }
+
+    /* HEADER */
+    .slide-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 10px;
+      margin-bottom: 14px;
+    }
+
+    .kicker {
+      font-family: 'Fira Code', monospace;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent-cyan);
+      font-weight: 500;
+    }
+
+    .slide-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: -0.02em;
+      margin-top: 2px;
+    }
+
+    .badge {
+      font-family: 'Fira Code', monospace;
+      font-size: 11px;
+      padding: 4px 10px;
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      color: var(--text-muted);
+    }
+
+    /* BODY CONTENT */
+    .slide-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    /* FOOTER */
+    .slide-footer {
+      border-top: 1px solid var(--border-color);
+      padding-top: 10px;
+      display: flex;
+      justify-content: space-between;
+      font-family: 'Fira Code', monospace;
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+
+    /* CARDS & GRIDS */
+    .card-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 12px 14px;
+    }
+
+    .card-title {
+      font-family: 'Fira Code', monospace;
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--accent-cyan);
+      margin-bottom: 5px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .card-text {
+      font-size: 12.5px;
+      color: #cbd5e1;
+      line-height: 1.45;
+    }
+
+    .card-subtext {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 4px;
+      line-height: 1.35;
+    }
+
+    /* SPEECH BUBBLES WITH PERSON ICONS */
+    .dialogue {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .speech-bubble {
+      padding: 10px 15px;
+      border-radius: 8px;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .speech-lead {
+      background: #1f242c;
+      border-left: 3px solid var(--accent-amber);
+      color: #e2e8f0;
+    }
+
+    .speech-bruno {
+      background: #16261e;
+      border-left: 3px solid var(--accent-green);
+      color: #f0fdf4;
+    }
+
+    .actor-name {
+      font-family: 'Fira Code', monospace;
+      font-size: 11px;
+      font-weight: 600;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .actor-icon {
+      font-size: 13px;
+    }
+
+    .speech-lead .actor-name { color: var(--accent-amber); }
+    .speech-bruno .actor-name { color: var(--accent-green); }
+
+    /* PRO TIP BOX */
+    .pro-tip {
+      background: var(--tip-bg);
+      border: 1px solid var(--tip-border);
+      border-left: 4px solid var(--tip-border);
+      border-radius: 6px;
+      padding: 8px 12px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .pro-tip-icon {
+      font-size: 16px;
+      line-height: 1;
+    }
+
+    .pro-tip-text {
+      font-size: 11.5px;
+      color: #fef08a;
+      line-height: 1.4;
+    }
+
+    /* AGENDA & BACKLOG LISTS WITH ICON BADGES */
+    .agenda-list {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .agenda-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 12px;
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+    }
+
+    .agenda-icon {
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 4px;
+    }
+
+    .agenda-time {
+      font-family: 'Fira Code', monospace;
+      font-size: 11px;
+      color: var(--accent-cyan);
+      min-width: 70px;
+    }
+
+    .agenda-text {
+      font-size: 12.5px;
+      font-weight: 500;
+    }
+
+    /* CODE BLOCK */
+    .code-block {
+      background: #090d13;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 14px 18px;
+      font-family: 'Fira Code', monospace;
+      font-size: 12px;
+      color: #7ee787;
+      line-height: 1.55;
+      white-space: pre-wrap;
+    }
+
+    /* PRINT SPECIFIC STYLES (PDF EXPORT) */
+    @media print {
+      body {
+        background-color: transparent !important;
+        padding: 0;
+      }
+
+      .slide {
+        box-shadow: none;
+        border: none;
+        margin: 0;
+        width: 100vw;
+        height: 100vh;
+        border-radius: 0;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      @page {
+        size: A4 landscape;
+        margin: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- SLIDE 1: COVER -->
+  <section class="slide" id="slide-1">
+    <div class="slide-header">
+      <span class="kicker">&gt; English for Data &amp; AI // Foundations</span>
+      <span class="badge">🚀 Class 02 • Saturday</span>
+    </div>
+    <div class="slide-content" style="justify-content: center; align-items: flex-start;">
+      <span style="font-family: 'Fira Code'; color: var(--accent-green); font-size: 13px; margin-bottom: 8px;">[ ⚡ LIVE ACTIVATION SESSION ]</span>
+      <h1 style="font-size: 42px; font-weight: 800; line-height: 1.1; margin-bottom: 12px;">THE AGILE SURVIVAL<br>PLAYBOOK</h1>
+      <p style="font-size: 16.5px; color: var(--text-muted); max-width: 700px; line-height: 1.4; margin-bottom: 22px;">
+        Live Standup Flow, Handling Tech Lead Interruptions &amp; Clarification Protocols
+      </p>
+      <div style="font-family: 'Fira Code'; font-size: 12px; color: #94a3b8; display: flex; gap: 24px;">
+        
+        <span>⏱️ Duration: 60 Min</span>
+        <span>🏢 Context: Data Science &amp; AI</span>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <span>Foundations Track • Sábado</span>
+      <span>Slide 01 of 13</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 2: SPRINT AGENDA -->
+  <section class="slide" id="slide-2">
+    <div class="slide-header">
+      <div>
+        <span class="kicker">&gt; Overview</span>
+        <h2 class="slide-title">Sprint Agenda: Class 2 Execution</h2>
+      </div>
+      <span class="badge">⏱️ 60 Minutes</span>
+    </div>
+    <div class="slide-content">
+      <div class="agenda-list">
+        <div class="agenda-item">
+          <span class="agenda-icon">⚡</span>
+          <span class="agenda-time">[ 05 MIN ]</span>
+          <span class="agenda-text"><b>Icebreaker:</b> Study Routines &amp; Productivity Hacks (Pomodoro vs. Deep Work)</span>
+        </div>
+        <div class="agenda-item">
+          <span class="agenda-icon">🛡️</span>
+          <span class="agenda-time">[ 15 MIN ]</span>
+          <span class="agenda-text"><b>Survival Protocols:</b> The Conversation Loop &amp; Clarification Formulas (No more <i>"What?"</i>)</span>
+        </div>
+        <div class="agenda-item">
+          <span class="agenda-icon">🎭</span>
+          <span class="agenda-time">[ 20 MIN ]</span>
+          <span class="agenda-text"><b>Live Simulation:</b> 3 Standup Scenarios (Including the promised Saturday Mock Standup)</span>
+        </div>
+        <div class="agenda-item">
+          <span class="agenda-icon">📚</span>
+          <span class="agenda-time">[ 15 MIN ]</span>
+          <span class="agenda-text"><b>Industry Variables:</b> Core Glossary Integration (Class 1 &amp; 2) &amp; Diagnostics</span>
+        </div>
+        <div class="agenda-item">
+          <span class="agenda-icon">🎯</span>
+          <span class="agenda-time">[ 05 MIN ]</span>
+          <span class="agenda-text"><b>Master Pitch &amp; Async Sprint:</b> Career Narrative &amp; Full 7-Task Activity Deck</span>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <span>Agile Workflow</span>
+      <span>Slide 02 of 13</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 3: ICEBREAKER -->
+  <section class="slide" id="slide-3">
+    <div class="slide-header">
+      <div>
+        <span class="kicker">&gt; Warm-up &amp; Habits</span>
+        <h2 class="slide-title">Study Routines &amp; Productivity Hacks</h2>
+      </div>
+      <span class="badge">💬 05 Min Discussion</span>
+    </div>
+    <div class="slide-content">
+      <p style="font-size: 13px; color: var(--accent-cyan); font-weight: 600; margin-bottom: 2px;">
+        Which study system or focus habit works best for you when learning technical skills or languages?
+      </p>
+      <div class="card-grid-3">
+        <div class="card">
+          <span class="card-title">🍅 1. THE POMODORO METHOD</span>
+          <p class="card-text"><b>25 min focus + 5 min break.</b></p>
+          <p class="card-subtext">Ideal for avoiding mental fatigue, reading documentation, and structured grammar drills.</p>
+        </div>
+        <div class="card">
+          <span class="card-title">🧠 2. DEEP WORK (TIME BLOCK)</span>
+          <p class="card-text"><b>90–120 min uninterrupted.</b></p>
+          <p class="card-subtext">Best for complex SQL queries, tuning hyperparameters, training deep models, and coding pipelines.</p>
+        </div>
+        <div class="card">
+          <span class="card-title">📱 3. MICRO-LEARNING</span>
+          <p class="card-text"><b>10–15 min daily bursts.</b></p>
+          <p class="card-subtext">Perfect for platform flashcards, daily podcast listening, and rapid pronunciation checks before work.</p>
+        </div>
+      </div>
+      <div class="card" style="background: rgba(56, 189, 248, 0.08); border-color: rgba(56, 189, 248, 0.3); padding: 8px 12px;">
+        <span style="font-size: 11.5px; color: #e0f2fe;"><b>💡 Any that you already knew?</b> <i> You might have others you've tried before, when studying for your Master's degree.</i></span>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <span>Icebreaker &amp; Mindset</span>
+      <span>Slide 03 of 13</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 4: THE CONVERSATION LOOP -->
+  <section class="slide" id="slide-4">
+    <div class="slide-header">
+      <div>
+        <span class="kicker">&gt; Technical Bridge</span>
+        <h2 class="slide-title">The Conversation Loop (Handling Interruptions)</h2>
+      </div>
+      <span class="badge">⚙️ Framework</span>
+    </div>
+    <div class="slide-content">
+      <p style="font-size: 12.5px; color: var(--text-muted); margin-bottom: 2px;">
+        In international tech standups, the Tech Lead interrupts with unexpected questions. Use this 3-step bridge:
+      </p>
+      <div class="card-grid-3">
+        <div class="card">
+          <span class="card-title">⏱️ STEP 1: TIME BUYER</span>
+          <p class="card-text"><b>Buy thinking time</b> without awkward silences.</p>
+          <div style="margin-top: 8px; background: rgba(0,0,0,0.3); padding: 8px; border-radius: 4px; font-style: italic; font-size: 11.5px; color: #38bdf8; line-height: 1.4;">
+            "Good question. Well, basically..."<br>
+            "Sure, let me verify that on my screen..."
+          </div>
+        </div>
+        <div class="card">
+          <span class="card-title">📊 STEP 2: DIRECT ANSWER</span>
+          <p class="card-text"><b>State clear facts</b>, runtimes, or system metrics.</p>
+          <div style="margin-top: 8px; background: rgba(0,0,0,0.3); padding: 8px; border-radius: 4px; font-style: italic; font-size: 11.5px; color: #f1f5f9; line-height: 1.4;">
+            "It took around two hours..."<br>
+            "We noticed a small memory leak..."
+          </div>
+        </div>
+        <div class="card">
+          <span class="card-title">⚡ STEP 3: NEXT ACTION</span>
+          <p class="card-text"><b>State immediate focus</b> in Present Continuous.</p>
+          <div style="margin-top: 8px; background: rgba(0,0,0,0.3); padding: 8px; border-radius: 4px; font-style: italic; font-size: 11.5px; color: #4ade80; line-height: 1.4;">
+            "I am inspecting the logs right now."<br>
+            "I am DMing DevOps on Teams after this call."
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <span>Conversational Strategy • Present Continuous</span>
+      <span>Slide 04 of 13</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 5: CLARIFICATION FORMULAS (WITH PRO TIP) -->
+  <section class="slide" id="slide-5">
+    <div class="slide-header">
+      <div>
+        <span class="kicker">&gt; Survival Protocols</span>
+        <h2 class="slide-title">Clarification Formulas (Never Say "What?")</h2>
+      </div>
+      <span class="badge">✨ Professional Polish</span>
+    </div>
+    <div class="slide-content">
+      <div class="card-grid-3">
+        <div class="card">
+          <span class="card-title">🔄 1. RETRY (Repetition)</span>
+          <p class="card-text" style="margin-bottom: 4px;">When speech is too fast or audio cuts out:</p>
+          <p style="font-size: 12px; color: #38bdf8; font-style: italic; line-height: 1.4;">
+            "Could you repeat that, please?"<br>
+            "Sorry, could you say that again?"
+          </p>
+        </div>
+        <div class="card">
+          <span class="card-title">🔍 2. DEBUG (Scope)</span>
+          <p class="card-text" style="margin-bottom: 4px;">To clarify ambiguous technical questions:</p>
+          <p style="font-size: 12px; color: #a371f7; font-style: italic; line-height: 1.4;">
+            "Do you mean on staging or in production?"<br>
+            "Are you referring to latency or accuracy?"
+          </p>
+        </div>
+        <div class="card">
+          <span class="card-title">✅ 3. ACKNOWLEDGE (Action)</span>
+          <p class="card-text" style="margin-bottom: 4px;">To confirm immediate ownership:</p>
+          <p style="font-size: 12px; color: #34d399; font-style: italic; line-height: 1.4;">
+            "Understood. I am taking care of it now."<br>
+            "Got it. I am updating the team on Teams."
+          </p>
+        </div>
+      </div>
+
+      <!-- PRO TIP: PRESENT CONTINUOUS FOR FUTURE -->
+      <div class="pro-tip">
+        <span class="pro-tip-icon">💡</span>
+        <span class="pro-tip-text">
+          <b>Pro Tip (Future with -ING):</b> In tech standups, using <b>Present Continuous</b> (<i>"I am taking care of it now" / "I am DMing DevOps right after this call"</i>) sounds much more agile, natural, and immediate, but we are still talking about future actions. Avoid the simple future tense (<i>"I will take care of it"</i>) in these scenarios, as it can sound less proactive.
+        </span>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <span>Survival Protocols • Functional Grammar</span>
+      <span>Slide 05 of 13</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 6: LIVE SIMULATION OVERVIEW -->
+  <section class="slide" id="slide-6">
+    <div class="slide-header">
+      <div>
+        <span class="kicker">&gt; Standup Practice</span>
+        <h2 class="slide-title">Live Simulation: 3 Sprint Environments</h2>
+      </div>
+      <span class="badge">🎭 20 Min Roleplay</span>
+    </div>
+    <div class="slide-content">
+      <div class="card-grid-3">
+        
+        <!-- SCENARIO A -->
+        <div class="card" style="border-top: 3px solid var(--accent-green);">
+          <span class="card-title" style="color: var(--accent-green);">🎯 SCENARIO A: SATURDAY MOCK</span>
+          <p class="card-text"><b>The Class 1 Promise:</b></p>
+          <p class="card-subtext">• Report Yesterday, Today &amp; Blockers</p>
+          <p class="card-subtext">• Scrum Master asks 1 technical follow-up</p>
+          <p class="card-subtext">• Apply the 3-step conversation loop</p>
+        </div>
+
+        <!-- SCENARIO B -->
+        <div class="card" style="border-top: 3px solid var(--accent-amber);">
+          <span class="card-title" style="color: var(--accent-amber);">⚡ SCENARIO B: CONVERSATION LOOP</span>
+          <p class="card-text"><b>Handling cluster pressure:</b></p>
+          <p class="card-subtext">• Step 1: Buy time without silence</p>
+          <p class="card-subtext">• Step 2: Report runtimes &amp; memory leaks</p>
+          <p class="card-subtext">• Step 3: Present Continuous immediate action</p>
+        </div>
+
+        <!-- SCENARIO C -->
+        <div class="card" style="border-top: 3px solid var(--accent-purple);">
+          <span class="card-title" style="color: var(--accent-purple);">🛡️ SCENARIO C: CLARIFICATION PROTOCOL</span>
+          <p class="card-text"><b>Fast-paced tech direction:</b></p>
+          <p class="card-subtext">• Step 1: Retry (ask to repeat without "What?")</p>
+          <p class="card-subtext">• Step 2: Debug (staging vs. production scope)</p>
+          <p class="card-subtext">• Step 3: Acknowledge &amp; take active ownership</p>
+        </div>
+
+      </div>
+    </div>
+    <div class="slide-footer">
+      <span>Sprint Simulation • Overview</span>
+      <span>Slide 06 of 13</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 7: SCENARIO A (ROLEPLAY WITH PERSON ICONS) -->
+  <section class="slide" id="slide-7">
+    <div class="slide-header">
+      <div>
+        <span class="kicker">&gt; Roleplay Drill 1</span>
+        <h2 class="slide-title">Scenario A: The Saturday Mock Standup</h2>
+      </div>
+      <span class="badge">🤝 Class 1 Integration</span>
+    </div>
+    <div class="slide-content">
+      <div class="dialogue">
+        <div class="speech-bubble speech-lead">
+          <span class="actor-name"><span class="actor-icon">👨‍💼</span> Teacher (Scrum Master)</span>
+          "Morning Bruno! You're up. How's everything going on your end with the predictive model?"
+        </div>
+        <div class="speech-bubble speech-bruno">
+          <span class="actor-name"><span class="actor-icon">👨‍💻</span> Bruno (Data Scientist • 3-Step Framework from Class 1)</span>
+          <b>[Yesterday]:</b> "Yesterday, I cleaned the dataset and deployed the baseline model to staging."<br>
+          <b>[Today]:</b> "Today, I am tuning the hyperparameters to reduce inference latency."<br>
+          <b>[Blockers]:</b> "I have no critical blockers today, so everything is on track."
+        </div>
+        <div class="speech-bubble speech-lead">
+          <span class="actor-name"><span class="actor-icon">👨‍💼</span> Teacher (Scrum Master • Live Technical Question)</span>
+          "Great progress. Did you notice any data drift in the validation set?"
+        </div>
+        <div class="speech-bubble speech-bruno">
+          <span class="actor-name"><span class="actor-icon">👨‍💻</span> Bruno (Data Scientist • Conversation Loop in Action)</span>
+          "Good question. The metrics looked stable, but I am inspecting the logs after this call to verify."
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <span>Scenario A • Promised Saturday Mock</span>
+      <span>Slide 07 of 13</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 8: SCENARIO B (ROLEPLAY WITH PERSON ICONS) -->
+  <section class="slide" id="slide-8">
+    <div class="slide-header">
+      <div>
+        <span class="kicker">&gt; Roleplay Drill 2</span>
+        <h2 class="slide-title">Scenario B: Technical Interruption on Cluster</h2>
+      </div>
+      <span class="badge">⚡ The 3-Step Bridge</span>
+    </div>
+    <div class="slide-content" style="gap: 10px;">
+      
+      <!-- TECH LEAD INTERRUPTION -->
+      <div class="speech-bubble speech-lead" style="padding: 8px 14px;">
+        <span class="actor-name"><span class="actor-icon">👨‍💼</span> Tech Lead (Teacher)</span>
+        "Wait Bruno, how long did the model take to train on the GPU cluster? Did you run into memory issues?"
+      </div>
+
+      <!-- BRUNO'S MODULAR 3-STEP RESPONSE -->
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
+        
+        <!-- STEP 1 -->
+        <div class="card" style="border-top: 3px solid var(--accent-cyan); background: #131d27; padding: 10px 12px;">
+          <span style="font-family: 'Fira Code'; font-size: 11px; font-weight: 700; color: var(--accent-cyan); display: block; margin-bottom: 3px;">
+            ⏱️ STEP 1: TIME BUYER
+          </span>
+          <span style="font-size: 10px; color: var(--text-muted); display: block; margin-bottom: 6px;">
+            Buy thinking time without silences.
+          </span>
+          <p style="font-size: 12px; color: #e0f2fe; font-style: italic; line-height: 1.35;">
+            "Good question. Well, basically..."<br>
+            <span style="font-size: 10.5px; color: #7dd3fc;">(or: "Sure, let me verify that...")</span>
+          </p>
+        </div>
+
+        <!-- STEP 2 -->
+        <div class="card" style="border-top: 3px solid #f59e0b; background: #1f1b13; padding: 10px 12px;">
+          <span style="font-family: 'Fira Code'; font-size: 11px; font-weight: 700; color: #f59e0b; display: block; margin-bottom: 3px;">
+            📊 STEP 2: DIRECT ANSWER
+          </span>
+          <span style="font-size: 10px; color: var(--text-muted); display: block; margin-bottom: 6px;">
+            State clear runtimes &amp; metrics.
+          </span>
+          <p style="font-size: 12px; color: #fef3c7; font-style: italic; line-height: 1.35;">
+            "It took around two hours..."<br>
+            <span style="font-size: 10.5px; color: #fde68a;">"We noticed a small memory leak."</span>
+          </p>
+        </div>
+
+        <!-- STEP 3 -->
+        <div class="card" style="border-top: 3px solid var(--accent-green); background: #112217; padding: 10px 12px;">
+          <span style="font-family: 'Fira Code'; font-size: 11px; font-weight: 700; color: var(--accent-green); display: block; margin-bottom: 3px;">
+            ⚡ STEP 3: NEXT ACTION
+          </span>
+          <span style="font-size: 10px; color: var(--text-muted); display: block; margin-bottom: 6px;">
+            Immediate Present Continuous.
+          </span>
+          <p style="font-size: 12px; color: #dcfce7; font-style: italic; line-height: 1.35;">
+            "I am inspecting the logs right now."<br>
+            <span style="font-size: 10.5px; color: #86efac;">(or: "I am DMing DevOps on Teams.")</span>
+          </p>
+        </div>
+
+      </div>
+
+      <!-- ASSEMBLED SCRIPT -->
+      <div class="card" style="background: rgba(0,0,0,0.4); border-color: rgba(255,255,255,0.1); padding: 7px 12px;">
+        <span style="font-family: 'Fira Code'; font-size: 10px; color: var(--accent-cyan); text-transform: uppercase;">
+          ● Full Assembled Output:
+        </span>
+        <p style="font-size: 11.5px; color: #f1f5f9; margin-top: 2px;">
+          <i>"Good question. Well, basically it took around two hours. We noticed a small memory leak in the loop, so I am inspecting the error logs right now."</i>
+        </p>
+      </div>
+
+    </div>
+    <div class="slide-footer">
+      <span>Conversation Algorithm • 3-Step Execution</span>
+      <span>Slide 08 of 13</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 9: SCENARIO C (ROLEPLAY WITH PERSON ICONS) -->
+  <section class="slide" id="slide-9">
+    <div class="slide-header">
+      <div>
+        <span class="kicker">&gt; Roleplay Drill 3</span>
+        <h2 class="slide-title">Scenario C: Fast-Paced Technical Direction</h2>
+      </div>
+      <span class="badge">🛡️ Clarification Protocol</span>
+    </div>
+    <div class="slide-content" style="gap: 10px;">
+      
+      <!-- FAST-PACED TECH LEAD INTERRUPTION -->
+      <div class="speech-bubble speech-lead" style="padding: 8px 14px;">
+        <span class="actor-name"><span class="actor-icon">👨‍💼</span> Tech Lead (Teacher speaks fast / mumbled)</span>
+        "Hey Bruno, we need those pipeline permissions fixed immediately because the query job keeps failing on the nodes."
+      </div>
+
+      <!-- BRUNO'S MODULAR 3-STEP CLARIFICATION FLOW -->
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
+        
+        <!-- STEP 1: RETRY -->
+        <div class="card" style="border-top: 3px solid var(--accent-cyan); background: #131d27; padding: 10px 12px;">
+          <span style="font-family: 'Fira Code'; font-size: 11px; font-weight: 700; color: var(--accent-cyan); display: block; margin-bottom: 3px;">
+            🔄 1. RETRY (Repetition)
+          </span>
+          <span style="font-size: 10px; color: var(--text-muted); display: block; margin-bottom: 6px;">
+            When speech is fast or audio cuts out.
+          </span>
+          <p style="font-size: 12px; color: #e0f2fe; font-style: italic; line-height: 1.35;">
+            "Sorry, could you say that again?"<br>
+            <span style="font-size: 10.5px; color: #7dd3fc;">(or: "Could you repeat that, please?")</span>
+          </p>
+        </div>
+
+        <!-- STEP 2: DEBUG -->
+        <div class="card" style="border-top: 3px solid var(--accent-purple); background: #1b1726; padding: 10px 12px;">
+          <span style="font-family: 'Fira Code'; font-size: 11px; font-weight: 700; color: var(--accent-purple); display: block; margin-bottom: 3px;">
+            🔍 2. DEBUG (Scope)
+          </span>
+          <span style="font-size: 10px; color: var(--text-muted); display: block; margin-bottom: 6px;">
+            Clarify environment or technical scope.
+          </span>
+          <p style="font-size: 12px; color: #ede9fe; font-style: italic; line-height: 1.35;">
+            "Do you mean on staging or in prod?"<br>
+            <span style="font-size: 10.5px; color: #c4b5fd;">(or: "Are you referring to latency?")</span>
+          </p>
+        </div>
+
+        <!-- STEP 3: ACKNOWLEDGE -->
+        <div class="card" style="border-top: 3px solid var(--accent-green); background: #112217; padding: 10px 12px;">
+          <span style="font-family: 'Fira Code'; font-size: 11px; font-weight: 700; color: var(--accent-green); display: block; margin-bottom: 3px;">
+            ✅ 3. ACKNOWLEDGE (Action)
+          </span>
+          <span style="font-size: 10px; color: var(--text-muted); display: block; margin-bottom: 6px;">
+            Confirm ownership with -ING.
+          </span>
+          <p style="font-size: 12px; color: #dcfce7; font-style: italic; line-height: 1.35;">
+            "Understood. I am taking care of it."<br>
+            <span style="font-size: 10.5px; color: #86efac;">(or: "Got it. I am DMing DevOps now.")</span>
+          </p>
+        </div>
+
+      </div>
+
+      <!-- ASSEMBLED DRILL -->
+      <div class="card" style="background: rgba(0,0,0,0.4); border-color: rgba(255,255,255,0.1); padding: 7px 12px;">
+        <span style="font-family: 'Fira Code'; font-size: 10px; color: var(--accent-cyan); text-transform: uppercase;">
+          ● Complete Exchange Flow:
+        </span>
+        <p style="font-size: 11.5px; color: #f1f5f9; margin-top: 2px;">
+          <b>👨‍💼 Tech Lead:</b> <i>"Do we have write permissions set up for the transaction table?"</i><br>
+          <b>👨‍💻 Bruno:</b> <i>"Do you mean on staging or in production? ... Understood. I am taking care of it now and DMing DevOps on Teams."</i>
+        </p>
+      </div>
+
+    </div>
+    <div class="slide-footer">
+      <span>Clarification Protocols • 3-Step Execution</span>
+      <span>Slide 09 of 13</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 10: INDUSTRY GLOSSARY INTEGRATION -->
+  <section class="slide" id="slide-10">
+    <div class="slide-header">
+      <div>
+        <span class="kicker">&gt; Technical Lexicon</span>
+        <h2 class="slide-title">Glossary Integration: Core Variables</h2>
+      </div>
+      <span class="badge">📚 Class 1 &amp; 2 Bridge</span>
+    </div>
+    <div class="slide-content" style="justify-content: center; gap: 12px;">
+      
+      <!-- ROW 1: CLASS 1 FOUNDATIONS -->
+      <div>
+        <span style="font-family: 'Fira Code', monospace; font-size: 10.5px; color: var(--accent-green); font-weight: 600; letter-spacing: 0.08em; display: block; margin-bottom: 6px;">
+          ● CLASS 1: DATA &amp; AGILE FOUNDATIONS
+        </span>
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;">
+          <div class="card" style="padding: 8px 10px; border-left: 3px solid var(--accent-green);">
+            <span style="font-family: 'Fira Code'; font-size: 11.5px; font-weight: 700; color: #ffffff; display: block;">🚰 Pipeline</span>
+            <span style="font-size: 10.5px; color: var(--text-muted); line-height: 1.3; display: block; margin-top: 2px;">Automated data flow &amp; transformations.</span>
+          </div>
+          <div class="card" style="padding: 8px 10px; border-left: 3px solid var(--accent-green);">
+            <span style="font-family: 'Fira Code'; font-size: 11.5px; font-weight: 700; color: #ffffff; display: block;">⏳ Bottleneck</span>
+            <span style="font-size: 10.5px; color: var(--text-muted); line-height: 1.3; display: block; margin-top: 2px;">Point of congestion slowing progress.</span>
+          </div>
+          <div class="card" style="padding: 8px 10px; border-left: 3px solid var(--accent-green);">
+            <span style="font-family: 'Fira Code'; font-size: 11.5px; font-weight: 700; color: #ffffff; display: block;">🚫 Blocker</span>
+            <span style="font-size: 10.5px; color: var(--text-muted); line-height: 1.3; display: block; margin-top: 2px;">Critical impediment stopping work.</span>
+          </div>
+          <div class="card" style="padding: 8px 10px; border-left: 3px solid var(--accent-green);">
+            <span style="font-family: 'Fira Code'; font-size: 11.5px; font-weight: 700; color: #ffffff; display: block;">🚀 Deploy</span>
+            <span style="font-size: 10.5px; color: var(--text-muted); line-height: 1.3; display: block; margin-top: 2px;">Release model to staging or prod.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ROW 2: CLASS 2 ACTION & COMMUNICATION -->
+      <div>
+        <span style="font-family: 'Fira Code', monospace; font-size: 10.5px; color: var(--accent-cyan); font-weight: 600; letter-spacing: 0.08em; display: block; margin-bottom: 6px;">
+          ● CLASS 2: ACTION &amp; INTERACTION VARIABLES
+        </span>
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;">
+          <div class="card" style="padding: 8px 10px; border-left: 3px solid var(--accent-cyan);">
+            <span style="font-family: 'Fira Code'; font-size: 11.5px; font-weight: 700; color: #ffffff; display: block;">💬 DM</span>
+            <span style="font-size: 10.5px; color: var(--text-muted); line-height: 1.3; display: block; margin-top: 2px;">Send a direct message on Teams.</span>
+          </div>
+          <div class="card" style="padding: 8px 10px; border-left: 3px solid var(--accent-cyan);">
+            <span style="font-family: 'Fira Code'; font-size: 11.5px; font-weight: 700; color: #ffffff; display: block;">🤝 Reach out</span>
+            <span style="font-size: 10.5px; color: var(--text-muted); line-height: 1.3; display: block; margin-top: 2px;">Contact a team or person for help.</span>
+          </div>
+          <div class="card" style="padding: 8px 10px; border-left: 3px solid var(--accent-cyan);">
+            <span style="font-family: 'Fira Code'; font-size: 11.5px; font-weight: 700; color: #ffffff; display: block;">🎯 On track</span>
+            <span style="font-size: 10.5px; color: var(--text-muted); line-height: 1.3; display: block; margin-top: 2px;">Proceeding on sprint schedule.</span>
+          </div>
+          <div class="card" style="padding: 8px 10px; border-left: 3px solid var(--accent-cyan);">
+            <span style="font-family: 'Fira Code'; font-size: 11.5px; font-weight: 700; color: #ffffff; display: block;">🔔 Heads up</span>
+            <span style="font-size: 10.5px; color: var(--text-muted); line-height: 1.3; display: block; margin-top: 2px;">Advance warning or informal alert.</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="slide-footer">
+      <span>Lexicon Consolidation • 8 Core Terms</span>
+      <span>Slide 10 of 13</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 11: CONTEXTUAL DIAGNOSTICS -->
+  <section class="slide" id="slide-11">
+    <div class="slide-header">
+      <div>
+        <span class="kicker">&gt; Quick Knowledge Check</span>
+        <h2 class="slide-title">Contextual Diagnostics (No Spoilers)</h2>
+      </div>
+      <span class="badge">🧠 Oral Recall</span>
+    </div>
+    <div class="slide-content">
+      <div style="display: flex; flex-direction: column; gap: 9px;">
+        <div class="card">
+          <p style="font-size: 12.5px; font-weight: 500;">
+            1. "Just a quick [ ________ ]: the cloud database will undergo maintenance at 3 PM."
+          </p>
+          <p style="font-size: 11.5px; color: var(--accent-cyan); margin-top: 3px;">
+            (a) heads up &nbsp;&nbsp;|&nbsp;&nbsp; (b) on track &nbsp;&nbsp;|&nbsp;&nbsp; (c) cluster
+          </p>
+        </div>
+        <div class="card">
+          <p style="font-size: 12.5px; font-weight: 500;">
+            2. "Don't worry about the query error, the team [ ________ ] it this morning."
+          </p>
+          <p style="font-size: 11.5px; color: var(--accent-cyan); margin-top: 3px;">
+            (a) took care of &nbsp;&nbsp;|&nbsp;&nbsp; (b) fall behind &nbsp;&nbsp;|&nbsp;&nbsp; (c) DM
+          </p>
+        </div>
+        <div class="card">
+          <p style="font-size: 12.5px; font-weight: 500;">
+            3. "We are [ ________ ] schedule because the data ingestion pipeline timed out."
+          </p>
+          <p style="font-size: 11.5px; color: var(--accent-cyan); margin-top: 3px;">
+            (a) on track &nbsp;&nbsp;|&nbsp;&nbsp; (b) falling behind &nbsp;&nbsp;|&nbsp;&nbsp; (c) reaching out
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <span>Oral Diagnostic Check</span>
+      <span>Slide 11 of 13</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 12: THE MASTER PITCH -->
+  <section class="slide" id="slide-12">
+    <div class="slide-header">
+      <div>
+        <span class="kicker">&gt; Synthesis</span>
+        <h2 class="slide-title">The Master Pitch: Professional Narrative</h2>
+      </div>
+      <span class="badge">💼 Interview Ready</span>
+    </div>
+    <div class="slide-content">
+      <p style="font-size: 12.5px; color: var(--text-muted); margin-bottom: 2px;">
+        Clean Past Simple &amp; Present Simple (no confusing complex perfect tenses):
+      </p>
+      <div class="code-block">{
+  "intro": "Hi, I'm Bruno. I am a Data Scientist based in Buenos Aires.",
+  "experience": "I worked at YPF, where I managed data pipelines and deployed machine learning models.",
+  "focus": "I recently completed my Master's Degree in Data Science & AI, and I specialize in predictive modeling and pipeline automation."
+}</div>
+    </div>
+    <div class="slide-footer">
+      <span>Career Narrative</span>
+      <span>Slide 12 of 13</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 13: SPRINT BACKLOG (ALL 7 ASYNC TASKS WITH ICONS) -->
+  <section class="slide" id="slide-13">
+    <div class="slide-header">
+      <div>
+        <span class="kicker">&gt; Weekly Homework</span>
+        <h2 class="slide-title">Sprint Backlog: Platform Activity Deck</h2>
+      </div>
+      <span class="badge">📋 Sunday to Thursday</span>
+    </div>
+    <div class="slide-content">
+      <div class="agenda-list">
+        <div class="agenda-item">
+          <span class="agenda-icon">🎧</span>
+          <span class="agenda-time">[ TASK 1 ]</span>
+          <span class="agenda-text"><b>Video Listening:</b> Watch real daily standup &amp; answer 3 comprehension questions.</span>
+        </div>
+        <div class="agenda-item">
+          <span class="agenda-icon">📝</span>
+          <span class="agenda-time">[ TASK 2 ]</span>
+          <span class="agenda-text"><b>Knowledge Check Quiz:</b> Multiple-choice questions on standup grammar &amp; protocols.</span>
+        </div>
+        <div class="agenda-item">
+          <span class="agenda-icon">🧩</span>
+          <span class="agenda-time">[ TASK 3 ]</span>
+          <span class="agenda-text"><b>Sentence Builder:</b> Assemble fixed syntax blocks for past &amp; present continuous tenses.</span>
+        </div>
+        <div class="agenda-item">
+          <span class="agenda-icon">✍️</span>
+          <span class="agenda-time">[ TASK 4 ]</span>
+          <span class="agenda-text"><b>Completar Oraciones:</b> Multiple choice syntax check with vocabulary &amp; action verbs.</span>
+        </div>
+        <div class="agenda-item">
+          <span class="agenda-icon">💬</span>
+          <span class="agenda-time">[ TASK 5 ]</span>
+          <span class="agenda-text"><b>Teams Thread Writing:</b> Post your daily update reply in Alex's thread using the template.</span>
+        </div>
+        <div class="agenda-item">
+          <span class="agenda-icon">🗂️</span>
+          <span class="agenda-time">[ TASK 6 ]</span>
+          <span class="agenda-text"><b>Platform Flashcards:</b> Practice the word glossary (Data &amp; Agile variables).</span>
+        </div>
+        <div class="agenda-item">
+          <span class="agenda-icon">🎙️</span>
+          <span class="agenda-time">[ TASK 7 ]</span>
+          <span class="agenda-text"><b>Voice Lab:</b> New sentences for practice.</span>
+        </div>
+      </div>
+    </div>
+    <div class="slide-footer">
+      <span>Weekly Platform Deck</span>
+      <span>Slide 13 of 13</span>
+    </div>
+  </section>
+
+  <!-- KEYBOARD NAVIGATION -->
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    let currentSlide = 0;
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === ' ') {
+        if (currentSlide < slides.length - 1) {
+          currentSlide++;
+          slides[currentSlide].scrollIntoView({ behavior: 'smooth' });
+        }
+      } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+        if (currentSlide > 0) {
+          currentSlide--;
+          slides[currentSlide].scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Industry Glossary - English for Data & AI</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap');
+
+    :root {
+      --bg-dark: #121820;
+      --card-bg: #1a222d;
+      --card-border: #263342;
+      --accent-green: #10b981;
+      --accent-cyan: #38bdf8;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --tag-bg: #1e293b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      display: flex;
+      justify-content: center;
+      padding: 40px 20px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .sheet-container {
+      width: 100%;
+      max-width: 900px;
+      background-color: var(--bg-dark);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 48px;
+      position: relative;
+    }
+
+    /* HEADER */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 1px solid var(--card-border);
+      padding-bottom: 24px;
+      margin-bottom: 32px;
+    }
+
+    .kicker {
+      font-family: 'Fira Code', monospace;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--accent-cyan);
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .title {
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #ffffff;
+      margin-bottom: 6px;
+    }
+
+    .subtitle {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .badge-terminal {
+      font-family: 'Fira Code', monospace;
+      font-size: 11px;
+      padding: 6px 12px;
+      background-color: var(--tag-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 6px;
+      color: var(--accent-green);
+    }
+
+    /* GRID */
+    .glossary-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 18px 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 8px;
+    }
+
+    .term {
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      color: #ffffff;
+    }
+
+    .phonetic {
+      font-family: 'Fira Code', monospace;
+      font-size: 12px;
+      color: var(--accent-cyan);
+    }
+
+    .category {
+      display: inline-block;
+      font-size: 10px;
+      text-transform: uppercase;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      background: var(--tag-bg);
+      color: var(--text-muted);
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin-bottom: 10px;
+      align-self: flex-start;
+    }
+
+    .definition {
+      font-size: 13px;
+      line-height: 1.5;
+      color: #cbd5e1;
+      margin-bottom: 12px;
+    }
+
+    .example-box {
+      background-color: rgba(18, 24, 32, 0.7);
+      border-left: 2px solid var(--accent-green);
+      padding: 8px 12px;
+      border-radius: 0 6px 6px 0;
+    }
+
+    .example-label {
+      font-family: 'Fira Code', monospace;
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent-green);
+      margin-bottom: 2px;
+      display: block;
+    }
+
+    .example-text {
+      font-size: 12px;
+      color: #e2e8f0;
+      font-style: italic;
+    }
+
+    /* FOOTER */
+    .footer {
+      border-top: 1px solid var(--card-border);
+      padding-top: 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'Fira Code', monospace;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .footer span.status {
+      color: var(--accent-green);
+    }
+
+    /* PRINT STYLES FOR CRISP PDF EXPORT */
+    @media print {
+      body {
+        background-color: #121820 !important;
+        padding: 0;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .sheet-container {
+        border: none;
+        max-width: 100%;
+        padding: 30px;
+        border-radius: 0;
+      }
+
+      @page {
+        size: A4 portrait;
+        margin: 10mm;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="sheet-container">
+    <!-- HEADER -->
+    <header class="header">
+      <div>
+        <span class="kicker">&gt; English for Data &amp; AI // Foundations</span>
+        <h1 class="title">DOCUMENTATION: INDUSTRY GLOSSARY</h1>
+        <p class="subtitle">Class 01 • The Daily Agile Standup &amp; Action Verbs</p>
+      </div>
+      <div class="badge-terminal">[Student Workbook]</div>
+    </header>
+
+    <!-- GRID DE 8 TARJETAS -->
+    <main class="glossary-grid">
+
+      <!-- 1. Pipeline -->
+      <article class="card">
+        <div>
+          <div class="card-top">
+            <span class="term">PIPELINE</span>
+            <span class="phonetic">[PAIP-lain]</span>
+          </div>
+          <span class="category">Noun</span>
+          <p class="definition">Automated workflow that moves and transforms data from source to destination.</p>
+        </div>
+        <div class="example-box">
+          <span class="example-label">&gt; Standup Example</span>
+          <p class="example-text">"The data pipeline runs every morning at 6 AM."</p>
+        </div>
+      </article>
+
+      <!-- 2. Bottleneck -->
+      <article class="card">
+        <div>
+          <div class="card-top">
+            <span class="term">BOTTLENECK</span>
+            <span class="phonetic">[BOT-l-nek]</span>
+          </div>
+          <span class="category">Noun</span>
+          <p class="definition">A point of congestion or impediment that slows down the whole system.</p>
+        </div>
+        <div class="example-box">
+          <span class="example-label">&gt; Standup Example</span>
+          <p class="example-text">"Data extraction is our main bottleneck right now."</p>
+        </div>
+      </article>
+
+      <!-- 3. Blocker -->
+      <article class="card">
+        <div>
+          <div class="card-top">
+            <span class="term">BLOCKER</span>
+            <span class="phonetic">[BLOK-er]</span>
+          </div>
+          <span class="category">Noun</span>
+          <p class="definition">An impediment that stops you from making progress on your current task.</p>
+        </div>
+        <div class="example-box">
+          <span class="example-label">&gt; Standup Example</span>
+          <p class="example-text">"I have no blockers today; everything is on track."</p>
+        </div>
+      </article>
+
+      <!-- 4. Deploy -->
+      <article class="card">
+        <div>
+          <div class="card-top">
+            <span class="term">DEPLOY</span>
+            <span class="phonetic">[di-PLOI]</span>
+          </div>
+          <span class="category">Action Verb (Past: Deployed)</span>
+          <p class="definition">To release and run a model or script in a production environment.</p>
+        </div>
+        <div class="example-box">
+          <span class="example-label">&gt; Standup Example</span>
+          <p class="example-text">"Yesterday, we deployed the baseline model to staging."</p>
+        </div>
+      </article>
+
+      <!-- 5. Tune -->
+      <article class="card">
+        <div>
+          <div class="card-top">
+            <span class="term">TUNE</span>
+            <span class="phonetic">[TIUN]</span>
+          </div>
+          <span class="category">Action Verb (Cont: Tuning)</span>
+          <p class="definition">To adjust parameters or hyperparameters to optimize performance.</p>
+        </div>
+        <div class="example-box">
+          <span class="example-label">&gt; Standup Example</span>
+          <p class="example-text">"Today, I am tuning hyperparameters for better accuracy."</p>
+        </div>
+      </article>
+
+      <!-- 6. Feature -->
+      <article class="card">
+        <div>
+          <div class="card-top">
+            <span class="term">FEATURE</span>
+            <span class="phonetic">[FII-cher]</span>
+          </div>
+          <span class="category">Noun</span>
+          <p class="definition">An individual measurable property or variable used as input for a model.</p>
+        </div>
+        <div class="example-box">
+          <span class="example-label">&gt; Standup Example</span>
+          <p class="example-text">"We engineered three new features from customer logs."</p>
+        </div>
+      </article>
+
+      <!-- 7. Standup -->
+      <article class="card">
+        <div>
+          <div class="card-top">
+            <span class="term">STANDUP</span>
+            <span class="phonetic">[STAND-ap]</span>
+          </div>
+          <span class="category">Noun</span>
+          <p class="definition">A daily short status meeting (10–15 mins) to align team priorities.</p>
+        </div>
+        <div class="example-box">
+          <span class="example-label">&gt; Standup Example</span>
+          <p class="example-text">"Let's discuss this right after the morning standup."</p>
+        </div>
+      </article>
+
+      <!-- 8. ETL -->
+      <article class="card">
+        <div>
+          <div class="card-top">
+            <span class="term">ETL</span>
+            <span class="phonetic">[ii-tii-el]</span>
+          </div>
+          <span class="category">Acronym / Process</span>
+          <p class="definition">Extract, Transform, Load: consolidating data from multiple sources.</p>
+        </div>
+        <div class="example-box">
+          <span class="example-label">&gt; Standup Example</span>
+          <p class="example-text">"The ETL job failed last night due to memory limits."</p>
+        </div>
+      </article>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <span>English for Data &amp; AI</span>
+      <span>Status: <span class="status">100% Compiled</span></span>
+    </footer>
+  </div>
+
+</body>
+</html>

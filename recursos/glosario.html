@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Class 2 Glossary - Industry Core Variables</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap');
+
+    :root {
+      --bg-dark: #121820;
+      --card-bg: #1a222d;
+      --card-border: #263342;
+      --accent-green: #10b981;
+      --accent-cyan: #38bdf8;
+      --accent-amber: #f59e0b;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --tag-bg: #1e293b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      display: flex;
+      justify-content: center;
+      padding: 30px 20px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .sheet-container {
+      width: 100%;
+      max-width: 900px;
+      background-color: var(--bg-dark);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 36px 40px;
+      position: relative;
+    }
+
+    /* HEADER */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 1px solid var(--card-border);
+      padding-bottom: 20px;
+      margin-bottom: 24px;
+    }
+
+    .kicker {
+      font-family: 'Fira Code', monospace;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--accent-cyan);
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .title {
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #ffffff;
+      margin-bottom: 4px;
+    }
+
+    .subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .badge-terminal {
+      font-family: 'Fira Code', monospace;
+      font-size: 11px;
+      padding: 6px 12px;
+      background-color: var(--tag-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 6px;
+      color: var(--accent-green);
+    }
+
+    /* GRID 10 TARJETAS (2 COLUMNAS) */
+    .glossary-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    .card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 4px;
+    }
+
+    .term {
+      font-size: 15px;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .phonetic {
+      font-family: 'Fira Code', monospace;
+      font-size: 11px;
+      color: var(--accent-cyan);
+    }
+
+    .category {
+      display: inline-block;
+      font-size: 9px;
+      text-transform: uppercase;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      background: var(--tag-bg);
+      color: var(--text-muted);
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin-bottom: 8px;
+      align-self: flex-start;
+    }
+
+    .definition {
+      font-size: 12px;
+      line-height: 1.4;
+      color: #cbd5e1;
+      margin-bottom: 10px;
+    }
+
+    .example-box {
+      background-color: rgba(18, 24, 32, 0.7);
+      border-left: 2px solid var(--accent-green);
+      padding: 6px 10px;
+      border-radius: 0 4px 4px 0;
+    }
+
+    .example-label {
+      font-family: 'Fira Code', monospace;
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent-green);
+      margin-bottom: 2px;
+      display: block;
+    }
+
+    .example-text {
+      font-size: 11px;
+      color: #e2e8f0;
+      font-style: italic;
+    }
+
+    /* FOOTER */
+    .footer {
+      border-top: 1px solid var(--card-border);
+      padding-top: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'Fira Code', monospace;
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+
+    .footer span.status {
+      color: var(--accent-green);
+    }
+
+    /* PRINT STYLES FOR CRISP PDF EXPORT */
+    @media print {
+      body {
+        background-color: #121820 !important;
+        padding: 0;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .sheet-container {
+        border: none;
+        max-width: 100%;
+        padding: 20px 24px;
+        border-radius: 0;
+      }
+
+      @page {
+        size: A4 portrait;
+        margin: 6mm;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="sheet-container">
+    <!-- HEADER -->
+    <header class="header">
+      <div>
+        <span class="kicker">&gt; English for Data &amp; AI // Foundations</span>
+        <h1 class="title">INDUSTRY GLOSSARY: CORE VARIABLES</h1>
+        <p class="subtitle">Class 02 • Cross-Team Actions, Incident Response &amp; Standup Flow</p>
+      </div>
+      <div class="badge-terminal">[Student Workbook]</div>
+    </header>
+
+    <!-- GRID DE 10 TÉRMINOS -->
+    <main class="glossary-grid">
+
+      <!-- 1. DM -->
+      <article class="card">
+        <div>
+          <div class="card-top">
+            <span class="term">DM</span>
+            <span class="phonetic">[dee-em]</span>
+          </div>
+          <span class="category">Action Verb</span>
+          <p class="definition">To send a brief direct message on Teams or chat.</p>
+        </div>
+        <div class="example-box">
+          <span class="example-label">&gt; Example</span>
+          <p class="example-text">"I will DM DevOps right after this call."</p>
+        </div>
+      </article>
+
+      <!-- 2. REACH OUT TO -->
+      <article class="card">
+        <div>
+          <div class="card-top">
+            <span class="term">REACH OUT TO</span>
+            <span class="phonetic">[RIICH aut tu]</span>
+          </div>
+          <span class="category">Phrasal Verb</span>
+          <p class="definition">To contact a person or external team for coordination or help.</p>
+        </div>
+        <div class="example-box">
+          <span class="example-label">&gt; Example</span>
+          <p class="example-text">"Have you reached out to the infrastructure team yet?"</p>
+        </div>
+      </article>
+
+      <!-- 3. TAKE CARE OF -->
+      <article class="card">
+        <div>
+          <div class="card-top">
+            <span class="term">TAKE CARE OF</span>
+            <span class="phonetic">[TEIK ker ov]</span>
+          </div>
+          <span class="category">Verb Phrase</span>
+          <p class="definition">To assume full responsibility for handling or resolving a task.</p>
+        </div>
+        <div class="example-box">
+          <span class="example-label">&gt; Example</span>
+          <p class="example-text">"Don't worry about the query error, I will take care of it."</p>
+        </div>
+      </article>
+
+      <!-- 4. ON TRACK -->
+      <article class="card">
+        <div>
+          <div class="card-top">
+            <span class="term">ON TRACK</span>
+            <span class="phonetic">[on TRAK]</span>
+          </div>
+          <span class="category">Idiom / Status</span>
+          <p class="definition">Proceeding according to schedule; meeting the planned deadlines.</p>
+        </div>
+        <div class="example-box">
+          <span class="example-label">&gt; Example</span>
+          <p class="example-text">"Everything is on track. No critical blockers today."</p>
+        </div>
+      </article>
+
+      <!-- 5. FALL BEHIND -->
+      <article class="card">
+        <div>
+          <div class="card-top">
+            <span class="term">FALL BEHIND</span>
+            <span class="phonetic">[FOL bi-JAIND]</span>
+          </div>
+          <span class="category">Phrasal Verb</span>
+          <p class="definition">To fail to keep up with the sprint pace or project schedule.</p>
+        </div>
+        <div class="example-box">
+          <span class="example-label">&gt; Example</span>
+          <p class="example-text">"We are falling behind schedule due to server downtime."</p>
+        </div>
+      </article>
+
+      <!-- 6. HEADS UP -->
+      <article class="card">
+        <div>
+          <div class="card-top">
+            <span class="term">HEADS UP</span>
+            <span class="phonetic">[hedz-AP]</span>
+          </div>
+          <span class="category">Noun / Alert</span>
+          <p class="definition">An advance warning or informal alert about a future change.</p>
+        </div>
+        <div class="example-box">
+          <span class="example-label">&gt; Example</span>
+          <p class="example-text">"Just a quick heads up: the database will restart at 3 PM."</p>
+        </div>
+      </article>
+
+      <!-- 7. LOGS -->
+      <article class="card">
+        <div>
+          <div class="card-top">
+            <span class="term">LOGS</span>
+            <span class="phonetic">[logz]</span>
+          </div>
+          <span class="category">Technical Noun</span>
+          <p class="definition">Official time-stamped records of system operations or errors.</p>
+        </div>
+        <div class="example-box">
+          <span class="example-label">&gt; Example</span>
+          <p class="example-text">"I will inspect the container logs to find the root cause."</p>
+        </div>
+      </article>
+
+      <!-- 8. CLUSTER -->
+      <article class="card">
+        <div>
+          <div class="card-top">
+            <span class="term">CLUSTER</span>
+            <span class="phonetic">[KLAS-ter]</span>
+          </div>
+          <span class="category">Infrastructure</span>
+          <p class="definition">A group of interconnected machines/servers working as a single system.</p>
+        </div>
+        <div class="example-box">
+          <span class="example-label">&gt; Example</span>
+          <p class="example-text">"The model took two hours to train on the GPU cluster."</p>
+        </div>
+      </article>
+
+      <!-- 9. MEMORY LEAK -->
+      <article class="card">
+        <div>
+          <div class="card-top">
+            <span class="term">MEMORY LEAK</span>
+            <span class="phonetic">[MEM-ri liik]</span>
+          </div>
+          <span class="category">Bug / Incident</span>
+          <p class="definition">A failure in a program to release allocated memory, degrading performance.</p>
+        </div>
+        <div class="example-box">
+          <span class="example-label">&gt; Example</span>
+          <p class="example-text">"We noticed a small memory leak in the data loader loop."</p>
+        </div>
+      </article>
+
+      <!-- 10. UNDERSTOOD -->
+      <article class="card">
+        <div>
+          <div class="card-top">
+            <span class="term">UNDERSTOOD</span>
+            <span class="phonetic">[an-der-STUD]</span>
+          </div>
+          <span class="category">Communication</span>
+          <p class="definition">Clear, professional confirmation that an instruction or status was received.</p>
+        </div>
+        <div class="example-box">
+          <span class="example-label">&gt; Example</span>
+          <p class="example-text">"Understood. I will keep you posted on our progress."</p>
+        </div>
+      </article>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <span>English for Data &amp; AI // Class 02</span>
+      <span>Status: <span class="status">Compiled &amp; Clean</span></span>
+    </footer>
+  </div>
+
+</body>
+</html>
