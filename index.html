@@ -192,6 +192,15 @@
     .plan ul{list-style:none;margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid var(--linea);display:grid;gap:.55rem}
     .plan li{display:flex;gap:.6rem;font-size:1rem}
     .plan li::before{content:'';width:.6rem;height:.6rem;border-radius:50%;background:var(--cobalto);margin-top:.55rem;flex:none}
+    .plans.three{grid-template-columns:repeat(3,1fr);align-items:stretch}
+    .plan{display:flex;flex-direction:column;position:relative}
+    .plan .plan-cta{margin-top:auto;align-self:flex-start}
+    .plan ul{margin-bottom:1.75rem}
+    .plan.featured{border-width:2.5px;box-shadow:8px 8px 0 var(--carbon)}
+    .badge{position:absolute;top:-.85rem;left:1.5rem;background:var(--cobalto);color:#fff;font:700 .75rem/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;padding:.45rem .7rem;border:2px solid var(--carbon)}
+    .plans.three .plan h3{font-size:2rem}
+    .plans.three .price strong{font-size:3rem}
+    .plan-note{margin-top:1.25rem;font-size:1rem}
     .extras{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-top:2.5rem}
     .extras h4{font:400 1.5rem/1 var(--display);letter-spacing:.04em;margin-bottom:.4rem}
     .extras p{font-size:1rem;color:var(--gris)}
@@ -248,6 +257,8 @@
       .mail{position:static;max-width:560px}
       .portrait{max-width:300px}
       .mods{grid-template-columns:repeat(2,1fr)}
+      .plans.three{grid-template-columns:1fr;gap:2rem}
+      .plans.three .plan{max-width:560px}
       .extras{grid-template-columns:1fr}
       .line-body{grid-template-columns:1fr;padding-left:4.25rem}
       .line-body .cases{grid-column:auto}
@@ -526,39 +537,44 @@
     <section class="block" id="planes" data-stop>
       <div class="wrap">
         <div class="stop"><span class="kicker">Parada 04 · Planes</span></div>
-        <div class="sec-head"><h2>Planes claros, <em>sin letra chica.</em></h2><p class="muted">Valores vigentes en pesos argentinos (ARS).</p></div>
+        <div class="sec-head"><h2>Planes claros, <em>sin letra chica.</em></h2><p class="lead">Un entrenamiento individual, armado para tus objetivos laborales, técnicos y académicos. Valores en pesos argentinos (ARS).</p></div>
 
         <div class="first">
           <div>
             <p class="kicker">Primer paso · sin cargo</p>
             <h3>Nivelación 1 a 1 de 30 minutos</h3>
-            <p>Medimos tu nivel conversacional, detectamos los bloqueos que tenés al hablar, revisamos cómo estudiás y armamos tu ruta.</p>
+            <p>Evaluamos tu fluidez actual, detectamos tus bloqueos y armamos el plan de trabajo a medida antes de empezar.</p>
           </div>
           <a class="btn" href="#agenda">Agendá tu nivelación</a>
         </div>
 
-        <div class="plans">
+        <div class="plans three">
           <article class="plan">
-            <h3>Track Regular</h3>
-            <p class="freq">1 clase por semana · 4 al mes</p>
-            <div class="price"><strong>$102.000</strong><span>/ mes</span><s>$120.000</s></div>
-            <span class="save">Ahorrás $18.000 pagando por adelantado</span>
-            <ul><li>4 clases 1 a 1 de 60 min</li><li>Class Kit después de cada clase</li><li>Acceso completo a Activity Blog</li></ul>
+            <h3>Sesión individual</h3>
+            <p class="freq">Para algo puntual: una entrevista técnica, una revisión urgente de portfolio o una presentación.</p>
+            <div class="price"><strong>$25.000</strong><span>/ hora</span></div>
+            <ul><li>60 minutos 1 a 1 en vivo</li><li>Zero Note-Taking: no tomás apuntes en clase</li><li>Class Kit personalizado a tu mail</li><li>Acceso temporal a Activity Blog</li></ul>
+            <a class="link plan-cta" href="#agenda">Agendá una sesión puntual</a>
+          </article>
+          <article class="plan featured">
+            <span class="badge">Recomendado</span>
+            <h3>Plan mensual</h3>
+            <p class="freq">Para sostener la constancia semanal, ganar fluidez o preparar un examen.</p>
+            <div class="price"><strong>$85.000</strong><span>/ mes</span><s>$100.000</s></div>
+            <span class="save">4 clases · $21.250 cada una en vez de $25.000</span>
+            <ul><li>1 clase por semana de 60 min</li><li>Enfoque 100% personalizado: tech, data, business, exámenes o sprints</li><li>Class Kit completo con notas fonéticas y correcciones</li><li>Acceso ilimitado a Activity Blog</li><li>Soporte asíncrono para dudas entre clases</li></ul>
+            <a class="btn plan-cta" href="#agenda">Agendá tu nivelación</a>
           </article>
           <article class="plan">
-            <h3>Track Intensivo</h3>
-            <p class="freq">2 clases por semana · 8 al mes</p>
-            <div class="price"><strong>$204.000</strong><span>/ mes</span><s>$240.000</s></div>
-            <span class="save">Ahorrás $36.000 pagando por adelantado</span>
-            <ul><li>8 clases 1 a 1 de 60 min</li><li>Class Kit después de cada clase</li><li>Acceso completo a Activity Blog</li></ul>
+            <h3>Plan intensivo</h3>
+            <p class="freq">Para exámenes de grado cercanos, certificaciones internacionales o un cambio laboral en curso.</p>
+            <div class="price"><strong>$170.000</strong><span>/ mes</span><s>$200.000</s></div>
+            <span class="save">8 clases · $21.250 cada una en vez de $25.000</span>
+            <ul><li>2 clases por semana de 60 min</li><li>Simulacros, code reviews y práctica de debate</li><li>Class Kit prioritario con seguimiento de tu progreso</li><li>Acceso completo a Activity Blog</li><li>Corrección asíncrona de ensayos, entregas o presentaciones</li></ul>
+            <a class="link plan-cta" href="https://wa.me/541151268940?text=Hola%20Camila!%20Quiero%20consultar%20por%20el%20plan%20intensivo%20de%20Track%20English" target="_blank" rel="noopener">Consultá el plan intensivo&nbsp;↗</a>
           </article>
         </div>
-
-        <div class="extras">
-          <div><h4>Clase suelta · $30.000</h4><p>Una sesión de 60 minutos para algo puntual, sin compromiso mensual.</p></div>
-          <div><h4>Plan trimestral</h4><p>Congelás el 15% de descuento por tres meses ($102.000 o $204.000 por mes), con objetivos trimestrales.</p></div>
-          <div><h4>Sprints de entrevistas y exámenes</h4><p>Módulos intensivos de 4 u 8 clases para un proceso de selección, IELTS o TOEFL.</p></div>
-        </div>
+        <p class="muted plan-note">Los planes mensuales tienen 15% de descuento pagando el mes por adelantado.</p>
 
         <details class="policies">
           <summary>Políticas de agenda</summary>
